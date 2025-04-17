@@ -1,0 +1,15 @@
+<nav class="d-flex align-items-center">
+  <h2 class="mb-0">
+    <span class="breadcrumb-back px-2" (click)="goBack()" style="cursor: pointer;">
+      <i class="pi pi-arrow-left"></i>
+    </span>
+    <ng-container *ngFor="let bread of breadcrumbs; index as i">
+      <a href="{{ bread.url }}" 
+         class="breadcrumb-item text-reset px-2"
+         [class.active]="i === breadcrumbs.length - 1">{{ bread.label }}</a>
+      <span *ngIf="i < breadcrumbs.length - 1" class="breadcrumb-separator px-2">
+        <i class="pi pi-chevron-right"></i>
+      </span>
+    </ng-container>
+  </h2>
+</nav>

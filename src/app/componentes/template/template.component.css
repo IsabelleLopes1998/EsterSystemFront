@@ -1,0 +1,123 @@
+@import url('../../../assets/css/componentes/paleta.css');
+
+.toolbar-spacer {
+  flex: 1 1 auto;
+}
+
+mat-sidenav {
+  min-width: 56px;
+}
+
+.sidenav {
+  width: 250px;
+  display: flex;
+  align-items: left;
+  justify-content: center;
+  background-color: #4d0b63;
+}
+
+mat-sidenav-container {
+  position: absolute;
+  top: 60px;
+  bottom: 0px;
+  left: 0;
+  right: 0;
+}
+
+.title {
+  margin-bottom: 500px;
+}
+
+.sitram-toolbar-logo {
+  max-width: 100px;
+}
+
+.someli-toolbar-logo {
+  max-width: 120px; /* Aumenta o tamanho máximo da logo */
+  height: auto; /* Mantém a proporção da imagem */
+}
+
+
+.content {
+  padding: 10px;
+}
+
+.toolbar-st {
+  background-color: var(--cor-verde-toobar);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+.menu-icon {
+  color: #fff;
+}
+
+/*--- MENU ---*/
+
+mat-nav-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 56px; /* Largura mínima quando fechada */
+}
+
+mat-icon {
+  font-size: 24px;
+}
+
+/*Bread Crumb*/
+
+.breadcrumb-item {
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 24px;
+  letter-spacing: 0em;
+  text-align: left;
+
+  color: #4d0b63 !important;
+}
+
+.breadcrumb-item.active {
+  color: #374151 !important;
+}
+
+.logout { 
+  color: white;
+}
+
+.toolbar-title {
+  color: white;
+  font-size: 22px; 
+  margin-left: 555px;
+  display: flex;
+}
+
+.ui-panelmenu .no-arrow .pi-chevron-right {
+  display: none;
+}
+
+/* Sobrescreve a posição do ícone para o item "Consultas" */
+.p-panelmenu .ui-menuitem .pi-share-alt {
+  margin-left: auto !important;  /* Move o ícone para o lado direito */
+  margin-right: 0 !important;    /* Remove margem à direita */
+  display: inline-block;         /* Assegura que o ícone se comporta como bloco inline */
+}
+
+/* Opcional: Garante que o texto do item ocupe o restante do espaço */
+.p-panelmenu .ui-menuitem-text {
+  margin-right: auto;
+}
+
+.p-panelmenu {
+  margin-left: 100px  !important;
+}
+
+:host ::ng-deep .p-panelmenu .p-panelmenu-header .p-panelmenu-header-content a .p-icon-wrapper {
+  position: absolute;
+  right: 10px
+}
+
+
+

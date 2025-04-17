@@ -1,0 +1,25 @@
+@import url("./paleta.css");
+
+fieldset {
+    border-top: 1px dashed rgba(0,0,0, 0.2);
+}
+
+legend {
+    width: auto;
+    float: none;
+    text-align: left;
+    background-color: white;
+    border: none;
+}
+
+fieldset .p-fieldset-legend a,
+fieldset .p-fieldset-legend a .pi-user,
+fieldset .p-fieldset-legend a .text-lg {
+    color: var(--cor-titulo);
+}
+
+fieldset .p-fieldset-legend span {
+    color: var(--cor-titulo);
+    padding-left: 15px;
+    padding-right: 15px;
+}

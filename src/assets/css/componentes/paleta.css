@@ -1,0 +1,27 @@
+:root {
+  --cor-primaria: #ffab00;
+  --cor-primaria-hover: #eda30b;
+
+  --cor-secundaria: #e8e8e8;
+  --cor-secundaria-hover: #d3d3d3;
+
+  --cor-btn-export-csv: #3fab35;
+  --cor-btn-export-csv-hover: #1c5638;
+
+  --cor-btn-pdf: #b21b1b;
+  --cor-btn-pdf-hover: #860a0a;
+
+  --cor-terciaria: #b21b1b;
+  --cor-terciaria-hover: #860a0a;
+
+  --cor-titulo: #1c5638;
+
+  --cor-preto: #000;
+  --cor-cinza: #8c8c8c;
+  --cor-branco: #fff;
+
+  --cor-error: #e24c4c;
+
+  --cor-verde-toobar: #1c5638;
+  --background-sidbar: #f6f9ed;
+}

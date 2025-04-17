@@ -1,0 +1,18 @@
+p-dynamicdialog .p-dialog .p-dialog-header-icons {
+  display: none !important;
+}
+
+.st-usuario-logado.p-dialog {
+  display: block;
+  position: inherit;
+  top: 66px;
+  right: 6%;
+}
+
+.st-usuario-logado.p-dialog .p-dialog-header-icons {
+  display: block !important;
+}
+
+.st-usuario-logado.p-dialog .p-dialog-header {
+  padding: 0px;
+}

@@ -1,0 +1,29 @@
+<p-toolbar *ngIf="mostrarToolbar()">
+  <div class="p-toolbar-group-start">
+    <p-button [rounded]="true" [text]="true" icon="pi pi-bars" class="cor-branca" (click)="toggleMenu()"></p-button>
+    <img class="someli-toolbar-logo" src="./assets/images/someli-sem-s.png" alt="logo someli" [routerLink]="['/index']"
+      style="cursor: pointer;" />
+  </div>
+  <div class="p-toolbar-group-end">
+    <div class="linha-vertical">
+      <p-avatar label=" S " styleClass="mr-5" size="normal" [style]="{
+          'background-color': '#c163ba',
+          color: '#ffffff',
+          cursor: 'pointer'
+        }" shape="circle"></p-avatar>
+
+    </div>
+    <button *ngIf="estaLogado()" class="p-link logout" (click)="logout()">
+      <i class="pi pi-sign-out"></i>
+    </button>
+  </div>
+</p-toolbar>
+
+<p-sidebar [(visible)]="menuAberto" [position]="'left'" [modal]="true">
+  <div style="height: 100%; overflow: auto">
+    <p-panelMenu [model]="menus" [style]="{ width: '100%' }" [multiple]="true"></p-panelMenu>
+  </div>
+</p-sidebar>
+
+<!-- Aqui é onde o conteúdo do componente index será renderizado -->
+<router-outlet></router-outlet>

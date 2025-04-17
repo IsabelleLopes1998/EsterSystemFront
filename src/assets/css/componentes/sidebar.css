@@ -1,0 +1,19 @@
+@import url('./paleta.css');
+
+.p-sidebar {
+  background: #4d0b63;
+}
+
+.p-sidebar .p-sidebar-header {
+  display: none;
+}
+
+.p-sidebar-left {
+  top: 66px;
+  width: 15rem;
+
+}
+
+.p-sidebar .p-sidebar-content {
+  padding: 0px;
+}

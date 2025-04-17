@@ -1,0 +1,21 @@
+@import url('./paleta.css');
+
+.p-toolbar {
+  background: #4d0b63; /* Cinza claro */
+  color: #333; /* Texto escuro */
+  border: none;
+  padding: 0.50rem;
+  border-radius: 0;
+  gap: 0.5rem;
+}
+
+.p-toolbar .p-button {
+  background-color: #4d0b63; /* Verde sutil para botões */
+  color: white;
+  border: none;
+}
+
+.linha-vertical {
+  border-right: 1px solid #ddd; /* Cinza suave */
+  margin-right: 2rem;
+}

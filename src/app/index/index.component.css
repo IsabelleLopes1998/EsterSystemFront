@@ -1,0 +1,100 @@
+.card-custom {
+  width: 300px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Sombra para o card */
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center; /* Centraliza o conteúdo */
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  cursor: pointer;
+  margin-bottom: 20px; /* Espaçamento entre os cards */
+  background-color: #ffffff;
+  border: 1px solid #4d0b63; /* Borda verde fina */
+}
+
+
+.card-custom:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5); /* Sombra ao passar o mouse */
+}
+
+.card-icon {
+  font-size: 2.5rem;
+  color: #4d0b63; /* Ícones verdes */
+  margin-bottom: 10px;
+}
+
+.p-button, .p-button-outline {
+  text-transform: none; /* Remove qualquer transformação do texto */
+  font-weight: bold; /* Deixa o texto em negrito */
+}
+
+
+.card-title {
+  font-size: 1.2rem;
+  color: #333;
+  margin-top: -8px;
+  margin-bottom: 20px;
+  font-weight: bold; /* Negrito */
+
+}
+
+.card-container {
+  display: flex;
+  gap: 45px; /* Espaçamento entre os cards */
+  justify-content: center;
+  flex-wrap: wrap; /* Permite que os cards quebrem em linha quando necessário */
+  margin-top: 30px;
+}
+
+.p-button {
+  margin: 10px 0;
+  width: 100%;
+  background-color: #4d0b63;
+  color: white;
+  border: none;
+  padding: 10px 0; /* Botão mais slim */
+  border-radius: 4px;
+  font-size: 1rem;
+  
+  /* Ajustes de centralização */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.p-button-outline {
+  margin: 10px 0;
+  width: 100%;
+  background-color: white;
+  color: #4d0b63;
+  border: 2px solid #4d0b63;
+  padding: 10px 0;
+  border-radius: 4px;
+  font-size: 1rem;
+  
+  /* Ajustes de centralização */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.p-button:hover, .p-button-outline:hover {
+  background-color: #5b0577; /* Leve alteração ao passar o mouse */
+  color: white;
+}
+
+@media (max-width: 768px) {
+  .card-container {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+.welcome-message {
+  text-align: center;
+  margin-bottom: 20px; /* Espaçamento entre a mensagem e os cards */
+  font-size: 1.5em;
+  color: #333;
+  margin-top: 20px;
+}

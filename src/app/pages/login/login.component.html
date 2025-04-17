@@ -1,0 +1,23 @@
+<div class="login-wrapper">
+    <div class="login-card">
+        <img src="../../assets/images/someli-sem-s.png" alt="Logo Someli" class="logo" />
+
+        <h2 class="title">Acesso ao sistema</h2>
+
+        <form [formGroup]="loginForm" (ngSubmit)="fazerLogin()">
+            <div class="form-group">
+                <label for="cpf">CPF</label>
+                <input id="cpf" pInputText formControlName="cpf" placeholder="Digite seu CPF" />
+            </div>
+
+            <div class="form-group">
+                <label for="senha">Senha</label>
+                <input id="senha" pInputText type="password" formControlName="senha" placeholder="Digite sua senha" />
+            </div>
+
+            <button type="submit" pButton label="Entrar" class="login-button w-full p-button-success mt-3"></button>
+        </form>
+    </div>
+</div>
+
+<p-toast></p-toast>

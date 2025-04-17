@@ -1,0 +1,102 @@
+<div class="custom-margin">
+    <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+</div>
+
+<p-card class="custom-card-margin">
+    <p-dialog [(visible)]="isLoading" [modal]="true" [closable]="false" showHeader="false"
+        styleClass="custom-loading-dialog">
+        <div class="loading-content">
+            <p-progressSpinner></p-progressSpinner>
+            <p class="loading-text">Processando...</p>
+        </div>
+    </p-dialog>
+
+    <form [formGroup]="clienteForm" (ngSubmit)="salvarCliente()">
+        <div class="d-flex align-items-center mt-0">
+            <h1 style="color: #5e2974; font-size: 18px; margin-top: -50px; margin-left: -5px; text-wrap: nowrap;">
+                <strong>Cadastrar Cliente</strong>
+            </h1>
+            <div class="flex-grow-1 mx-5" style="position: relative; top: -30px; margin-left: 60px;width: 100%;">
+                <hr class="divider container-fluid" style="width: 100%; margin-left: 2px; margin-right: 40px;">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3">
+                <label class="form-label" for="cnpj">CNPJ da empresa</label>
+                <input type="text" class="form-control input-pequeno" pInputText formControlName="cnpj"
+                    placeholder="Digite o CNPJ" maxlength="18" (input)="applyCnpjMask($event.target.value)"
+                    [disabled]="veioDaConsulta" />
+            </div>
+            <div class="col-md-3">
+                <label for="razaoSocial" class="form-label">Razão Social</label>
+                <input id="razaoSocial" pInputText type="text" class="form-control input-pequeno" formControlName="nome"
+                    placeholder="Digite a razão social" [disabled]="veioDaConsulta" />
+            </div>
+            <div class="col-md-3">
+                <label for="nomeProprietario" class="form-label">Nome do proprietário</label>
+                <input id="nomeProprietario" pInputText type="text" class="form-control input-pequeno"
+                    formControlName="nomeProprietario" placeholder="Digite o nome do proprietário" />
+            </div>
+            <div class="col-md-3">
+                <label for="telefone" class="form-label">Telefone</label>
+                <input type="text" class="form-control input-pequeno" pInputText formControlName="telefone"
+                    placeholder="Digite o telefone" maxlength="15" (input)="applyPhoneMask($event.target.value)" />
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-3">
+                <label for="email" class="form-label">E-mail</label>
+                <input id="email" pInputText type="email" class="form-control input-pequeno" formControlName="email"
+                    placeholder="Digite o e-mail" />
+                <small
+                    *ngIf="clienteForm.get('email')?.invalid && (clienteForm.get('email')?.touched || clienteForm.get('email')?.dirty)"
+                    class="text-danger">
+                    <i class="pi pi-exclamation-circle"></i> E-mail inválido
+                </small>
+            </div>
+
+            <div class="col-md-3">
+                <label for="honorario" class="form-label">Valor do Honorário</label>
+                <input type="text" class="form-control input-pequeno" pInputText formControlName="honorario"
+                    placeholder="Digite o valor do honorário" maxlength="11"
+                    (input)="applyCurrencyMask($event.target.value)" />
+            </div>
+            <div class="col-md-3">
+                <label for="vencimento" class="form-label">Dia de Vencimento</label>
+                <p-treeSelect id="vencimento" class="md:w-100rem w-full" containerStyleClass="w-full"
+                    [options]="diasVencimento" [(ngModel)]="diaSelecionado" optionLabel="label" optionValue="key"
+                    formControlName="vencimento" placeholder="Selecione um dia de vencimento">
+                </p-treeSelect>
+            </div>
+            <div class="col-md-3">
+                <label for="pagamento" class="form-label">Ordem de Pagamento</label>
+                <p-treeSelect id="pagamento" class="md:w-100rem w-full input-pequeno" containerStyleClass="w-full"
+                    [options]="tiposPagamento" [(ngModel)]="pagamentoSelecionado" optionLabel="label" optionValue="key"
+                    formControlName="pagamento" placeholder="Selecione">
+                </p-treeSelect>
+            </div>
+        </div>
+
+
+        <!-- Botões -->
+        <div class="d-flex justify-content-left mt-4">
+            <button type="button" class="btn-limpar mx-2" (click)="limparFormulario()">Limpar</button>
+
+            <!-- Botão para cadastrar novo cliente -->
+            <button *ngIf="!isEditing" type="submit" [disabled]="!formAlterado" class="btn-salvar mx-2">
+                Cadastrar Cliente
+            </button>
+
+            <!-- Botão para atualizar cliente existente -->
+            <button *ngIf="isEditing" type="submit" [disabled]="!formAlterado" class="btn-atualizar mx-2">
+                Atualizar Cliente
+            </button>
+        </div>
+
+
+
+    </form>
+</p-card>
+
+<p-toast></p-toast>

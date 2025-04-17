@@ -1,0 +1,30 @@
+@import url("./paleta.css");
+
+.p-breadcrumb {
+    background: none;
+    border: none;
+    border-radius: 0;
+}
+
+.p-breadcrumb .p-breadcrumb-list {
+    padding-left: 0;
+}
+
+.p-breadcrumb .p-breadcrumb-list li .p-menuitem-link .p-menuitem-text, 
+.p-breadcrumb .p-breadcrumb-list li .p-menuitem-link .p-menuitem-icon {
+    color: var(--cor-titulo);
+    font-size: 20px;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-left: 5px;
+    line-height: 24px;
+}
+
+
+/* Estilos para dispositivos móveis com largura de tela de até 767 pixels */
+@media only screen and (max-width: 767px) {
+    .p-breadcrumb .p-breadcrumb-list li .p-menuitem-link .p-menuitem-text, 
+    .p-breadcrumb .p-breadcrumb-list li .p-menuitem-link .p-menuitem-icon {
+        font-size: 12px;
+    }
+}

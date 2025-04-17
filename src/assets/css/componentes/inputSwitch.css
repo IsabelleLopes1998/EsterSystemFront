@@ -1,0 +1,5 @@
+@import url("./paleta.css");
+
+.p-inputswitch.p-inputswitch-checked .p-inputswitch-slider {
+    background: var(--cor-primaria);
+}

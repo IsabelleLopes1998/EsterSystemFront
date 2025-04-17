@@ -1,0 +1,13 @@
+@import url("./paleta.css");
+
+.p-element .p-progressbar {
+  margin-top: 10%;
+}
+
+.p-progressbar .p-progressbar-value {
+  background: var(--cor-primaria);
+}
+
+.p-progressbar .p-progressbar-label {
+  padding: 5px;
+}

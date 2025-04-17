@@ -1,0 +1,128 @@
+<div class="custom-margin">
+    <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+</div>
+
+<p-card class="custom-card-margin">
+    <p-dialog [(visible)]="isLoading" [modal]="true" [closable]="false" showHeader="false"
+        styleClass="custom-loading-dialog">
+        <div class="loading-content">
+            <p-progressSpinner></p-progressSpinner>
+            <p class="loading-text">Processando...</p>
+        </div>
+    </p-dialog>
+
+    <form [formGroup]="usuarioForm" (ngSubmit)="salvarUsuario()">
+        <div class="d-flex align-items-center mt-0">
+            <h1 style="color: #5e2974; font-size: 18px; margin-top: -50px; margin-left: -5px; text-wrap: nowrap;">
+                <strong>Cadastro de Usuário</strong>
+            </h1>
+            <div class="flex-grow-1 mx-5" style="position: relative; top: -30px; margin-left: 60px;width: 100%;">
+                <hr class="divider container-fluid" style="width: 100%; margin-left: 2px; margin-right: 40px;">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3">
+                <label class="form-label" for="nome">Nome</label>
+                <input type="text" pInputText id="nome" class="form-control input-pequeno" formControlName="nome"
+                    placeholder="Digite o nome completo" />
+            </div>
+
+            <div class="col-md-3">
+                <label class="form-label" for="cpf">CPF</label>
+                <input type="text" class="form-control input-pequeno" pInputText formControlName="cpf"
+                    placeholder="Digite o CPF" maxlength="14" (input)="applyCpfMask($event.target.value)" />
+            </div>
+
+
+            <div class="col-md-3">
+                <label class="form-label" for="email">Email</label>
+                <input type="email" pInputText id="email" class="form-control input-pequeno" formControlName="email"
+                    placeholder="Digite o e-mail" />
+                <small
+                    *ngIf="usuarioForm.get('email')?.invalid && (usuarioForm.get('email')?.touched || usuarioForm.get('email')?.dirty)"
+                    class="text-danger">
+                    <i class="pi pi-exclamation-circle"></i> E-mail inválido
+                </small>
+            </div>
+
+            <div class="col-md-3">
+                <label class="form-label" for="perfil">Perfil</label>
+                <p-treeSelect id="perfil" class="w-full input-pequeno" containerStyleClass="w-full" [options]="perfis"
+                    [(ngModel)]="perfilSelecionado" formControlName="perfil" optionLabel="label" optionValue="key"
+                    placeholder="Selecione o perfil">
+                </p-treeSelect>
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <!-- Campo Senha -->
+            <div class="col-md-6">
+                <label for="senha" class="form-label">Senha</label>
+                <div class="input-group">
+                    <input [type]="mostrarSenha ? 'text' : 'password'" class="form-control input-pequeno" id="senha"
+                        formControlName="senha" (input)="validarSenha($event)" placeholder="Digite sua senha" />
+                    <span class="input-group-text" style="cursor: pointer;">
+                        <i class="pi" [ngClass]="mostrarSenha ? 'pi-eye-slash' : 'pi-eye'"
+                            (mousedown)="mostrarSenha = true" (mouseup)="mostrarSenha = false"
+                            (mouseleave)="mostrarSenha = false">
+                        </i>
+                    </span>
+                </div>
+
+                <!-- Regras -->
+                <div class="mt-2" style="line-height: 1.5;">
+                    <div [ngClass]="{'text-success': temMinCaracteres}" style="font-weight: bold;">
+                        ✓ Mínimo 8 caracteres
+                    </div>
+                    <div [ngClass]="{'text-success': temNumero}" style="font-weight: bold;">
+                        ✓ Pelo menos 1 número
+                    </div>
+                    <div [ngClass]="{'text-success': temMaiuscula}" style="font-weight: bold;">
+                        ✓ Pelo menos 1 letra maiúscula
+                    </div>
+                    <div [ngClass]="{'text-success': temMinuscula}" style="font-weight: bold;">
+                        ✓ Pelo menos 1 letra minúscula
+                    </div>
+                    <div [ngClass]="{'text-success': temEspecial}" style="font-weight: bold;">
+                        ✓ Pelo menos 1 caractere especial
+                    </div>
+                </div>
+            </div>
+
+            <!-- Campo Confirmar Senha -->
+            <div class="col-md-6">
+                <label for="confirmarSenha" class="form-label">Confirmar Senha</label>
+                <div class="input-group">
+                    <input [type]="mostrarConfirmacao ? 'text' : 'password'" class="form-control input-pequeno"
+                        id="confirmarSenha" formControlName="confirmarSenha" (input)="verificarConfirmacao()"
+                        placeholder="Digite novamente" />
+                    <span class="input-group-text" style="cursor: pointer;">
+                        <i class="pi" [ngClass]="mostrarConfirmacao ? 'pi-eye-slash' : 'pi-eye'"
+                            (mousedown)="mostrarConfirmacao = true" (mouseup)="mostrarConfirmacao = false"
+                            (mouseleave)="mostrarConfirmacao = false">
+                        </i>
+                    </span>
+                </div>
+
+                <small *ngIf="senhasIguais" class="text-success fw-bold">✅ As senhas coincidem</small>
+                <small *ngIf="senhasIguais === false" class="text-danger fw-bold">✗ As senhas não coincidem</small>
+            </div>
+        </div>
+
+        <!-- Botões -->
+        <div class="d-flex justify-content-left mt-4">
+            <button type="button" class="btn-limpar mx-2" (click)="limparFormulario()">Limpar</button>
+
+            <button *ngIf="!isEditing" type="submit" class="btn-salvar mx-2">
+                Cadastrar Usuário
+            </button>
+
+            <button *ngIf="isEditing" type="submit" class="btn-atualizar mx-2">
+                Atualizar Usuário
+            </button>
+        </div>
+    </form>
+</p-card>
+
+<p-toast></p-toast>

@@ -1,0 +1,131 @@
+@import '~bootstrap/dist/css/bootstrap.css';
+
+@import 'primeng/resources/themes/lara-light-blue/theme.css';
+@import 'primeng/resources/primeng.css';
+
+@import 'primeicons/primeicons.css';
+@import '/node_modules/primeflex/primeflex.css';
+
+@import './assets/css/componentes/toobar.css';
+@import './assets/css/componentes/sidebar.css';
+@import './assets/css/componentes/menu.css';
+@import './assets/css/componentes/dynamic-dialog.css';
+@import './assets/css/componentes/input-text.css';
+@import './assets/css/componentes/button.css';
+@import './assets/css/componentes/breadcrumb.css';
+@import './assets/css/componentes/radiobutton.css';
+@import './assets/css/componentes/titulo-pagina.css';
+@import './assets/css/componentes/card.css';
+@import './assets/css/componentes/fieldset.css';
+@import './assets/css/componentes/dropdown.css';
+@import './assets/css/componentes/table.css';
+@import './assets/css/componentes/tabview.css';
+@import './assets/css/componentes/confirm-dialog.css';
+@import './assets/css/componentes/inputSwitch.css';
+@import './assets/css/componentes/error-fields.css';
+
+@font-face {
+  font-family: 'Inter';
+  src: url('./assets/fonts/Inter/static/Inter-Regular.ttf');
+}
+
+body {
+  background-color: #fafafa;
+  margin: 0;
+  padding: 0;
+}
+
+table {
+  width: 100%;
+  background: #f8f9fa;
+}
+
+a {
+  text-decoration: none !important;
+  color: white;
+}
+
+.mat-drawer.mat-drawer-side {
+  z-index: 1 !important;
+}
+
+.tituloNotaDetalhes {
+  font-size: 14px;
+}
+
+.textoNotaDetalhes {
+  font-size: 12px;
+  text-transform: uppercase;
+}
+
+.p-component-overlay {
+  top: 66px;
+}
+
+ol,
+ul,
+dl {
+  padding-left: 0px;
+}
+
+.p-dropdown-items-wrapper {
+  max-height: none !important;
+}
+
+.p-datatable.p-datatable-striped .p-datatable-tbody>tr:nth-child(even) {
+  background: #ffffff !important
+}
+
+tfoot,
+tr {
+  border-color: none !important;
+  /* Remove bordas ao redor */
+  border-style: none !important;
+  /* Remove bordas ao redor */
+  border-color: #e3dede !important;
+}
+
+tr {
+  border-bottom: double !important;
+  /* Linha horizontal na parte inferior de cada linha */
+  border-width: 1px !important;
+  border-color: #e3dede !important;
+}
+
+td,
+th {
+  border: none !important;
+  /* Remove as bordas verticais entre as células */
+  border-color: #e3dede !important;
+}
+
+thead tr {
+  border-bottom: none !important;
+  /* Remove a linha horizontal no final do cabeçalho */
+}
+
+thead th {
+  border: none !important;
+  /* Remove todas as bordas das células do cabeçalho */
+}
+
+.p-toast .p-toast-message.p-toast-message-warn {
+  background: #fff !important;
+}
+
+.p-toast .p-toast-message.p-toast-message-success {
+  background: #fff !important;
+}
+
+.p-toast .p-toast-message.p-toast-message-error {
+  background: #fff !important;
+
+  /* border: solid #cc8925;
+  border-width: 0 0 0 6px;
+  color: #cc8925; */
+
+}
+
+.p-toast .p-toast-message.p-toast-message-info {
+  background: #fff;
+}

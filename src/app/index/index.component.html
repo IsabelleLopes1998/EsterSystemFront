@@ -1,0 +1,40 @@
+<!-- Container dos Cards Internos -->
+<link rel="manifest" href="assets/manifest.webmanifest">
+
+<div class="welcome-message">
+  <h5>{{ saudacao }}, {{ nomeUsuario }}! O que deseja fazer?</h5>
+</div>
+
+<!-- Container dos Cards Internos -->
+<div class="card-container">
+
+  <!-- Usuarios -->
+  <div class="card-custom">
+    <i class="fa-solid fa-user-shield card-icon"></i>
+    <div class="card-title">Usuário</div>
+    <button class="p-button-outline" (click)="navigateTo('/usuario-listar')">Lista de usuários</button>
+    <button class="p-button" (click)="navigateTo('/usuario-criar-novo')">Adicionar usuário</button>
+
+  </div>
+  <!-- Consultas -->
+  <div class="card-custom">
+    <i class="fa-solid fa-search card-icon"></i>
+    <div class="card-title">Consulta</div>
+    <button class="p-button-outline" (click)="navigateTo('/cliente-consultar-novo')">Consultar cliente</button>
+  </div>
+
+  <!-- Clientes -->
+  <div class="card-custom">
+    <i class="fa-solid fa-user card-icon"></i>
+    <div class="card-title">Cliente</div>
+    <button class="p-button-outline" (click)="navigateTo('/cliente-listar')">Lista de clientes</button>
+    <button class="p-button" (click)="navigateTo('/cliente-criar-novo')">Adicionar cliente</button>
+  </div>
+  <!-- Financeiro -->
+  <div class="card-custom">
+    <i class="fa-solid fa-chart-line card-icon"></i>
+    <div class="card-title">Financeiro</div>
+    <button class="p-button-outline" (click)="navigateTo('/financeiro')">Dashboard</button>
+  </div>
+
+</div>

@@ -1,0 +1,66 @@
+@import url('./paleta.css');
+
+.p-datatable .p-datatable-header {
+  background: none;
+  border: none;
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+.p-datatable .tabela-vazia {
+  text-align: center;
+  font-weight: bold;
+}
+
+.btn-st-table-padrao {
+  background: none;
+  border: none;
+  color: var(--cor-preto);
+}
+
+.p-datatable.p-datatable-hoverable-rows
+  .p-datatable-tbody
+  > tr:not(.p-highlight):hover {
+  background: rgba(233, 236, 239, 0.2);
+}
+
+.p-datatable .p-datatable-thead > tr > th {
+  line-height: 15px;
+  padding: 1rem 0.5rem;
+  font-size: 14px;
+}
+
+.p-datatable .p-datatable-tbody > tr > td {
+  font-size: 11px;
+  line-height: 15px;
+  padding: 0.3rem 0.5rem;
+  /* text-transform: uppercase; */
+}
+
+.tableCaption {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--cor-titulo);
+}
+
+.p-paginator,
+.p-dropdown-label,
+.p-paginator .p-paginator-current {
+  font-size: 11px;
+  padding-left: 0;
+  padding-right: 0;
+  padding-top: 12px;
+}
+
+.p-dropdown .p-dropdown-trigger {
+  width: 2.5rem;
+}
+
+.footer-custom {
+  font-size: 11px;
+}
+
+.footer-custom td {
+  padding: 8px;
+}

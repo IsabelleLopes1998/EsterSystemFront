@@ -1,0 +1,36 @@
+@import url('./paleta.css');
+
+.p-panelmenu .p-panelmenu-panel {
+  margin-bottom: 0px;
+}
+
+/* .p-panelmenu .p-panelmenu-header .p-panelmenu-header-content {
+    border: 1px solid #dee2e6;
+    color: #6c757d;
+    background: #f8f9fa;
+    border-radius: 6px;
+    transition: box-shadow 0.2s;
+} */
+
+.p-panelmenu .p-panelmenu-header .p-panelmenu-header-content {
+  border: none;
+  background: #4d0b63;
+  border-radius: 0px;
+  transition: box-shadow 0.2s;
+}
+
+.p-panelmenu .p-panelmenu-header .p-panelmenu-header-content a {
+  color: var(--cor-branco);
+}
+
+.p-panelmenu .p-panelmenu-content {
+  padding: 0.25rem 0;
+  border: none;
+  background: var(--background-sidbar);
+  color: var(--cor-verde-toobar);
+  border-top: 0;
+  border-top-right-radius: 0;
+  border-top-left-radius: 0;
+  border-bottom-right-radius: 6px;
+  border-bottom-left-radius: 6px;
+}

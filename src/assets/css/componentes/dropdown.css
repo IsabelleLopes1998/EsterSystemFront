@@ -1,0 +1,22 @@
+@import url("./paleta.css");
+
+.p-dropdown-label {
+    font-size: 14px !important;
+    margin-left: 5px;
+}
+
+
+.p-dropdown-panel .p-dropdown-items .p-dropdown-item:not(.p-highlight):not(.p-disabled).p-focus {
+    color: var(--cor-preto);
+    background: var(--cor-primaria);
+}
+
+.p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight.p-focus {
+    color: var(--cor-preto);
+    background: var(--cor-primaria);
+}
+
+.p-dropdown-panel .p-dropdown-items .p-dropdown-item:not(.p-highlight):not(.p-disabled):hover {
+    color: var(--cor-preto);
+    background: (255, 171, 0, 0.24);
+}

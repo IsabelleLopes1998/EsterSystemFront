@@ -1,0 +1,90 @@
+<p-toast></p-toast>
+
+<p-card>
+  <div style="margin-left: 30px;">
+    <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+  </div>
+
+  <div class="container-fluid mb-7 mr-5">
+    <div class="flex justify-content-end">
+      <button icon="pi pi-plus" pButton pRipple label="Novo usuário" class="p-button-someli"
+        (click)="criarNovoUsuario()">
+      </button>
+    </div>
+  </div>
+
+  <div class="container-fluid">
+    <div class="header-container d-flex align-items-center mb-4">
+      <div class="titulo" style="margin-left: 10px;">
+        <h1 class="titulo-pagina" style="font-size: 1.5rem; color: #5e2974; margin-right: 10px;">
+          <strong>Lista de usuários</strong>
+        </h1>
+      </div>
+
+      <p-divider class="divider" type="solid"></p-divider>
+
+      <div class="search-container p-input-icon-left ml-auto" style="position: relative; margin-right: 15px;">
+        <i class="pi pi-search" style="position: absolute; left: 10px; top: 65%; transform: translateY(-50%);"></i>
+        <input class="input-pesquisar" pInputText type="text" placeholder="Pesquisar" style="padding-left: 30px;">
+        <!-- [(ngModel)]="pesquisarUsuario"> -->
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="isLoading" class="spinner-container">
+    <p-progressSpinner ariaLabel="loading" [style]="{ width: '50px', height: '50px' }" strokeWidth="4"
+      class="green-spinner">
+    </p-progressSpinner>
+  </div>
+
+  <p-table *ngIf="!isLoading" dataKey="id" [value]="usuariosFiltrados" styleClass="p-datatable-striped custom-table"
+  [tableStyle]="{ 'min-width': '20rem', 'width': '100%' }" [paginator]="true" [rows]="10"
+  [rowsPerPageOptions]="[10, 20, 30]">
+
+  <ng-template pTemplate="header">
+    <tr>
+      <th pSortableColumn="nome" style="min-width: 200px; font-size: 13px;">Nome <p-sortIcon field="nome"></p-sortIcon></th>
+      <th pSortableColumn="cpf" style="min-width: 160px; font-size: 13px;">CPF <p-sortIcon field="cpf"></p-sortIcon></th>
+      <th pSortableColumn="email" style="min-width: 220px; font-size: 13px;">Email <p-sortIcon field="email"></p-sortIcon></th>
+      <th pSortableColumn="perfil" style="min-width: 160px; font-size: 13px;">Perfil <p-sortIcon field="perfil"></p-sortIcon></th>
+      <th style="min-width: 120px;">Ações</th>
+    </tr>
+  </ng-template>
+
+  <ng-template pTemplate="body" let-usuario>
+    <tr>
+      <td class="table-cell" style="font-size: 12px;">{{ usuario.nome }}</td>
+      <td class="table-cell" style="font-size: 12px;">{{ formatarCpf(usuario.cpf) }}</td>
+      <td class="table-cell" style="font-size: 12px;">{{ usuario.email }}</td>
+      <td class="table-cell" style="font-size: 12px;">{{ getLabelPerfil(usuario.perfil) }}</td>
+      <td class="table-cell" style="font-size: 20px;">
+        <p-button class="custom-button-edit" (click)="editarUsuario(usuario.id)">
+          <i class="fa-solid fa-pen-to-square"></i>
+        </p-button>
+
+        <p-button class="custom-button-excluir" (click)="confirmarExclusao(usuario)">
+          <i class="fa-solid fa-trash"></i>
+        </p-button>
+      </td>
+    </tr>
+  </ng-template>
+
+</p-table>
+
+
+</p-card>
+
+<p-dialog [(visible)]="modalExclusaoVisivel" [modal]="true" [closable]="false" header="Confirmar Exclusão">
+  <div class="p-d-flex p-ai-center p-jc-center">
+    <p>Tem certeza que deseja excluir este usuário?</p>
+  </div>
+
+  <div class="p-dialog-footer p-d-flex p-jc-center">
+    <button class="btn-nao" (click)="modalExclusaoVisivel = false">
+      <i class="pi pi-times"></i> NÃO
+    </button>
+    <button class="btn-sim">
+      <i class="pi pi-check"></i> SIM
+    </button>
+  </div>
+</p-dialog>

@@ -1,0 +1,139 @@
+@import url("./paleta.css");
+
+.p-button {
+    border-radius: 5px;
+    box-shadow: 0px 1px 8px (0, 0, 0, 0.08),
+        0px 3px 4px (0, 0, 0, 0.1),
+        0px 1px 4px -1px (0, 0, 0, 0.1);
+    text-transform: uppercase;
+}
+
+.primario .p-button {
+    float: inline-start;
+    color: var(--cor-preto);
+    background: var(--cor-primaria);
+    border: 1px solid var(--cor-primaria);
+    width: 100%;
+}
+
+.primario .p-button:enabled:hover {
+    color: var(--cor-preto);
+    background: var(--cor-primaria-hover);
+    border: 1px solid var(--cor-primaria-hover);
+}
+
+.secundario .p-button {
+    float: inline-end;
+    color: var(--cor-cinza);
+    background: var(--cor-secundaria);
+    border: 1px solid var(--cor-secundaria);
+    width: 100%;
+}
+
+.secundario .p-button:enabled:hover {
+    background: var(--cor-secundaria-hover);
+    border: 1px solid var(--cor-secundaria-hover);
+}
+
+.exportCsv .p-button {
+    color: var(--cor-branco);
+    background: var(--cor-btn-export-csv);
+    border: 1px solid var(--cor-btn-export-csv);
+    width: 100%;
+    float: none;
+    display: block;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.exportCsv .p-button:enabled:hover {
+    color: var(--cor-branco);
+    background: var(--cor-btn-export-csv-hover);
+    border: 1px solid var(--cor-btn-export-csv-hover);
+}
+
+.downloadPdf .p-button {
+    color: var(--cor-branco);
+    background: var(--cor-btn-pdf);
+    border: 1px solid var(--cor-btn-pdf);
+    width: 100%;
+    float: none;
+    display: block;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.btnCalculadora .p-button {
+  color: var(--cor-preto);
+  background: transparent !important;
+  border: none !important;
+  width: 100%;
+}
+
+.downloadPdf .p-button:enabled:hover {
+    color: var(--cor-branco);
+    background: var(cor-btn-pdf-hover);
+    border: 1px solid var(cor-btn-pdf-hover);
+}
+
+.btnTable .p-button {
+    color: var(--cor-preto);
+    background: transparent !important;
+    border: none !important;
+    width: 100%;
+}
+
+.btnTable .p-button:enabled:hover {
+    color: var(--cor-preto);
+    background: transparent !important;
+    border: none !important;
+}
+
+.btnBack .p-button {
+    float: inline-end;
+    color: var(--cor-preto);
+    background: var(--cor-secundaria);
+    border: 1px solid var(--cor-secundaria);
+    width: 50%;
+}
+
+.btnBack .p-button:enabled:hover {
+    color: var(--cor-preto);
+    background: var(--cor-secundaria-hover);
+    border: 1px solid var(--cor-secundaria-hover);
+}
+
+.primario .p-button strong,
+.secundario .p-button strong,
+.exportCsv .p-button strong,
+.downloadPdf .p-button strong {
+    float: none;
+    display: block;
+    margin: 0 auto;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+hr.hr-button {
+    border-top: 2px solid var(--cor-preto);
+    margin-right: 1%;
+    margin-top: 25px;
+}
+
+/* Estilos para dispositivos móveis com largura de tela de até 767 pixels */
+@media only screen and (max-width: 767px) {
+    .exportCsv .p-button,
+    .downloadPdf .p-button {
+        font-size: 10px;
+    }
+
+    .primario .p-button strong,
+    .secundario .p-button strong,
+    .downloadPdf .p-button strong {
+        font-size: 10px;
+    }
+
+    hr.hr-button {
+        display: none;
+    }
+}

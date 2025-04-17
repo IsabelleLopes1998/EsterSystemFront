@@ -1,0 +1,8 @@
+@import url("./paleta.css");
+
+/* Estilos para dispositivos móveis com largura de tela de até 767 pixels */
+@media only screen and (max-width: 767px) {
+    .p-message.p-message-info {
+        font-size: 12px;
+    }
+}
