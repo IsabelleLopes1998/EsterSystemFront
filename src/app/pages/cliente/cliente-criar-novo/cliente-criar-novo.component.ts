@@ -13,7 +13,8 @@ import { ToastModule } from 'primeng/toast';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { DialogModule } from 'primeng/dialog';
-import { Cliente } from '../cliente-listar/cliente.model';
+import { ClienteResponse } from '../cliente-listar/cliente.model';
+import { CalendarModule } from 'primeng/calendar';
 
 
 @Component({
@@ -28,7 +29,7 @@ import { Cliente } from '../cliente-listar/cliente.model';
     TreeSelectModule,
     ToastModule,
     OverlayPanelModule,
-    ProgressSpinnerModule, DialogModule],
+    ProgressSpinnerModule, DialogModule, CalendarModule ],
   templateUrl: './cliente-criar-novo.component.html',
   styleUrl: './cliente-criar-novo.component.css',
   providers: [MessageService]
@@ -37,34 +38,12 @@ import { Cliente } from '../cliente-listar/cliente.model';
 export class ClienteCriarNovoComponent {
   breadcrumbs: any = [{ "label": "Início", "url": "#" }, { "label": "Nova consulta", "url": "javascript:void(0)" }];
 
-  tiposPagamento = [
-    { key: 1, label: 'Física' },
-    { key: 2, label: 'Jurídica' },
-    { key: 3, label: 'Terceiros' }
-  ];
-
-  pagamentoSelecionado: string | null = null;
-
-  diasVencimento = [
-    { key: 1, label: '1' },
-    { key: 5, label: '5' },
-    { key: 10, label: '10' },
-    { key: 15, label: '15' },
-    { key: 20, label: '20' },
-    { key: 25, label: '25' },
-    { key: 30, label: '30' }
-  ];
-  diaSelecionado: number | null = null;
-  
-  veioDaConsulta: boolean = false;
-  
   clienteForm: FormGroup;
   isFormValid: boolean = false;
   isLoading = false;
   isEditing = false;
-  idCliente: number | null = null;
+  id: string | null = null;
   formAlterado: boolean = false;
-  dadosOriginais: any = {};
 
   constructor(
     private fb: FormBuilder,
@@ -75,151 +54,52 @@ export class ClienteCriarNovoComponent {
 
   ) {
     this.clienteForm = this.fb.group({
-      cnpj: ['', Validators.required],
       nome: ['', Validators.required],
-      nomeProprietario: ['', Validators.required],
-      telefone: ['', Validators.required],
+      cpf: ['', Validators.required],
+      dateBirth: ['', Validators.required],
+      //telefone: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      honorario: ['', Validators.required],
-      vencimento: [null, Validators.required],
-      pagamento: [null, Validators.required]
+      rua: ['', Validators.required],
+      numero: ['', Validators.required],
+      complemento: ['', Validators.required],
+      cep: ['', Validators.required]
     });
   }
   ngOnInit() {
     this.isFormValid = this.clienteForm.valid;
     this.formAlterado = false; // Garante que inicia desabilitado
 
-    const state = history.state;
-    if (state.cliente) {
-      this.veioDaConsulta = true;
+   const id = this.route.snapshot.paramMap.get('id');
+   if (id) {
+     this.isEditing = true;
+     this.id = id; // ✅ agora será uma string UUID
+     this.carregarCliente();
+   }
 
-      this.clienteForm.patchValue({
-        cnpj: state.cliente.cnpj,
-        nome: state.cliente.nome,
-        telefone: state.cliente.telefone,
-        email: state.cliente.email
-      });
 
-      this.clienteForm.controls['cnpj'].disable();
-      this.clienteForm.controls['nome'].disable();
-    }
-
-    const id = this.route.snapshot.paramMap.get('id');
-    if (id) {
-      this.isEditing = true;
-      this.idCliente = Number(id);
-      this.carregarCliente();
-    }
 
     // Monitora mudanças nos campos do formulário
     this.clienteForm.valueChanges.subscribe(() => {
       this.isFormValid = this.clienteForm.valid;
-      this.verificarAlteracoes(); // Verifica se houve alguma modificação
     });
   }
-
-
-
-  limparFormulario(): void {
-    this.clienteForm.reset();
-
-    this.clienteForm.patchValue({
-      cnpj: '',
-      nome: '',
-      telefone: '',
-      email: '',
-      honorario: '',
-      vencimento: null,
-      pagamento: null
-    });
-  }
-
-
-  applyCnpjMask(value: string): string {
-    let cnpj = value.replace(/\D/g, '');
-    if (cnpj.length > 14) {
-      cnpj = cnpj.slice(0, 14);
-    }
-    cnpj = cnpj.replace(/^(\d{2})(\d)/, '$1.$2');
-    cnpj = cnpj.replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3');
-    cnpj = cnpj.replace(/\.(\d{3})(\d)/, '.$1/$2');
-    cnpj = cnpj.replace(/(\d{4})(\d)/, '$1-$2');
-    this.clienteForm.get('cnpj')?.setValue(cnpj, { emitEvent: false });
-
-    return cnpj;
-  }
-
-
-
-
-  applyPhoneMask(value: string): string {
-    let phone = value.replace(/\D/g, '');
-    if (phone.length > 11) {
-      phone = phone.slice(0, 11);
-    }
-    if (phone.length <= 10) {
-      phone = phone.replace(/^(\d{2})(\d)/, '($1) $2');
-      phone = phone.replace(/(\d{4})(\d)/, '$1-$2');
-    } else {
-      phone = phone.replace(/^(\d{2})(\d)/, '($1) $2');
-      phone = phone.replace(/(\d{5})(\d)/, '$1-$2');
-    }
-    this.clienteForm.get('telefone')?.setValue(phone, { emitEvent: false });
-
-    return phone;
-  }
-
-  telefoneValidator(control: FormControl) {
-    const value = control.value?.replace(/\D/g, '');
-    if (!value || value.length < 10 || value.length > 11) {
-      return { telefoneInvalido: true };
-    }
-    return null;
-  }
-
-
-  applyCurrencyMask(value: string): string {
-    let numericValue = value.replace(/\D/g, '');
-    if (numericValue.length > 9) {
-      numericValue = numericValue.slice(0, 9);
-    }
-    let formattedValue = (parseFloat(numericValue) / 100).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-    this.clienteForm.get('honorario')?.setValue(formattedValue, { emitEvent: false });
-
-    return formattedValue;
-  }
-
-  applyDateMask(value: string): string {
-    let date = value.replace(/\D/g, '');
-    if (date.length > 8) {
-      date = date.slice(0, 8);
-    }
-    date = date.replace(/^(\d{2})(\d)/, '$1/$2');
-    date = date.replace(/^(\d{2})\/(\d{2})(\d)/, '$1/$2/$3');
-    this.clienteForm.get('vencimento')?.setValue(date, { emitEvent: false });
-
-    return date;
-  }
-
-
   carregarCliente() {
-    if (!this.idCliente) return;
+    if (!this.id) return;
 
     this.isLoading = true;
-    this.clienteService.getClientePorId(this.idCliente).subscribe({
+    this.clienteService.getClientePorId(this.id).subscribe({
       next: (cliente) => {
-        const vencimentoSelecionado = this.diasVencimento.find(d => d.key === cliente.vencimento) || null;
-        const pagamentoSelecionado = this.tiposPagamento.find(p => p.key === cliente.pagamento) || null;
 
         this.clienteForm.patchValue({
           nome: cliente.nome,
-          nomeProprietario: cliente.nomeProprietario,
-          cnpj: this.applyCnpjMask(cliente.cnpj), // Aplica a máscara antes de preencher
-          telefone: this.applyPhoneMask(cliente.telefone), // Aplica a máscara antes de preencher
+          cpf: cliente.cpf,
+          //telefone: this.applyPhoneMask(cliente.telefone), // Aplica a máscara antes de preencher
+          dateBirth: parseDateLocal(cliente.dateBirth),
           email: cliente.email,
-          honorario: this.applyCurrencyMask(cliente.honorario.toString()), // Converte para string antes de preencher
-          vencimento: vencimentoSelecionado,
-          pagamento: pagamentoSelecionado
+          rua: cliente.rua,
+          numero: cliente.numero,
+          complemento: cliente.complemento,
+          cep: cliente.cep
         });
 
         this.isLoading = false;
@@ -231,39 +111,29 @@ export class ClienteCriarNovoComponent {
     });
   }
 
-
-  verificarAlteracoes() {
-    // Converte os objetos para strings JSON para fazer a comparação
-    const valoresAtuais = JSON.stringify(this.clienteForm.getRawValue());
-    const valoresOriginais = JSON.stringify(this.dadosOriginais);
-
-    this.formAlterado = valoresAtuais !== valoresOriginais;
-  }
-
   salvarCliente() {
-    if (this.clienteForm.invalid) {
-      return;
-    }
+   console.log('[DEBUG] salvarCliente foi chamado');
+     if (this.clienteForm.invalid) {
+       console.log('[DEBUG] Formulário inválido');
+       return;
+     }
 
     this.isLoading = true; // Exibe o spinner antes do envio
 
     // Captura TODOS os valores do formulário, incluindo os desabilitados
     const formValues = this.clienteForm.getRawValue();
 
-    const cliente: Cliente = {
-      clienteId: this.idCliente || 0, // Usa clienteId conforme a interface
-      cnpj: this.clienteForm.getRawValue().cnpj || '',
+    const cliente: ClienteResponse = {
+      id: this.id || '',
+      cpf: this.clienteForm.getRawValue().cpf || '',
       nome: this.clienteForm.getRawValue().nome || '',
-      nomeProprietario: this.clienteForm.getRawValue().nomeProprietario || '',
-      telefone: this.clienteForm.getRawValue().telefone || '',
+      dateBirth: this.toISODate(this.clienteForm.value.dateBirth),
+      //telefone: this.clienteForm.getRawValue().telefone || '',
       email: this.clienteForm.getRawValue().email || '',
-      honorario: parseFloat(
-        String(this.clienteForm.getRawValue().honorario || '0')
-          .replace(/[^\d,]/g, '') // Remove tudo que não seja número ou vírgula
-          .replace(',', '.') // Substitui vírgula por ponto para formato decimal
-      ),
-            vencimento: Number(this.clienteForm.getRawValue().vencimento?.key || this.clienteForm.getRawValue().vencimento || 0),
-      pagamento: Number(this.clienteForm.getRawValue().pagamento?.key || this.clienteForm.getRawValue().pagamento || 0)
+      rua: this.clienteForm.getRawValue().rua || '',
+      numero: this.clienteForm.getRawValue().numero || '',
+      complemento: this.clienteForm.getRawValue().complemento || '',
+      cep: this.clienteForm.getRawValue().cep || ''
     };
 
     console.log('Enviando para o backend:', cliente); // Verifica se os valores estão corretos no console
@@ -295,4 +165,110 @@ export class ClienteCriarNovoComponent {
     }
   }
 
-}  
+  limparFormulario(): void {
+      this.clienteForm.reset();
+
+      this.clienteForm.patchValue({
+        nome: '',
+        cpf: '',
+        //telefone: '',
+        email: '',
+        rua: '',
+        numero: '',
+        complemento: '',
+        cep: ''
+      });
+    }
+
+
+    applyCnpjMask(value: string): string {
+      let cnpj = value.replace(/\D/g, '');
+      if (cnpj.length > 14) {
+        cnpj = cnpj.slice(0, 14);
+      }
+      cnpj = cnpj.replace(/^(\d{2})(\d)/, '$1.$2');
+      cnpj = cnpj.replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3');
+      cnpj = cnpj.replace(/\.(\d{3})(\d)/, '.$1/$2');
+      cnpj = cnpj.replace(/(\d{4})(\d)/, '$1-$2');
+      this.clienteForm.get('cnpj')?.setValue(cnpj, { emitEvent: false });
+
+      return cnpj;
+    }
+
+
+
+
+    applyPhoneMask(value: string): string {
+      let phone = value.replace(/\D/g, '');
+      if (phone.length > 11) {
+        phone = phone.slice(0, 11);
+      }
+      if (phone.length <= 10) {
+        phone = phone.replace(/^(\d{2})(\d)/, '($1) $2');
+        phone = phone.replace(/(\d{4})(\d)/, '$1-$2');
+      } else {
+        phone = phone.replace(/^(\d{2})(\d)/, '($1) $2');
+        phone = phone.replace(/(\d{5})(\d)/, '$1-$2');
+      }
+      this.clienteForm.get('telefone')?.setValue(phone, { emitEvent: false });
+
+      return phone;
+    }
+
+    telefoneValidator(control: FormControl) {
+      const value = control.value?.replace(/\D/g, '');
+      if (!value || value.length < 10 || value.length > 11) {
+        return { telefoneInvalido: true };
+      }
+      return null;
+    }
+
+
+    applyCurrencyMask(value: string): string {
+      let numericValue = value.replace(/\D/g, '');
+      if (numericValue.length > 9) {
+        numericValue = numericValue.slice(0, 9);
+      }
+      let formattedValue = (parseFloat(numericValue) / 100).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+      this.clienteForm.get('honorario')?.setValue(formattedValue, { emitEvent: false });
+
+      return formattedValue;
+    }
+
+    applyDateMask(value: string): string {
+      let date = value.replace(/\D/g, '');
+      if (date.length > 8) {
+        date = date.slice(0, 8);
+      }
+      date = date.replace(/^(\d{2})(\d)/, '$1/$2');
+      date = date.replace(/^(\d{2})\/(\d{2})(\d)/, '$1/$2/$3');
+      this.clienteForm.get('vencimento')?.setValue(date, { emitEvent: false });
+
+      return date;
+    }
+
+ private toISODate(data: Date): string {
+   if (!data) return '';
+   return data.toISOString().split('T')[0]; // yyyy-MM-dd
+ }
+
+formatarData(event: Event) {
+    const input = event.target as HTMLInputElement;
+      let valor = input.value.replace(/\D/g, ''); // Remove todos os caracteres que não são números
+
+      if (valor.length > 2 && valor.length <= 4) {
+          valor = valor.replace(/^(\d{2})(\d+)/, '$1/$2');
+      } else if (valor.length > 4) {
+          valor = valor.replace(/^(\d{2})(\d{2})(\d+)/, '$1/$2/$3');
+      }
+
+        input.value=valor;
+}
+
+
+}
+function parseDateLocal(dateStr: string): Date | null {
+     if (!dateStr) return null;
+     const [year, month, day] = dateStr.split('-').map(Number);
+     return new Date(year, month - 1, day); // mês começa do zero
+   }

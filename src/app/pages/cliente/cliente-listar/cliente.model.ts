@@ -1,11 +1,11 @@
-export interface Cliente {
-  clienteId: number;
-  nome: string;  
-  nomeProprietario: string; 
-  cnpj: string;
-  telefone: string;
+export interface ClienteResponse {
+  id: string;
+  nome: string;
+  cpf: string;
+  dateBirth: string; // ✅ Altere para string (formato yyyy-MM-dd)
   email: string;
-  honorario: number;
-  vencimento: number;
-  pagamento: number;
+  rua: string;
+  numero: string;
+  complemento: string;
+  cep: string;
 }

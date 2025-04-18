@@ -23,26 +23,28 @@
 
         <div class="row">
             <div class="col-md-3">
-                <label class="form-label" for="cnpj">CNPJ da empresa</label>
-                <input type="text" class="form-control input-pequeno" pInputText formControlName="cnpj"
-                    placeholder="Digite o CNPJ" maxlength="18" (input)="applyCnpjMask($event.target.value)"
-                    [disabled]="veioDaConsulta" />
+                <label class="form-label" for="nome">Nome</label>
+                <input id="nome" type="text" class="form-control input-pequeno" pInputText formControlName="nome"
+                    placeholder="Digite o nome do cliente"/>
             </div>
             <div class="col-md-3">
-                <label for="razaoSocial" class="form-label">Razão Social</label>
-                <input id="razaoSocial" pInputText type="text" class="form-control input-pequeno" formControlName="nome"
-                    placeholder="Digite a razão social" [disabled]="veioDaConsulta" />
+                <label for="cpf" class="form-label">CPF</label>
+                <input id="cpf" pInputText type="text" class="form-control input-pequeno" formControlName="cpf"
+                    placeholder="Digite o cpf do cliente"/>
             </div>
-            <div class="col-md-3">
-                <label for="nomeProprietario" class="form-label">Nome do proprietário</label>
-                <input id="nomeProprietario" pInputText type="text" class="form-control input-pequeno"
-                    formControlName="nomeProprietario" placeholder="Digite o nome do proprietário" />
+            <div class="col-md-3 custom-field">
+                <label  style="margin-block-end: 8px;">Data de Nascimento</label>
+                <p-calendar [showIcon]="true" [iconDisplay]="'input'" dateFormat="dd/mm/yy"
+                            placeholder="Selecione uma data" formControlName="dateBirth"
+                            (input)="formatarData($event)" [showOnFocus]="false">
+                </p-calendar>
             </div>
-            <div class="col-md-3">
-                <label for="telefone" class="form-label">Telefone</label>
-                <input type="text" class="form-control input-pequeno" pInputText formControlName="telefone"
-                    placeholder="Digite o telefone" maxlength="15" (input)="applyPhoneMask($event.target.value)" />
-            </div>
+
+            <!--            <div class="col-md-3">-->
+<!--                <label for="telefone" class="form-label">Telefone</label>-->
+<!--                <input type="text" class="form-control input-pequeno" pInputText formControlName="telefone"-->
+<!--                    placeholder="Digite o telefone" maxlength="15" (input)="applyPhoneMask($event.target.value)" />-->
+<!--            </div>-->
         </div>
         <div class="row mt-3">
             <div class="col-md-3">
@@ -57,25 +59,33 @@
             </div>
 
             <div class="col-md-3">
-                <label for="honorario" class="form-label">Valor do Honorário</label>
-                <input type="text" class="form-control input-pequeno" pInputText formControlName="honorario"
-                    placeholder="Digite o valor do honorário" maxlength="11"
-                    (input)="applyCurrencyMask($event.target.value)" />
+                <label for="rua" class="form-label">Rua</label>
+                <input id="rua" type="text" class="form-control input-pequeno" pInputText formControlName="rua"
+                    placeholder="Digite o nome da rua"/>
             </div>
             <div class="col-md-3">
-                <label for="vencimento" class="form-label">Dia de Vencimento</label>
-                <p-treeSelect id="vencimento" class="md:w-100rem w-full" containerStyleClass="w-full"
-                    [options]="diasVencimento" [(ngModel)]="diaSelecionado" optionLabel="label" optionValue="key"
-                    formControlName="vencimento" placeholder="Selecione um dia de vencimento">
-                </p-treeSelect>
+                <label for="numero" class="form-label">Número</label>
+                <input id="numero" type="text" class="form-control input-pequeno" pInputText formControlName="numero"
+                       placeholder="Digite o número"/>
             </div>
             <div class="col-md-3">
-                <label for="pagamento" class="form-label">Ordem de Pagamento</label>
-                <p-treeSelect id="pagamento" class="md:w-100rem w-full input-pequeno" containerStyleClass="w-full"
-                    [options]="tiposPagamento" [(ngModel)]="pagamentoSelecionado" optionLabel="label" optionValue="key"
-                    formControlName="pagamento" placeholder="Selecione">
-                </p-treeSelect>
+                <label for="complemento" class="form-label">Complemento</label>
+                <input id="complemento" type="text" class="form-control input-pequeno" pInputText formControlName="complemento"
+                       placeholder="Digite o complemento"/>
             </div>
+            <div class="col-md-3">
+                <label for="cep" class="form-label">CEP</label>
+                <input id="cep" type="text" class="form-control input-pequeno" pInputText formControlName="cep"
+                       placeholder="Digite o CEP"/>
+            </div>
+<!--            <div class="col-md-3">-->
+<!--                <label for="pagamento" class="form-label">Ordem de Pagamento</label>-->
+<!--                <p-treeSelect id="pagamento" class="md:w-100rem w-full input-pequeno" containerStyleClass="w-full"-->
+<!--                    [options]="tiposPagamento" [(ngModel)]="pagamentoSelecionado" optionLabel="label" optionValue="key"-->
+<!--                    formControlName="pagamento" placeholder="Selecione">-->
+<!--                </p-treeSelect>-->
+<!--            </div>-->
+
         </div>
 
 
@@ -84,12 +94,12 @@
             <button type="button" class="btn-limpar mx-2" (click)="limparFormulario()">Limpar</button>
 
             <!-- Botão para cadastrar novo cliente -->
-            <button *ngIf="!isEditing" type="submit" [disabled]="!formAlterado" class="btn-salvar mx-2">
+            <button *ngIf="!isEditing" type="submit" class="btn-salvar mx-2">
                 Cadastrar Cliente
             </button>
 
             <!-- Botão para atualizar cliente existente -->
-            <button *ngIf="isEditing" type="submit" [disabled]="!formAlterado" class="btn-atualizar mx-2">
+            <button *ngIf="isEditing" type="submit" class="btn-atualizar mx-2">
                 Atualizar Cliente
             </button>
         </div>

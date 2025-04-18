@@ -49,32 +49,14 @@ export class TemplateComponent implements OnInit, OnDestroy {
    */
   renderizaMenu(): void {
     this.menus = [
-      {
-        label: 'Consultas',
-        icon: 'fa fa-search',
-        routerLink: '/cliente-consultar-novo',
-        command: () => this.toggleMenu()
-      },
+
       {
         label: 'Clientes',
         icon: 'fa fa-user',
         routerLink: '/cliente-listar',
         command: () => this.toggleMenu()
       },
-      {
-        label: 'Financeiro',
-        icon: 'fa fa-money-bill',
-        routerLink: '/financeiro',
-        command: () => this.toggleMenu()
-      },
-
-      {
-        label: 'Usuarios',
-        icon: 'fa fa-user-shield',
-        routerLink: '/usuario-listar',
-        command: () => this.toggleMenu()
-      },
-    ];
+  ];
   }
 
   /**

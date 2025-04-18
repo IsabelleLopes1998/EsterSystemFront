@@ -26,7 +26,7 @@
         <div class="search-container p-input-icon-left ml-auto" style="position: relative; margin-right: 15px;">
           <i class="pi pi-search" style="position: absolute; left: 10px; top: 65%; transform: translateY(-50%);"></i>
           <input class="input-pesquisar" pInputText type="text" placeholder="Pesquisar" style="padding-left: 30px;"
-            [(ngModel)]="pesquisar" (ngModelChange)="filtrarClientes()">
+            [(ngModel)]="pesquisar" >
         </div>
       </div>
     </div>
@@ -37,56 +37,45 @@
         class="green-spinner"></p-progressSpinner>
     </div>
 
-    <p-table *ngIf="!isLoading" dataKey="id" [value]="ClientesFiltrados" styleClass="p-datatable-striped custom-table"
-      [tableStyle]="{ 'min-width': '20rem', 'width': '100%' }" [paginator]="true" [rows]="10"
-      [rowsPerPageOptions]="[10, 20, 30]">
-      <ng-template pTemplate="header">
-        <tr>
-          <th pSortableColumn="nome" style="min-width: 210px; font-size: 13px;">Razão social <p-sortIcon
-              field="nome"></p-sortIcon></th>
-          <th pSortableColumn="cnpj" style="min-width: 160px; font-size: 13px;">CNPJ <p-sortIcon
-              field="cnpj"></p-sortIcon></th>
-          <th pSortableColumn="cnpj" style="min-width: 160px; font-size: 13px;">Proprietário <p-sortIcon
-              field="cnpj"></p-sortIcon></th>
-          <th pSortableColumn="telefone" style="min-width: 130px; font-size: 13px;">Telefone <p-sortIcon
-              field="telefone"></p-sortIcon></th>
-          <th pSortableColumn="email" style="min-width: 200px; font-size: 13px;">Email <p-sortIcon
-              field="email"></p-sortIcon></th>
-          <th pSortableColumn="honorario" style="min-width: 150px; font-size: 13px;">Honorário <p-sortIcon
-              field="honorario"></p-sortIcon></th>
-          <th pSortableColumn="vencimento" style="min-width: 100px; font-size: 13px;">Vencimento <p-sortIcon
-              field="vencimento"></p-sortIcon></th>
-          <th pSortableColumn="pagamento" style="min-width: 130px; font-size: 13px;">Pagamento <p-sortIcon
-              field="pagamento"></p-sortIcon></th>
-          <th style="min-width: 120px">Ações</th>
-        </tr>
-      </ng-template>
+      <p-table *ngIf="!isLoading" dataKey="id" [value]="ClientesFiltrados" styleClass="p-datatable-striped custom-table"
+               [tableStyle]="{ 'min-width': '20rem', 'width': '100%' }" [paginator]="true" [rows]="10"
+               [rowsPerPageOptions]="[10, 20, 30]">
+          <ng-template pTemplate="header">
+              <tr>
+                  <th pSortableColumn="nome" style="min-width: 180px; font-size: 13px;">Nome </th>
+                  <th pSortableColumn="cpf" style="min-width: 140px; font-size: 13px;">CPF <p-sortIcon field="cpf"></p-sortIcon></th>
+                  <th pSortableColumn="dateBirth" style="min-width: 130px; font-size: 13px;">Nascimento <p-sortIcon field="dateBirth"></p-sortIcon></th>
+                  <th pSortableColumn="email" style="min-width: 180px; font-size: 13px;">Email <p-sortIcon field="email"></p-sortIcon></th>
+                  <th pSortableColumn="cep" style="min-width: 110px; font-size: 13px;">CEP <p-sortIcon field="cep"></p-sortIcon></th>
+                  <th pSortableColumn="rua" style="min-width: 150px; font-size: 13px;">Rua <p-sortIcon field="rua"></p-sortIcon></th>
+                  <th pSortableColumn="numero" style="min-width: 100px; font-size: 13px;">Número <p-sortIcon field="numero"></p-sortIcon></th>
+                  <th pSortableColumn="complemento" style="min-width: 130px; font-size: 13px;">Complemento <p-sortIcon field="complemento"></p-sortIcon></th>
+                  <th style="min-width: 100px">Ações</th>
+              </tr>
+          </ng-template>
 
-      <ng-template pTemplate="body" let-cliente let-expanded="expanded">
-        <tr>
-          <td class="table-cell table-cell-large" style="font-size: 12px;">{{ cliente.nome }}</td>
-          <td class="table-cell table-cell-large" style="font-size: 12px;">{{ formatarCnpj(cliente.cnpj) }}</td>
-          <td class="table-cell table-cell-large" style="font-size: 12px;">{{ cliente.nomeProprietario }}</td>
-          <td class="table-cell table-cell-large" style="font-size: 12px;">{{ cliente.telefone }}</td>
-          <td class="table-cell table-cell-large" style="font-size: 12px;">{{ cliente.email }}</td>
-          <td class="table-cell table-cell-large" style="font-size: 12px;">{{ cliente.honorario |
-            currency:'BRL':'symbol':'1.2-2':'pt-BR' }}</td>
-          <td class="table-cell table-cell-large" style="font-size: 12px;">{{ cliente.vencimento }}</td>
-          <td class="table-cell table-cell-large" style="font-size: 12px;">{{ getLabelPagamento(cliente.pagamento) }}
-          </td>
-          <td class="table-cell table-cell-large" style="font-size: 20px;">
-            <p-button class="custom-button-edit" (click)="editarCliente(cliente.clienteId)">
-              <i class="fa-solid fa-pen-to-square"></i>
-            </p-button>
+          <ng-template pTemplate="body" let-cliente>
+              <tr>
+                  <td class="table-cell" style="font-size: 12px;">{{ cliente.nome }}</td>
+                  <td class="table-cell" style="font-size: 12px;">{{ cliente.cpf }}</td>
+                  <td class="table-cell" style="font-size: 12px;">{{ cliente.dateBirth | date:'dd/MM/yyyy' }}</td>
+                  <td class="table-cell" style="font-size: 12px;">{{ cliente.email }}</td>
+                  <td class="table-cell" style="font-size: 12px;">{{ cliente.cep }}</td>
+                  <td class="table-cell" style="font-size: 12px;">{{ cliente.rua }}</td>
+                  <td class="table-cell" style="font-size: 12px;">{{ cliente.numero }}</td>
+                  <td class="table-cell" style="font-size: 12px;">{{ cliente.complemento }}</td>
+                  <td class="table-cell" style="font-size: 20px;">
+                      <p-button class="custom-button-edit" (click)="editarCliente(cliente.id)">
+                          <i class="fa-solid fa-pen-to-square"></i>
+                      </p-button>
+                      <p-button class="custom-button-excluir" (click)="confirmarExclusao(cliente)">
+                          <i class="fa-solid fa-trash"></i>
+                      </p-button>
+                  </td>
+              </tr>
+          </ng-template>
+      </p-table>
 
-            <p-button class="custom-button-excluir" (click)="confirmarExclusao(cliente)">
-              <i class="fa-solid fa-trash"></i>
-            </p-button>
-          </td>
-        </tr>
-      </ng-template>
-
-    </p-table>
   </div>
 </p-card>
 

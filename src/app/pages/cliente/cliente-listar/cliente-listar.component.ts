@@ -13,7 +13,7 @@ import { MessageService } from 'primeng/api';
 import { BreadcrumbModule } from 'src/app/componentes/breadcrumb/breadcrumb.module';
 import { PrimeNgModule } from 'src/app/componentes/primeng/primeng.module';
 import { ClienteService } from '../cliente.service';
-import { Cliente } from './cliente.model';
+import { ClienteResponse } from './cliente.model';
 
 interface PageEvent {
   first: number;
@@ -32,9 +32,9 @@ interface PageEvent {
 export class ClienteListarComponent {
   @ViewChild(PaginatorModule) paginator: PaginatorModule;
   @Input() TITULO = 'Lista de clientes';
-  @Input() veiculoData: Cliente[] = [];
+  @Input() veiculoData: ClienteResponse[] = [];
   breadcrumbs: any = [{ "label": "Início", "url": "#" }, { "label": "Lista de clientes", "url": "#/cliente-listar" }];
-  Clientes: Cliente[] = [];
+  Clientes: ClienteResponse[] = [];
   totalElements: number = 0;
   pageSize: number = 5;
   pageIndex: number = 0;
@@ -46,7 +46,7 @@ export class ClienteListarComponent {
   first: number = 0;
   rows: number = 10;
   modalExclusaoVisivel = false;
-  clienteSelecionado!: Cliente; // Variável para armazenar o cliente que será excluído
+  clienteSelecionado!: ClienteResponse; // Variável para armazenar o cliente que será excluído
 
   tiposPagamento = [
     { key: 1, label: 'Física' },
@@ -72,12 +72,12 @@ export class ClienteListarComponent {
     this.Clientes = this.Clientes.slice(page * size, (page + 1) * size);
   }
 
-  toggleRow(row: Cliente): void {
-    if (this.expandedRows[row.clienteId]) {
-      delete this.expandedRows[row.clienteId];
+  toggleRow(row: ClienteResponse): void {
+    if (this.expandedRows[row.id]) {
+      delete this.expandedRows[row.id];
     } else {
       this.expandedRows = {};
-      this.expandedRows[row.clienteId] = true;
+      this.expandedRows[row.id] = true;
     }
   }
 
@@ -92,7 +92,7 @@ export class ClienteListarComponent {
     this.clienteService.getListaDeClientes()
       .pipe(finalize(() => this.isLoading = false))
       .subscribe({
-        next: (res: Cliente[]) => {
+        next: (res: ClienteResponse[]) => {
           if (res && res.length > 0) {
             this.Clientes = res;
             this.ClientesFiltrados = [...this.Clientes];
@@ -122,42 +122,34 @@ export class ClienteListarComponent {
       });
   }
 
-  filtrarClientes() {
-    const pesquisa = this.pesquisar.toLowerCase();
+//   filtrarClientes() {
+//     const pesquisa = this.pesquisar.toLowerCase();
+//
+//     this.ClientesFiltrados = this.Clientes.filter(cliente => {
+//       // Buscar a label do tipo de pagamento
+//       const tipoPagamento = this.getLabelPagamento(cliente.pagamento).toLowerCase();
+//
+//       return (
+//         cliente.nome.toLowerCase().includes(pesquisa) ||
+//         cliente.nomeProprietario.toLowerCase().includes(pesquisa) ||
+//         cliente.cnpj.toLowerCase().includes(pesquisa) ||
+//         cliente.telefone.toLowerCase().includes(pesquisa) ||
+//         cliente.email.toLowerCase().includes(pesquisa) ||
+//         tipoPagamento.includes(pesquisa) // ✅ Agora filtra pelo nome do tipo de pagamento
+//       );
+//     });
+//   }
 
-    this.ClientesFiltrados = this.Clientes.filter(cliente => {
-      // Buscar a label do tipo de pagamento
-      const tipoPagamento = this.getLabelPagamento(cliente.pagamento).toLowerCase();
 
-      return (
-        cliente.nome.toLowerCase().includes(pesquisa) ||
-        cliente.nomeProprietario.toLowerCase().includes(pesquisa) ||
-        cliente.cnpj.toLowerCase().includes(pesquisa) ||
-        cliente.telefone.toLowerCase().includes(pesquisa) ||
-        cliente.email.toLowerCase().includes(pesquisa) ||
-        tipoPagamento.includes(pesquisa) // ✅ Agora filtra pelo nome do tipo de pagamento
-      );
-    });
-  }
+//   removerAcentos(texto: string): string {
+//     return texto.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+//   }
 
+//   getLabelPagamento(codigo: number): string {
+//     const tipo = this.tiposPagamento.find(tp => tp.key === codigo);
+//     return tipo ? tipo.label : 'Desconhecido'; // Retorna a label ou 'Desconhecido' se não encontrar
+//   }
 
-  removerAcentos(texto: string): string {
-    return texto.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-  }
-
-  getLabelPagamento(codigo: number): string {
-    const tipo = this.tiposPagamento.find(tp => tp.key === codigo);
-    return tipo ? tipo.label : 'Desconhecido'; // Retorna a label ou 'Desconhecido' se não encontrar
-  }
-
-  formatarCnpj(cnpj: string): string {
-    if (!cnpj) {
-      return '';
-    }
-
-    const cnpjLimpo = cnpj.replace(/\D/g, '');
-    return cnpjLimpo.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/, "$1.$2.$3/$4-$5");
-  }
 
   editarCliente(id: number | undefined) {
     if (!id) {
@@ -169,17 +161,17 @@ export class ClienteListarComponent {
   }
 
 
-  // Função para abrir o modal de confirmação
-  confirmarExclusao(cliente: Cliente) {
+ // Função para abrir o modal de confirmação
+  confirmarExclusao(cliente: ClienteResponse) {
     this.clienteSelecionado = cliente;
     this.modalExclusaoVisivel = true;
   }
 
-  // Função para excluir o cliente
+  //Função para excluir o cliente
   excluirCliente() {
-    if (!this.clienteSelecionado || !this.clienteSelecionado.clienteId) return;
+    if (!this.clienteSelecionado || !this.clienteSelecionado.id) return;
 
-    this.clienteService.excluirCliente(this.clienteSelecionado.clienteId).subscribe({
+    this.clienteService.excluirCliente(this.clienteSelecionado.id).subscribe({
       next: () => {
         this.modalExclusaoVisivel = false;
         this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Cliente excluído com sucesso!' });
