@@ -56,6 +56,13 @@ export class TemplateComponent implements OnInit, OnDestroy {
         routerLink: '/cliente-listar',
         command: () => this.toggleMenu()
       },
+      {
+          label: 'Produtos',
+          icon: 'fa fa-gem',
+          routerLink: '/produto-listar',
+          command: () => this.toggleMenu()
+      },
+
   ];
   }
 
