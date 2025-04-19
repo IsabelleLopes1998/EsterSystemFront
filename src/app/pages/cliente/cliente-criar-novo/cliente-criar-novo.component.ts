@@ -259,6 +259,7 @@ formatarData(event: Event) {
       if (valor.length > 2 && valor.length <= 4) {
           valor = valor.replace(/^(\d{2})(\d+)/, '$1/$2');
       } else if (valor.length > 4) {
+
           valor = valor.replace(/^(\d{2})(\d{2})(\d+)/, '$1/$2/$3');
       }
 
