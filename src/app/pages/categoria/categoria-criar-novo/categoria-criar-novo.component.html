@@ -1,0 +1,45 @@
+<div class="custom-margin">
+    <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+</div>
+
+<p-card class="custom-card-margin">
+
+    <p-dialog [(visible)]="isLoading" [modal]="true" [closable]="false" showHeader="false"
+              styleClass="custom-loading-dialog">
+        <div class="loading-content">
+            <p-progressSpinner></p-progressSpinner>
+            <p class="loading-text">Processando...</p>
+        </div>
+    </p-dialog>
+
+    <form [formGroup]="categoriaForm" (ngSubmit)="salvarCategoria()">
+        <div class="row">
+            <div class="col-md-3">
+                <label for="nome" class="form-label">Nome</label>
+                <input id="nome" type="text" class="form-control" formControlName="nome" placeholder="Nome da categoria" />
+            </div>
+
+            <div class="col-md-3">
+                <label for="descricao" class="form-label">Descrição</label>
+                <input id="descricao" type="text" class="form-control" formControlName="descricao" placeholder="Descrição" />
+            </div>
+        </div>
+
+        <!-- Botões -->
+        <div class="d-flex justify-content-left mt-4">
+            <button type="button" class="btn-limpar mx-2" (click)="limparFormulario()">Limpar</button>
+
+            <button *ngIf="!isEditing" type="submit" class="btn-salvar mx-2">
+                Cadastrar Categoria
+            </button>
+
+            <button *ngIf="isEditing" type="submit" class="btn-atualizar mx-2">
+                Atualizar Categoria
+            </button>
+        </div>
+
+    </form>
+
+</p-card>
+
+<p-toast></p-toast>

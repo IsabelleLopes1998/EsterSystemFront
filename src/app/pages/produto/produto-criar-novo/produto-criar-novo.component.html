@@ -1,0 +1,85 @@
+<div class="custom-margin">
+    <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+</div>
+
+<p-card class="custom-card-margin">
+    <p-dialog [(visible)]="isLoading" [modal]="true" [closable]="false" showHeader="false"
+              styleClass="custom-loading-dialog">
+        <div class="loading-content">
+            <p-progressSpinner></p-progressSpinner>
+            <p class="loading-text">Processando...</p>
+        </div>
+    </p-dialog>
+
+    <form [formGroup]="produtoForm" (ngSubmit)="salvarProduto()">
+        <div class="d-flex align-items-center mt-0">
+            <h1 style="color: #5e2974; font-size: 18px; margin-top: -50px; margin-left: -5px; text-wrap: nowrap;">
+                <strong>Cadastrar Produto</strong>
+            </h1>
+            <div class="flex-grow-1 mx-5" style="position: relative; top: -30px; margin-left: 60px;width: 100%;">
+                <hr class="divider container-fluid" style="width: 100%; margin-left: 2px; margin-right: 40px;">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3">
+                <label class="form-label" for="nome">Nome</label>
+                <input id="nome" type="text" class="form-control input-pequeno" pInputText formControlName="nome"
+                       placeholder="Digite o nome do produto"/>
+            </div>
+            <div class="col-md-3">
+                <label for="valor" class="form-label">Valor</label>
+                <input id="valor" pInputText type="text" class="form-control input-pequeno" formControlName="valor"
+                       placeholder="Digite o valor do produto"/>
+            </div>
+            <div class="col-md-3">
+                <label for="quantidadeEstoque" class="form-label">Quantidade</label>
+                <input id="quantidadeEstoque" pInputText type="text" class="form-control input-pequeno" formControlName="quantidadeEstoque"
+                       placeholder="Digite a quantidade do produto"/>
+            </div>
+
+            <div class="col-md-3 ">
+                <label class="form-label" for="idCategoria">Categoria</label>
+                <p-dropdown
+                    inputId="idCategoria"
+                    [options]="categoria"
+                    optionLabel="nome"
+                    optionValue="id"
+                    placeholder="Selecione a categoria"
+                    formControlName="idCategoria"
+                    (onChange)="categoriaSelecionada($event)">
+                </p-dropdown>
+            </div>
+
+            <div class="col-md-3 d-flex flex-column justify-content-end">
+                <label for="idSubcategoria" class="form-label">Subcategoria</label>
+                <p-dropdown
+                    inputId="idSubcategoria"
+                    [options]="subcategoria"
+                    optionLabel="nome"
+                    optionValue="id"
+                    placeholder="Selecione a subcategoria"
+                    formControlName="idSubcategoria">
+                </p-dropdown>
+            </div>
+
+            <!-- Botões -->
+            <div class="d-flex justify-content-left mt-4">
+                <button type="button" class="btn-limpar mx-2" (click)="limparFormulario()">Limpar</button>
+
+                <button *ngIf="!isEditing" type="submit" class="btn-salvar mx-2">
+                    Cadastrar Produto
+                </button>
+
+                <button *ngIf="isEditing" type="submit" class="btn-atualizar mx-2">
+                    Atualizar Produto
+                </button>
+            </div>
+
+        </div>
+
+    </form>
+
+</p-card>
+
+<p-toast></p-toast>
