@@ -14,47 +14,47 @@ import { CategoriaCriarNovoComponent } from './pages/categoria/categoria-criar-n
 import { LoginComponent } from './pages/login/login.component';
 import { AuthGuard } from './auth.guard';
 
-
+import { EstoqueListarComponent } from './pages/estoque/estoque-listar/estoque-listar.component'
 
 
 const routes: Routes = [
-  // Redirecionamento automático para /login ao abrir a aplicação
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
+    // Redirecionamento automático para /login ao abrir a aplicação
+    { path: '', redirectTo: 'login', pathMatch: 'full' },
 
-  {
-    path: '',
-    children: [
-      { path: 'index', component: IndexComponent },
-//       {
-//         path: 'index',
-//         loadComponent: () => import('../app/index/index.component').then(m => m.IndexComponent),
-//         canActivate: [AuthGuard]
-//       },
+    {
+        path: '',
+        children: [
+            { path: 'index', component: IndexComponent },
+            //       {
+            //         path: 'index',
+            //         loadComponent: () => import('../app/index/index.component').then(m => m.IndexComponent),
+            //         canActivate: [AuthGuard]
+            //       },
 
-      { path: 'cliente-criar-novo', component: ClienteCriarNovoComponent },
-      { path: 'cliente-criar-novo/:id', component: ClienteCriarNovoComponent },
-      { path: 'cliente-listar', component: ClienteListarComponent },
-      { path: 'produto-listar', component: ProdutoListarComponent },
-      { path: 'produto-criar-novo/:id', component: ProdutoCriarNovoComponent },
-      { path: 'categoria-listar', component: CategoriaListarComponent },
-      { path: 'categoria-criar-novo', component: CategoriaCriarNovoComponent },
-      { path: 'produto-criar-novo', component: ProdutoCriarNovoComponent },
-      { path: 'categoria-criar-novo/:id', component: CategoriaCriarNovoComponent },
+            { path: 'cliente-criar-novo', component: ClienteCriarNovoComponent },
+            { path: 'cliente-criar-novo/:id', component: ClienteCriarNovoComponent },
+            { path: 'cliente-listar', component: ClienteListarComponent },
+            { path: 'produto-listar', component: ProdutoListarComponent },
+            { path: 'produto-criar-novo/:id', component: ProdutoCriarNovoComponent },
+            { path: 'categoria-listar', component: CategoriaListarComponent },
+            { path: 'categoria-criar-novo', component: CategoriaCriarNovoComponent },
+            { path: 'produto-criar-novo', component: ProdutoCriarNovoComponent },
+            { path: 'categoria-criar-novo/:id', component: CategoriaCriarNovoComponent },
+            { path: 'estoque-listar', component: EstoqueListarComponent }
+            //       { path: 'financeiro', component: FinanceiroComponent, canActivate: [AuthGuard] },
+            //       { path: 'usuario-criar-novo', component: UsuarioCriarNovoComponent, canActivate: [AuthGuard] },
+            //       { path: 'usuario-criar-novo/:id', component: UsuarioCriarNovoComponent, canActivate: [AuthGuard] },
+            //       { path: 'usuario-listar', component: UsuarioListarComponent, canActivate: [AuthGuard] }
+        ]
+    },
 
-//       { path: 'financeiro', component: FinanceiroComponent, canActivate: [AuthGuard] },
-//       { path: 'usuario-criar-novo', component: UsuarioCriarNovoComponent, canActivate: [AuthGuard] },
-//       { path: 'usuario-criar-novo/:id', component: UsuarioCriarNovoComponent, canActivate: [AuthGuard] },
-//       { path: 'usuario-listar', component: UsuarioListarComponent, canActivate: [AuthGuard] }
-    ]
-  },
-
-  // Caso a rota não exista, redireciona para login
-  { path: '**', redirectTo: 'index' }
+    // Caso a rota não exista, redireciona para login
+    { path: '**', redirectTo: 'index' }
 ];
 
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule],
+    imports: [RouterModule.forRoot(routes)],
+    exports: [RouterModule],
 })
 export class AppRoutingModule { }

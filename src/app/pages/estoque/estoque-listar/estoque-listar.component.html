@@ -1,0 +1,95 @@
+<p-toast></p-toast>
+
+<p-card>
+    <div style="margin-left: 30px;">
+        <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+    </div>
+
+    <div class="container-fluid mb-7 mr-5">
+        <div class="container-fluid mb-7 mr-5" style="margin-right: -10px;">
+            <div class="flex justify-content-end">
+                <button icon="pi pi-plus" pButton pRipple label="Nova Movimentação" class="p-button-someli"
+                    (click)="criarNovaMovimentacao()">
+                </button>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+            <div class="header-container d-flex align-items-center mb-4">
+                <div class="titulo" style="margin-left: 10px;">
+                    <h1 class="titulo-pagina" style="font-size: 1.5rem; color: #5e2974; margin-right: 10px;">
+                        <strong>Lista de movimentações de estoque</strong>
+                    </h1>
+                </div>
+                <p-divider class="divider" type="solid"></p-divider>
+                <div class="search-container p-input-icon-left ml-auto" style="position: relative; margin-right: 15px;">
+                    <i class="pi pi-search"
+                        style="position: absolute; left: 10px; top: 65%; transform: translateY(-50%);"></i>
+                    <!-- <input class="input-pesquisar" pInputText type="text" placeholder="Pesquisar" -->
+                    <!-- [(ngModel)]="pesquisar" style="padding-left: 30px;"> -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Spinner -->
+        <div *ngIf="isLoading" class="spinner-container">
+            <p-progressSpinner ariaLabel="loading" [style]="{ width: '50px', height: '50px' }" strokeWidth="4"
+                class="green-spinner"></p-progressSpinner>
+        </div>
+
+        <!-- Tabela -->
+        <p-table *ngIf="!isLoading" dataKey="id" [value]="movimentacoesEstoqueFiltradas"
+            styleClass="p-datatable-striped custom-table" [tableStyle]="{ 'min-width': '20rem', 'width': '100%' }"
+            [paginator]="true" [rows]="10" [rowsPerPageOptions]="[10, 20, 30]">
+
+            <ng-template pTemplate="header">
+                <tr>
+                    <th pSortableColumn="idProduto" style="min-width: 180px; font-size: 13px;">Produto</th>
+                    <th pSortableColumn="quantidade" style="min-width: 100px; font-size: 13px;">Quantidade <p-sortIcon
+                            field="quantidade"></p-sortIcon></th>
+                    <th pSortableColumn="tipoMovimentacao" style="min-width: 130px; font-size: 13px;">Tipo <p-sortIcon
+                            field="tipoMovimentacao"></p-sortIcon></th>
+                    <th pSortableColumn="data" style="min-width: 150px; font-size: 13px;">Data</th>
+                    <th style="min-width: 100px;">Ações</th>
+                </tr>
+            </ng-template>
+
+            <ng-template pTemplate="body" let-mov>
+                <tr>
+                    <td class="table-cell" style="font-size: 12px;">{{
+                        mov.idProduto }}</td>
+                    <td class="table-cell" style="font-size: 12px;">{{ mov.quantidade }}</td>
+                    <td class="table-cell" style="font-size: 12px;">{{
+                        mov.tipoMovimentacao }}</td>
+                    <td class="table-cell" style="font-size: 12px;">{{ mov.data
+                        | date: 'dd/MM/yyyy hh:mm:ss' }}</td>
+                    <td class="table-cell" style="font-size: 20px;">
+                        <p-button type="button" class="custom-button-edit" (click)="editarMovimentacao(mov.id)">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </p-button>
+
+                        <p-button class="custom-button-excluir" (click)="confirmarExclusao(mov)">
+                            <i class="fa-solid fa-trash"></i>
+                        </p-button>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</p-card>
+
+<!-- Modal de exclusão -->
+<p-dialog [(visible)]="modalExclusaoVisivel" [modal]="true" [closable]="false" header="Confirmar Exclusão">
+    <div class="p-d-flex p-ai-center p-jc-center">
+        <p>Tem certeza que deseja excluir esta movimentação?</p>
+    </div>
+
+    <div class="p-dialog-footer p-d-flex p-jc-center">
+        <button class="btn-nao" (click)="modalExclusaoVisivel = false">
+            <i class="pi pi-times"></i> NÃO
+        </button>
+        <button class="btn-sim" (click)="excluirMovimentacao()">
+            <i class="pi pi-check"></i> SIM
+        </button>
+    </div>
+</p-dialog>

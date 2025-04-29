@@ -1,0 +1,149 @@
+.header-container {
+    margin-left: 0;
+    padding: 0 10px;
+}
+
+.divider {
+    flex-grow: 1;
+    margin-left: 60px;
+    margin-right: 60px;
+    height: 45px;
+}
+
+:host ::ng-deep .custom-button {
+    background-color: transparent !important;
+}
+
+:host ::ng-deep .custom-button-edit .p-button {
+    padding: 6px 8px;
+    background-color: rgb(255, 165, 0);
+    border-color: rgb(255, 165, 0);
+    margin-left: 5px;
+}
+
+:host ::ng-deep .custom-button-excluir .p-button {
+    padding: 6px 8px;
+    background-color: rgb(199, 31, 31);
+    border-color: rgb(199, 31, 31);
+    margin-left: 5px;
+}
+
+:host ::ng-deep .flex {
+    display: flex !important;
+    margin-top: -3rem;
+}
+
+.p-button {
+    border-radius: 7px;
+    text-transform: initial;
+    padding: 10px 10px;
+    font-size: 1rem;
+    height: auto;
+    width: auto;
+    margin-right: 20px;
+}
+
+.spinner-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin-top: -270px;
+}
+
+:host ::ng-deep .p-progress-spinner-circle {
+    stroke: #6A1B9A !important;
+}
+
+.p-button-someli {
+    background-color: #4d0b63 !important;
+    /* Roxo Someli */
+    border-color: #4d0b63 !important;
+    color: #ffffff !important;
+    /* Texto branco */
+}
+
+.p-button-someli:hover {
+    background-color: #7a43be !important;
+    /* Roxo mais escuro no hover */
+    border-color: #7a43be !important;
+}
+
+/* Ajuste geral do modal */
+:host ::ng-deep .p-dialog {
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    width: 350px !important;
+}
+
+/* Centraliza o conteúdo do modal */
+:host ::ng-deep .p-dialog-content {
+    text-align: center;
+    font-size: 16px;
+    color: #444;
+    padding-bottom: 20px;
+}
+
+/* Alinha os botões corretamente */
+:host ::ng-deep .p-dialog-footer {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    /* Espaço entre os botões */
+    padding: 10px 20px;
+}
+
+/* Botão "Não" */
+.btn-nao {
+    background-color: #6c757d !important;
+    border: none;
+    color: white !important;
+    font-weight: bold;
+    padding: 10px 15px;
+    border-radius: 8px;
+    transition: 0.3s;
+    min-width: 120px;
+    /* Evita distorção */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Botão "Sim" */
+.btn-sim {
+    background-color: #dc3545 !important;
+    border: none;
+    color: white !important;
+    font-weight: bold;
+    padding: 10px 15px;
+    border-radius: 8px;
+    transition: 0.3s;
+    min-width: 120px;
+    /* Evita distorção */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Espaçamento entre o ícone e o texto */
+.btn-nao i,
+.btn-sim i {
+    margin-right: 8px;
+}
+
+/* Ajuste ao passar o mouse */
+.btn-nao:hover {
+    background-color: #5a6268 !important;
+}
+
+.btn-sim:hover {
+    background-color: #c82333 !important;
+}
+
+.bg-green {
+    background-color: #b6d7a8;
+}
+
+.bg-red {
+    background-color: #f4cccc;
+}

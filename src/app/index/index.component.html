@@ -2,19 +2,19 @@
 <link rel="manifest" href="assets/manifest.webmanifest">
 
 <div class="welcome-message">
-  <h5>{{ saudacao }}, {{ nomeUsuario }}! O que deseja fazer?</h5>
+    <h5>{{ saudacao }}, {{ nomeUsuario }}! O que deseja fazer?</h5>
 </div>
 
 <!-- Container dos Cards Internos -->
 <div class="card-container">
 
-  <!-- Clientes -->
-  <div class="card-custom">
-    <i class="fa-solid fa-user card-icon"></i>
-    <div class="card-title">Cliente</div>
-    <button class="p-button-outline" (click)="navigateTo('/cliente-listar')">Lista de clientes</button>
-    <button class="p-button" (click)="navigateTo('/cliente-criar-novo')">Adicionar cliente</button>
-  </div>
+    <!-- Clientes -->
+    <div class="card-custom">
+        <i class="fa-solid fa-user card-icon"></i>
+        <div class="card-title">Cliente</div>
+        <button class="p-button-outline" (click)="navigateTo('/cliente-listar')">Lista de clientes</button>
+        <button class="p-button" (click)="navigateTo('/cliente-criar-novo')">Adicionar cliente</button>
+    </div>
     <!-- Produto -->
     <div class="card-custom">
         <i class="fa-solid fa-gem card-icon"></i>
@@ -29,5 +29,12 @@
         <button class="p-button-outline" (click)="navigateTo('/categoria-listar')">Lista de categorias</button>
         <button class="p-button" (click)="navigateTo('/categoria-criar-novo')">Adicionar categoria</button>
     </div>
+    <div class="card-custom">
+        <i class="fa-solid fa-box card-icon"></i>
+        <div class="card-title">Estoque</div>
+        <button class="p-button-outline" (click)="navigateTo('/estoque-listar')">Lista de estoque</button>
+        <button class="p-button" (click)="navigateTo('/estoque-criar-novo')">Adicionar item de estoque</button>
+    </div>
+
 
 </div>
