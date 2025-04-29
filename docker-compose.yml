@@ -1,0 +1,16 @@
+services:
+  angular-app:
+    build: .
+    container_name: angular_demo
+    ports:
+      - "4200:4200"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    networks:
+      - demo-network
+    command: npx ng serve --host 0.0.0.0
+
+networks:
+  demo-network:
+
