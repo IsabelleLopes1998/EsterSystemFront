@@ -15,6 +15,9 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { DialogModule } from 'primeng/dialog';
 import { ClienteResponse } from '../cliente-listar/cliente.model';
 import { CalendarModule } from 'primeng/calendar';
+import { cpfOuCnpjValido } from '../validators';
+
+
 
 
 @Component({
@@ -55,7 +58,7 @@ export class ClienteCriarNovoComponent {
   ) {
     this.clienteForm = this.fb.group({
       nome: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
-        cpf: ['', [Validators.required,Validators.pattern(/^\d{3}\.\d{3}\.\d{3}-\d{2}$/)]],
+        cpf: ['', [Validators.required, Validators.pattern(/^(\d{3}\.\d{3}\.\d{3}-\d{2}|\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2})$/), cpfOuCnpjValido()]],
         dataNascimento: ['', Validators.required],
         email: ['', [Validators.required, Validators.email]],
         primeiroTelefone: ['', [Validators.pattern(/\(\d{2}\)\s9\d{4}-\d{4}/)]],
@@ -199,16 +202,22 @@ export class ClienteCriarNovoComponent {
     }
 
     applyCpfMask() {
-      let cpf = this.clienteForm.get('cpf')?.value || '';
-      cpf = cpf.replace(/\D/g, ''); // remove tudo que não for dígito
+     let valor = this.clienteForm.get('cpf')?.value || '';
+       valor = valor.replace(/\D/g, '');
 
-      if (cpf.length > 11) cpf = cpf.slice(0, 11);
+       if (valor.length <= 11) {
+         valor = valor.replace(/^(\d{3})(\d)/, '$1.$2');
+         valor = valor.replace(/^(\d{3})\.(\d{3})(\d)/, '$1.$2.$3');
+         valor = valor.replace(/\.(\d{3})(\d)/, '.$1-$2');
+       } else {
+         valor = valor.slice(0, 14);
+         valor = valor.replace(/^(\d{2})(\d)/, '$1.$2');
+         valor = valor.replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3');
+         valor = valor.replace(/\.(\d{3})(\d)/, '.$1/$2');
+         valor = valor.replace(/(\d{4})(\d)/, '$1-$2');
+       }
 
-      cpf = cpf.replace(/^(\d{3})(\d)/, '$1.$2');
-      cpf = cpf.replace(/^(\d{3})\.(\d{3})(\d)/, '$1.$2.$3');
-      cpf = cpf.replace(/\.(\d{3})(\d)/, '.$1-$2');
-
-      this.clienteForm.get('cpf')?.setValue(cpf, { emitEvent: false });
+       this.clienteForm.get('cpf')?.setValue(valor, { emitEvent: false });
     }
 
     applyCepMask() {

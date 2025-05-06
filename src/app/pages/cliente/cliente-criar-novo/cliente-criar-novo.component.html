@@ -29,22 +29,32 @@
             </div>
 
             <div class="col-md-3">
-                <label for="cpf" class="form-label">CPF</label>
+                <label for="cpf" class="form-label">CPF/CNPJ</label>
                 <input
                     id="cpf"
                     type="text"
                     class="form-control input-pequeno"
                     pInputText
                     formControlName="cpf"
-                    placeholder="000.000.000-00"
+                    placeholder="CPF ou CNPJ"
                     (input)="applyCpfMask()"
                 />
-                <small
-                    *ngIf="clienteForm.get('cpf')?.invalid && (clienteForm.get('cpf')?.touched || clienteForm.get('cpf')?.dirty)"
-                    class="text-danger"
-                >
-                    <i class="pi pi-exclamation-circle"></i> CPF inválido (formato: 000.000.000-00)
+                <small *ngIf="clienteForm.get('cpf')?.hasError('required') && clienteForm.get('cpf')?.touched" class="p-error">
+                    Campo obrigatório.
                 </small>
+                <small *ngIf="clienteForm.get('cpf')?.hasError('pattern') && clienteForm.get('cpf')?.touched" class="p-error">
+                    Formato inválido. Use CPF (XXX.XXX.XXX-XX) ou CNPJ (XX.XXX.XXX/0001-XX).
+                </small>
+                <small *ngIf="clienteForm.get('cpf')?.hasError('cpfInvalido') && clienteForm.get('cpf')?.touched" class="p-error">
+                    CPF inválido.
+                </small>
+                <small *ngIf="clienteForm.get('cpf')?.hasError('cnpjInvalido') && clienteForm.get('cpf')?.touched" class="p-error">
+                    CNPJ inválido.
+                </small>
+                <small *ngIf="clienteForm.get('cpf')?.hasError('cpfCnpjInvalido') && clienteForm.get('cpf')?.touched" class="p-error">
+                    CPF ou CNPJ inválido.
+                </small>
+
             </div>
 
 
