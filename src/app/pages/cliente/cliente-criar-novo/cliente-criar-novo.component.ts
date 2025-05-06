@@ -54,15 +54,16 @@ export class ClienteCriarNovoComponent {
 
   ) {
     this.clienteForm = this.fb.group({
-      nome: ['', Validators.required],
-      cpf: ['', Validators.required],
-      dateBirth: ['', Validators.required],
-      //telefone: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      rua: ['', Validators.required],
-      numero: ['', Validators.required],
-      complemento: ['', Validators.required],
-      cep: ['', Validators.required]
+      nome: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
+        cpf: ['', [Validators.required,Validators.pattern(/^\d{3}\.\d{3}\.\d{3}-\d{2}$/)]],
+        dataNascimento: ['', Validators.required],
+        email: ['', [Validators.required, Validators.email]],
+        primeiroTelefone: ['', [Validators.pattern(/\(\d{2}\)\s9\d{4}-\d{4}/)]],
+        segundoTelefone: ['', [Validators.pattern(/\(\d{2}\)\s9\d{4}-\d{4}/) ]],
+        rua: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(200)]],
+        numero: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(10)]],
+        complemento: ['', [Validators.required, Validators.maxLength(100)]],
+        cep: ['', [Validators.required,Validators.pattern(/\d{5}-\d{3}/)]]
     });
   }
   ngOnInit() {
@@ -89,18 +90,26 @@ export class ClienteCriarNovoComponent {
     this.isLoading = true;
     this.clienteService.getClientePorId(this.id).subscribe({
       next: (cliente) => {
+          console.log('[DEBUG] cliente.dataNascimento vindo do backend:', cliente.dataNascimento);
+          const data = parseDateLocal(cliente.dataNascimento);
+          console.log('[DEBUG] Resultado parseDateLocal:', data);
+
 
         this.clienteForm.patchValue({
           nome: cliente.nome,
           cpf: cliente.cpf,
-          //telefone: this.applyPhoneMask(cliente.telefone), // Aplica a máscara antes de preencher
-          dateBirth: parseDateLocal(cliente.dateBirth),
+          dataNascimento: parseDateLocal(cliente.dataNascimento),
           email: cliente.email,
+          primeiroTelefone: cliente.primeiroTelefone,
+          segundoTelefone: cliente.segundoTelefone,
           rua: cliente.rua,
           numero: cliente.numero,
           complemento: cliente.complemento,
           cep: cliente.cep
         });
+        console.log('[DEBUG] Tipo dataNascimento após patch:', typeof this.clienteForm.get('dataNascimento')?.value);
+        console.log('[DEBUG] Valor no form:', this.clienteForm.get('dataNascimento')?.value);
+
 
         this.isLoading = false;
       },
@@ -113,9 +122,16 @@ export class ClienteCriarNovoComponent {
 
   salvarCliente() {
    console.log('[DEBUG] salvarCliente foi chamado');
+
      if (this.clienteForm.invalid) {
        console.log('[DEBUG] Formulário inválido');
-       return;
+         Object.keys(this.clienteForm.controls).forEach(campo => {
+           const controle = this.clienteForm.get(campo);
+           if (controle?.invalid) {
+             console.log(`[ERRO] Campo inválido: ${campo}`, controle.errors);
+           }
+         });
+         return;
      }
 
     this.isLoading = true; // Exibe o spinner antes do envio
@@ -123,22 +139,23 @@ export class ClienteCriarNovoComponent {
     // Captura TODOS os valores do formulário, incluindo os desabilitados
     const formValues = this.clienteForm.getRawValue();
 
-    const cliente: ClienteResponse = {
-      id: this.id || '',
-      cpf: this.clienteForm.getRawValue().cpf || '',
-      nome: this.clienteForm.getRawValue().nome || '',
-      dateBirth: this.toISODate(this.clienteForm.value.dateBirth),
-      //telefone: this.clienteForm.getRawValue().telefone || '',
-      email: this.clienteForm.getRawValue().email || '',
-      rua: this.clienteForm.getRawValue().rua || '',
-      numero: this.clienteForm.getRawValue().numero || '',
-      complemento: this.clienteForm.getRawValue().complemento || '',
-      cep: this.clienteForm.getRawValue().cep || ''
+    const cliente: any = {
+      cpf: formValues.cpf,
+      nome: formValues.nome || '',
+      dataNascimento: this.toISODate(formValues.dataNascimento),
+      email: formValues.email || '',
+      primeiroTelefone: formValues.primeiroTelefone,
+      segundoTelefone: formValues.segundoTelefone || '',
+      rua: formValues.rua || '',
+      numero: formValues.numero || '',
+      complemento: formValues.complemento || '',
+      cep: formValues.cep || ''
     };
 
     console.log('Enviando para o backend:', cliente); // Verifica se os valores estão corretos no console
 
-    if (this.isEditing) {
+    if (this.isEditing && this.id) {
+        cliente.id = this.id;
       this.clienteService.atualizarCliente(cliente).subscribe({
         next: () => {
           this.isLoading = false;
@@ -171,8 +188,9 @@ export class ClienteCriarNovoComponent {
       this.clienteForm.patchValue({
         nome: '',
         cpf: '',
-        //telefone: '',
         email: '',
+        primeiroTelefone: '',
+        segundoTelefone: '',
         rua: '',
         numero: '',
         complemento: '',
@@ -180,29 +198,32 @@ export class ClienteCriarNovoComponent {
       });
     }
 
+    applyCpfMask() {
+      let cpf = this.clienteForm.get('cpf')?.value || '';
+      cpf = cpf.replace(/\D/g, ''); // remove tudo que não for dígito
 
-    applyCnpjMask(value: string): string {
-      let cnpj = value.replace(/\D/g, '');
-      if (cnpj.length > 14) {
-        cnpj = cnpj.slice(0, 14);
-      }
-      cnpj = cnpj.replace(/^(\d{2})(\d)/, '$1.$2');
-      cnpj = cnpj.replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3');
-      cnpj = cnpj.replace(/\.(\d{3})(\d)/, '.$1/$2');
-      cnpj = cnpj.replace(/(\d{4})(\d)/, '$1-$2');
-      this.clienteForm.get('cnpj')?.setValue(cnpj, { emitEvent: false });
+      if (cpf.length > 11) cpf = cpf.slice(0, 11);
 
-      return cnpj;
+      cpf = cpf.replace(/^(\d{3})(\d)/, '$1.$2');
+      cpf = cpf.replace(/^(\d{3})\.(\d{3})(\d)/, '$1.$2.$3');
+      cpf = cpf.replace(/\.(\d{3})(\d)/, '.$1-$2');
+
+      this.clienteForm.get('cpf')?.setValue(cpf, { emitEvent: false });
+    }
+
+    applyCepMask() {
+      let cep = this.clienteForm.get('cep')?.value || '';
+      cep = cep.replace(/\D/g, ''); // Remove tudo que não é número
+      if (cep.length > 8) cep = cep.slice(0, 8);
+      if (cep.length > 5) cep = cep.replace(/^(\d{5})(\d)/, '$1-$2');
+      this.clienteForm.get('cep')?.setValue(cep, { emitEvent: false });
     }
 
 
+    applyPhoneMask(fieldName: 'primeiroTelefone' | 'segundoTelefone') {
+      let phone = this.clienteForm.get(fieldName)?.value?.replace(/\D/g, '') || '';
+      if (phone.length > 11) phone = phone.slice(0, 11);
 
-
-    applyPhoneMask(value: string): string {
-      let phone = value.replace(/\D/g, '');
-      if (phone.length > 11) {
-        phone = phone.slice(0, 11);
-      }
       if (phone.length <= 10) {
         phone = phone.replace(/^(\d{2})(\d)/, '($1) $2');
         phone = phone.replace(/(\d{4})(\d)/, '$1-$2');
@@ -210,21 +231,21 @@ export class ClienteCriarNovoComponent {
         phone = phone.replace(/^(\d{2})(\d)/, '($1) $2');
         phone = phone.replace(/(\d{5})(\d)/, '$1-$2');
       }
-      this.clienteForm.get('telefone')?.setValue(phone, { emitEvent: false });
 
-      return phone;
+      this.clienteForm.get(fieldName)?.setValue(phone, { emitEvent: false });
     }
 
-    telefoneValidator(control: FormControl) {
+
+   /*  telefoneValidator(control: FormControl) {
       const value = control.value?.replace(/\D/g, '');
       if (!value || value.length < 10 || value.length > 11) {
         return { telefoneInvalido: true };
       }
       return null;
-    }
+    } */
 
 
-    applyCurrencyMask(value: string): string {
+    /* applyCurrencyMask(value: string): string {
       let numericValue = value.replace(/\D/g, '');
       if (numericValue.length > 9) {
         numericValue = numericValue.slice(0, 9);
@@ -233,7 +254,7 @@ export class ClienteCriarNovoComponent {
       this.clienteForm.get('honorario')?.setValue(formattedValue, { emitEvent: false });
 
       return formattedValue;
-    }
+    } */
 
     applyDateMask(value: string): string {
       let date = value.replace(/\D/g, '');
@@ -246,11 +267,35 @@ export class ClienteCriarNovoComponent {
 
       return date;
     }
+/* applyCnpjMask(value: string): string {
+      let cnpj = value.replace(/\D/g, '');
+      if (cnpj.length > 14) {
+        cnpj = cnpj.slice(0, 14);
+      }
+      cnpj = cnpj.replace(/^(\d{2})(\d)/, '$1.$2');
+      cnpj = cnpj.replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3');
+      cnpj = cnpj.replace(/\.(\d{3})(\d)/, '.$1/$2');
+      cnpj = cnpj.replace(/(\d{4})(\d)/, '$1-$2');
+      this.clienteForm.get('cnpj')?.setValue(cnpj, { emitEvent: false });
 
- private toISODate(data: Date): string {
+      return cnpj;
+    } */
+
+ private toISODate(data: any): string {
    if (!data) return '';
-   return data.toISOString().split('T')[0]; // yyyy-MM-dd
+
+   if (typeof data === 'string') {
+     const parsed = parseDateLocal(data);
+     return parsed ? parsed.toISOString().split('T')[0] : '';
+   }
+
+   if (data instanceof Date) {
+     return data.toISOString().split('T')[0];
+   }
+
+   return '';
  }
+
 
 formatarData(event: Event) {
     const input = event.target as HTMLInputElement;
@@ -269,7 +314,20 @@ formatarData(event: Event) {
 
 }
 function parseDateLocal(dateStr: string): Date | null {
-     if (!dateStr) return null;
-     const [year, month, day] = dateStr.split('-').map(Number);
-     return new Date(year, month - 1, day); // mês começa do zero
-   }
+  if (!dateStr) return null;
+
+  if (/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) {
+    const [year, month, day] = dateStr.split('-').map(Number);
+    return new Date(year, month - 1, day);
+  }
+
+  if (/^\d{2}\/\d{2}\/\d{4}$/.test(dateStr)) {
+    const [day, month, year] = dateStr.split('/').map(Number);
+    return new Date(year, month - 1, day);
+  }
+
+  return new Date(dateStr); // fallback
+}
+
+
+

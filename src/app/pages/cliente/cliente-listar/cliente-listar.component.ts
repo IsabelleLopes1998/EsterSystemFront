@@ -48,11 +48,6 @@ export class ClienteListarComponent {
   modalExclusaoVisivel = false;
   clienteSelecionado!: ClienteResponse; // Variável para armazenar o cliente que será excluído
 
-  tiposPagamento = [
-    { key: 1, label: 'Física' },
-    { key: 2, label: 'Jurídica' },
-    { key: 3, label: 'Terceiros' }
-  ];
 
   onPageChange(event: PageEvent) {
     this.first = event.first;
