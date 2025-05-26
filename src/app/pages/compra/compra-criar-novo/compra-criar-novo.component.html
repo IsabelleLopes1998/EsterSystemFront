@@ -1,0 +1,95 @@
+<!-- Campos da compra -->
+<div class="row">
+  <div class="col-md-4">
+    <label for="data" class="form-label">Data da compra</label>
+    <input
+      id="data"
+      type="date"
+      class="form-control input-pequeno"
+      pInputText
+      formControlName="data"
+    />
+  </div>
+
+  <div class="col-md-4">
+    <label for="fornecedor" class="form-label">Fornecedor</label>
+    <input
+      id="fornecedor"
+      type="text"
+      class="form-control input-pequeno"
+      pInputText
+      formControlName="fornecedor"
+      placeholder="Nome do fornecedor"
+    />
+  </div>
+</div>
+
+<!-- Itens da compra -->
+<div class="mt-4">
+  <h5 style="color: #5e2974;"><strong>Itens da compra</strong></h5>
+</div>
+
+<div formArrayName="itens" class="row">
+  <div
+    *ngFor="let item of itens.controls; let i = index"
+    [formGroupName]="i"
+    class="row mb-3"
+  >
+    <div class="col-md-4">
+      <label class="form-label">Produto</label>
+      <p-dropdown
+        [options]="produtos"
+        optionLabel="nome"
+        optionValue="id"
+        formControlName="produtoId"
+        placeholder="Selecione um produto"
+      ></p-dropdown>
+    </div>
+
+    <div class="col-md-3">
+      <label class="form-label">Valor Unitário</label>
+      <input
+        type="number"
+        class="form-control"
+        formControlName="valorUnitario"
+        placeholder="0.00"
+      />
+    </div>
+
+    <div class="col-md-3">
+      <label class="form-label">Quantidade</label>
+      <input
+        type="number"
+        class="form-control"
+        formControlName="quantidade"
+        placeholder="1"
+      />
+    </div>
+
+    <div class="col-md-2 d-flex align-items-end">
+      <button
+        type="button"
+        class="btn btn-danger"
+        (click)="removerItem(i)"
+      >
+        Remover
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Botão para adicionar item -->
+<div class="mt-3">
+  <button
+    type="button"
+    class="btn btn-primary"
+    (click)="adicionarItem()"
+  >
+    + Adicionar Produto
+  </button>
+</div>
+
+<!-- Botão final -->
+<div class="d-flex justify-content-left mt-4">
+  <button type="submit" class="btn-salvar mx-2">Cadastrar Compra</button>
+</div>

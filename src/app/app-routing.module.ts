@@ -10,6 +10,7 @@ import { CategoriaListarComponent } from './pages/categoria/categoria-listar/cat
 import { CategoriaCriarNovoComponent } from './pages/categoria/categoria-criar-novo/categoria-criar-novo.component';
 import { EstoqueListarComponent } from './pages/estoque/estoque-listar/estoque-listar.component';
 import { CompraListarComponent } from './pages/compra/compra-listar/compra-listar.component';
+import { CompraCriarNovoComponent } from './pages/compra/compra-criar-novo/compra-criar-novo.component';
 import { LoginComponent } from './pages/login/login.component';
 import { AuthGuard } from './auth.guard';
 
@@ -29,7 +30,8 @@ const routes: Routes = [
       { path: 'categoria-criar-novo', component: CategoriaCriarNovoComponent },
       { path: 'categoria-criar-novo/:id', component: CategoriaCriarNovoComponent },
       { path: 'estoque-listar', component: EstoqueListarComponent },
-      { path: 'compra-listar', component: CompraListarComponent }
+      { path: 'compra-listar', component: CompraListarComponent },
+      { path: 'compra-criar-novo', component: CompraCriarNovoComponent },
     ]
   },
   { path: '**', redirectTo: 'index' }

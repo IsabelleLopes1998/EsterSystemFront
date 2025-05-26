@@ -10,6 +10,8 @@ import { CompraRequest, CompraResponse } from './compra-listar/compra.model';
 export class CompraService {
 
   private compraApiUrl = `${environment.apiBaseUrl}/compras`;
+  fb: any;
+  itens: any;
 
   constructor(private http: HttpClient) { }
 
@@ -20,4 +22,5 @@ export class CompraService {
   getListaDeCompras(): Observable<CompraResponse[]> {
     return this.http.get<CompraResponse[]>(`${this.compraApiUrl}`);
   }
+  
 }
