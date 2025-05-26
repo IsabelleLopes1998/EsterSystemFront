@@ -1,85 +1,105 @@
-<div class="custom-margin">
-    <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <p-card>
+                <p-toast></p-toast>
+                
+                <div class="d-flex align-items-center mb-4">
+                    <h1 class="page-title">
+                        <strong>{{ isEditing ? 'Editar' : 'Novo' }} Produto</strong>
+                    </h1>
+                    <div class="divider"></div>
+                </div>
+
+                <form [formGroup]="produtoForm" (ngSubmit)="salvarProduto()">
+                    <div class="form-grid">
+                        <div class="form-field">
+                            <label for="nome">Nome *</label>
+                            <input id="nome" type="text" pInputText formControlName="nome" 
+                                placeholder="Digite o nome do produto"
+                                [class.ng-invalid]="produtoForm.get('nome')?.invalid && produtoForm.get('nome')?.touched">
+                            <small class="error-message" *ngIf="produtoForm.get('nome')?.invalid && produtoForm.get('nome')?.touched">
+                                Nome é obrigatório
+                            </small>
+                        </div>
+
+                        <div class="form-field">
+                            <label for="valor">Valor *</label>
+                            <input id="valor" type="text" pInputText formControlName="valor" 
+                                placeholder="Digite o valor do produto"
+                                [class.ng-invalid]="produtoForm.get('valor')?.invalid && produtoForm.get('valor')?.touched">
+                            <small class="error-message" *ngIf="produtoForm.get('valor')?.invalid && produtoForm.get('valor')?.touched">
+                                Valor é obrigatório
+                            </small>
+                        </div>
+
+                        <div class="form-field">
+                            <label for="quantidadeEstoque">Quantidade *</label>
+                            <input id="quantidadeEstoque" type="text" pInputText formControlName="quantidadeEstoque" 
+                                placeholder="Digite a quantidade do produto"
+                                [class.ng-invalid]="produtoForm.get('quantidadeEstoque')?.invalid && produtoForm.get('quantidadeEstoque')?.touched">
+                            <small class="error-message" *ngIf="produtoForm.get('quantidadeEstoque')?.invalid && produtoForm.get('quantidadeEstoque')?.touched">
+                                Quantidade é obrigatória
+                            </small>
+                        </div>
+
+                        <div class="form-field">
+                            <label for="idCategoria">Categoria *</label>
+                            <p-dropdown 
+                                id="idCategoria"
+                                formControlName="idCategoria"
+                                [options]="categoria"
+                                optionLabel="nome"
+                                optionValue="id"
+                                placeholder="Selecione a categoria"
+                                [class.ng-invalid]="produtoForm.get('idCategoria')?.invalid && produtoForm.get('idCategoria')?.touched"
+                                (onChange)="categoriaSelecionada($event)">
+                            </p-dropdown>
+                            <small class="error-message" *ngIf="produtoForm.get('idCategoria')?.invalid && produtoForm.get('idCategoria')?.touched">
+                                Categoria é obrigatória
+                            </small>
+                        </div>
+
+                        <div class="form-field">
+                            <label for="idSubcategoria">Subcategoria *</label>
+                            <p-dropdown
+                                id="idSubcategoria"
+                                formControlName="idSubcategoria"
+                                [options]="subcategoria"
+                                optionLabel="nome"
+                                optionValue="id"
+                                placeholder="Selecione a subcategoria"
+                                [class.ng-invalid]="produtoForm.get('idSubcategoria')?.invalid && produtoForm.get('idSubcategoria')?.touched">
+                            </p-dropdown>
+                            <small class="error-message" *ngIf="produtoForm.get('idSubcategoria')?.invalid && produtoForm.get('idSubcategoria')?.touched">
+                                Subcategoria é obrigatória
+                            </small>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-end mt-4">
+                        <button type="button" pButton class="btn-limpar mx-2" (click)="limparFormulario()">Limpar</button>
+                        <button type="submit" pButton class="btn-salvar mx-2" [disabled]="isLoading">
+                            <i *ngIf="isLoading" class="pi pi-spin pi-spinner mr-2"></i>
+                            {{ isEditing ? 'Atualizar' : 'Salvar' }}
+                        </button>
+                    </div>
+                </form>
+            </p-card>
+        </div>
+    </div>
 </div>
 
-<p-card class="custom-card-margin">
-    <p-dialog [(visible)]="isLoading" [modal]="true" [closable]="false" showHeader="false"
-              styleClass="custom-loading-dialog">
-        <div class="loading-content">
-            <p-progressSpinner></p-progressSpinner>
-            <p class="loading-text">Processando...</p>
-        </div>
-    </p-dialog>
-
-    <form [formGroup]="produtoForm" (ngSubmit)="salvarProduto()">
-        <div class="d-flex align-items-center mt-0">
-            <h1 style="color: #5e2974; font-size: 18px; margin-top: -50px; margin-left: -5px; text-wrap: nowrap;">
-                <strong>Cadastrar Produto</strong>
-            </h1>
-            <div class="flex-grow-1 mx-5" style="position: relative; top: -30px; margin-left: 60px;width: 100%;">
-                <hr class="divider container-fluid" style="width: 100%; margin-left: 2px; margin-right: 40px;">
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-3">
-                <label class="form-label" for="nome">Nome</label>
-                <input id="nome" type="text" class="form-control input-pequeno" pInputText formControlName="nome"
-                       placeholder="Digite o nome do produto"/>
-            </div>
-            <div class="col-md-3">
-                <label for="valor" class="form-label">Valor</label>
-                <input id="valor" pInputText type="text" class="form-control input-pequeno" formControlName="valor"
-                       placeholder="Digite o valor do produto"/>
-            </div>
-            <div class="col-md-3">
-                <label for="quantidadeEstoque" class="form-label">Quantidade</label>
-                <input id="quantidadeEstoque" pInputText type="text" class="form-control input-pequeno" formControlName="quantidadeEstoque"
-                       placeholder="Digite a quantidade do produto"/>
-            </div>
-
-            <div class="col-md-3 ">
-                <label class="form-label" for="idCategoria">Categoria</label>
-                <p-dropdown
-                    inputId="idCategoria"
-                    [options]="categoria"
-                    optionLabel="nome"
-                    optionValue="id"
-                    placeholder="Selecione a categoria"
-                    formControlName="idCategoria"
-                    (onChange)="categoriaSelecionada($event)">
-                </p-dropdown>
-            </div>
-
-            <div class="col-md-3 d-flex flex-column justify-content-end">
-                <label for="idSubcategoria" class="form-label">Subcategoria</label>
-                <p-dropdown
-                    inputId="idSubcategoria"
-                    [options]="subcategoria"
-                    optionLabel="nome"
-                    optionValue="id"
-                    placeholder="Selecione a subcategoria"
-                    formControlName="idSubcategoria">
-                </p-dropdown>
-            </div>
-
-            <!-- Botões -->
-            <div class="d-flex justify-content-left mt-4">
-                <button type="button" class="btn-limpar mx-2" (click)="limparFormulario()">Limpar</button>
-
-                <button *ngIf="!isEditing" type="submit" class="btn-salvar mx-2">
-                    Cadastrar Produto
-                </button>
-
-                <button *ngIf="isEditing" type="submit" class="btn-atualizar mx-2">
-                    Atualizar Produto
-                </button>
-            </div>
-
-        </div>
-
-    </form>
-
-</p-card>
-
-<p-toast></p-toast>
+<p-dialog [(visible)]="isLoading" [modal]="true" [closable]="false" [style]="{width: '450px'}">
+    <div class="flex align-items-center justify-content-center">
+        <p-progressSpinner [style]="{width: '50px', height: '50px'}" strokeWidth="8" fill="var(--surface-ground)" animationDuration=".5s"></p-progressSpinner>
+    </div>
+</p-dialog>
