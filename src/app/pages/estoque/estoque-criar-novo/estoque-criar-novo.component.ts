@@ -1,194 +1,163 @@
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MessageService } from 'primeng/api';
-import { DialogModule } from 'primeng/dialog';
-import { DropdownModule } from 'primeng/dropdown';
-import { InputMaskModule } from 'primeng/inputmask';
-import { OverlayPanelModule } from 'primeng/overlaypanel';
-import { ProgressSpinnerModule } from 'primeng/progressspinner';
-import { ToastModule } from 'primeng/toast';
-import { TreeSelectModule } from 'primeng/treeselect';
-import { BreadcrumbModule } from 'src/app/componentes/breadcrumb/breadcrumb.module';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators, FormsModule } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PrimeNgModule } from 'src/app/componentes/primeng/primeng.module';
-import { Usuario } from '../usuario.model';
-import { UsuarioService } from '../usuario.service';
-import { ActivatedRoute } from '@angular/router';
+import { BreadcrumbModule } from 'src/app/componentes/breadcrumb/breadcrumb.module';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
+import { EstoqueService, MovimentacaoEstoqueRequestDTO } from '../estoque.service';
+import { ProdutoService, ProdutoResponseDTO } from '../../produto/produto.service';
+import { DialogModule } from 'primeng/dialog';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { DropdownModule } from 'primeng/dropdown';
+import { CalendarModule } from 'primeng/calendar';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { ButtonModule } from 'primeng/button';
+import { AutoCompleteModule } from 'primeng/autocomplete';
+import { TooltipModule } from 'primeng/tooltip';
 
 @Component({
-    selector: 'app-usuario-criar-novo',
+    selector: 'app-estoque-criar-novo',
     standalone: true,
-    imports: [CommonModule,
-        ReactiveFormsModule,
+    imports: [
+        CommonModule,
         PrimeNgModule,
         BreadcrumbModule,
-        InputMaskModule,
-        DropdownModule,
-        TreeSelectModule,
         ToastModule,
-        OverlayPanelModule,
-        ProgressSpinnerModule, DialogModule],
-    templateUrl: './usuario-criar-novo.component.html',
-    styleUrl: './usuario-criar-novo.component.css',
+        ReactiveFormsModule,
+        FormsModule,
+        DialogModule,
+        ProgressSpinnerModule,
+        DropdownModule,
+        CalendarModule,
+        InputNumberModule,
+        InputTextareaModule,
+        ButtonModule,
+        AutoCompleteModule,
+        TooltipModule
+    ],
+    templateUrl: './estoque-criar-novo.component.html',
+    styleUrls: ['./estoque-criar-novo.component.css'],
     providers: [MessageService]
 })
-export class UsuarioCriarNovoComponent {
-    breadcrumbs: any = [
-        { label: 'Início', url: '#' },
-        { label: 'Lista de usuários', url: '/usuario-listar' },
-        { label: 'Novo usuário', url: 'javascript:void(0)' }
-    ];
-    usuarioForm!: FormGroup;
-    perfis = [
-        { key: 1, label: 'Administrador' }
-    ];
-
-    isEditing = false;
+export class EstoqueCriarNovoComponent implements OnInit {
+    form: FormGroup;
     isLoading = false;
-    perfilSelecionado: string;
-
-
-    mostrarSenha = false;
-    mostrarConfirmacao = false;
-    senhasIguais: boolean | null = null;
-
-    temMinCaracteres = false;
-    temNumero = false;
-    temMaiuscula = false;
-    temMinuscula = false;
-    temEspecial = false;
-
-
+    produtos: ProdutoResponseDTO[] = [];
+    filteredProdutos: ProdutoResponseDTO[] = [];
+    produtoSelecionado: ProdutoResponseDTO | null = null;
+    tiposMovimentacao = [
+        { label: 'Entrada Manual', value: 'ENTRADA_MANUAL' },
+        { label: 'Saída Manual', value: 'SAIDA_MANUAL' }
+    ];
+    loading = false;
+    breadcrumbs = [
+        { label: 'Início', url: '/' },
+        { label: 'Estoque', url: '/estoque-listar' },
+        { label: 'Nova Movimentação', url: '/estoque-criar-novo' }
+    ];
 
     constructor(
         private fb: FormBuilder,
-        private usuarioService: UsuarioService,
-        private messageService: MessageService,
-        private route: ActivatedRoute
-
+        private estoqueService: EstoqueService,
+        private produtoService: ProdutoService,
+        private router: Router,
+        private route: ActivatedRoute,
+        private messageService: MessageService
     ) {
-        this.usuarioForm = this.fb.group({
-            nome: ['', Validators.required],
-            cpf: ['', Validators.required],
-            email: ['', [Validators.required, Validators.email]],
-            perfil: ['', Validators.required],
-            senha: ['', Validators.required],
-            confirmarSenha: ['', Validators.required],
+        this.form = this.fb.group({
+            idProduto: [null, Validators.required],
+            tipoAcerto: ['ENTRADA_MANUAL', Validators.required],
+            data: [new Date(), Validators.required],
+            quantidade: [1, Validators.required],
+            observacao: ['']
         });
-
     }
 
     ngOnInit(): void {
-        const id = this.route.snapshot.paramMap.get('id');
-
-        if (id) {
-            // Edição
-            this.usuarioService.buscarPorId(+id).subscribe(usuario => {
-                this.usuarioForm.patchValue(usuario);
-            });
-        } else {
-            // Criação
-            this.usuarioForm.reset({ perfil: 'ADMINISTRADOR' });
-        }
+        this.carregarProdutos();
     }
-    criarNovaMovimentacaoEstoque() {
-        this.route.navigate(['/estoque-criar-novo'])
-    }
-    limparFormulario() {
-        this.usuarioForm.reset({ perfil: 'ADMINISTRADOR' });
-        this.isEditing = false;
-    }
-    salvarUsuario(): void {
-        if (this.usuarioForm.invalid) {
-            this.messageService.add({
-                severity: 'warn',
-                summary: 'Campos obrigatórios',
-                detail: 'Preencha todos os campos corretamente'
-            });
-            return;
-        }
 
-        const form = this.usuarioForm.value;
-
-        const novoUsuario: Usuario = {
-            nome: form.nome?.trim(),
-            cpf: form.cpf?.replace(/\D/g, ''), // remove pontuação
-            email: form.email?.trim().toLowerCase(),
-            perfil: form.perfil?.key ?? form.perfil, // <-- aqui é o mais importante!
-            senha: form.senha
-        };
-
-        this.usuarioService.salvar(novoUsuario).subscribe({
-            next: () => {
-                this.messageService.add({
-                    severity: 'success',
-                    summary: 'Usuário cadastrado',
-                    detail: 'Usuário salvo com sucesso!'
-                });
-                this.usuarioForm.reset({ perfil: 1 }); // reset com perfil padrão
+    carregarProdutos(): void {
+        this.isLoading = true;
+        this.produtoService.getListaDeProdutos().subscribe({
+            next: (produtos) => {
+                console.log('Produtos carregados:', produtos);
+                this.produtos = produtos;
+                this.isLoading = false;
             },
-            error: err => {
-                console.error('Erro ao salvar usuário', err);
+            error: (error) => {
+                console.error('Erro ao carregar produtos:', error);
                 this.messageService.add({
                     severity: 'error',
-                    summary: 'Erro ao salvar',
-                    detail: 'Não foi possível cadastrar o usuário'
+                    summary: 'Erro',
+                    detail: 'Erro ao carregar produtos'
                 });
+                this.isLoading = false;
             }
         });
     }
 
+    filtrarProdutos(event: any): void {
+        console.log('Evento de filtro:', event);
+        const query = event.query.toLowerCase();
+        this.filteredProdutos = this.produtos.filter(produto => 
+            produto.nome.toLowerCase().includes(query)
+        );
+        console.log('Produtos filtrados:', this.filteredProdutos);
+    }
 
-    applyCpfMask(value: string) {
-        if (!value) return;
+    onProdutoSelect(event: any): void {
+        console.log('Produto selecionado no evento:', event);
+        this.produtoSelecionado = event.value;
+        this.form.patchValue({
+            idProduto: event.value.id
+        });
+    }
 
-        let cpf = value.replace(/\D/g, ''); // Remove tudo que não for dígito
-
-        if (cpf.length > 11) {
-            cpf = cpf.substring(0, 11); // Limita a 11 dígitos
-        }
-
-        // Aplica a máscara manualmente
-        if (cpf.length <= 3) {
-            this.usuarioForm.get('cpf')?.setValue(cpf);
-        } else if (cpf.length <= 6) {
-            this.usuarioForm.get('cpf')?.setValue(`${cpf.slice(0, 3)}.${cpf.slice(3)}`);
-        } else if (cpf.length <= 9) {
-            this.usuarioForm.get('cpf')?.setValue(`${cpf.slice(0, 3)}.${cpf.slice(3, 6)}.${cpf.slice(6)}`);
+    salvar(): void {
+        if (this.form.valid) {
+            this.loading = true;
+            this.isLoading = true;
+            const dto: MovimentacaoEstoqueRequestDTO = this.form.value;
+            
+            this.estoqueService.criar(dto).subscribe({
+                next: () => {
+                    this.messageService.add({
+                        severity: 'success',
+                        summary: 'Sucesso',
+                        detail: 'Movimentação de estoque registrada com sucesso'
+                    });
+                    this.router.navigate(['/estoque-listar']);
+                },
+                error: (error) => {
+                    console.error('Erro ao salvar movimentação:', error);
+                    this.messageService.add({
+                        severity: 'error',
+                        summary: 'Erro',
+                        detail: 'Erro ao registrar movimentação de estoque'
+                    });
+                    this.loading = false;
+                    this.isLoading = false;
+                }
+            });
         } else {
-            this.usuarioForm.get('cpf')?.setValue(`${cpf.slice(0, 3)}.${cpf.slice(3, 6)}.${cpf.slice(6, 9)}-${cpf.slice(9)}`);
+            this.messageService.add({
+                severity: 'warn',
+                summary: 'Atenção',
+                detail: 'Preencha todos os campos obrigatórios'
+            });
         }
     }
 
-    validarSenha(event: any) {
-        // Impede espaço
-        const senhaDigitada = event.target.value.replace(/\s/g, '');
-        this.usuarioForm.get('senha')?.setValue(senhaDigitada, { emitEvent: false });
-
-        const senha = senhaDigitada;
-
-        this.temMinCaracteres = senha.length >= 8;
-        this.temNumero = /\d/.test(senha);
-        this.temMaiuscula = /[A-Z]/.test(senha);
-        this.temMinuscula = /[a-z]/.test(senha);
-        this.temEspecial = /[\W_]/.test(senha);
-
-        const requisitos = [
-            this.temNumero,
-            this.temMaiuscula,
-            this.temMinuscula,
-            this.temEspecial
-        ].filter(Boolean).length;
-
-        this.verificarConfirmacao();
+    limparFormulario(): void {
+        this.form.reset({
+            tipoAcerto: 'ENTRADA_MANUAL',
+            quantidade: 1,
+            data: new Date()
+        });
+        this.produtoSelecionado = null;
     }
-
-
-    verificarConfirmacao() {
-        const senha = this.usuarioForm.get('senha')?.value;
-        const confirmar = this.usuarioForm.get('confirmarSenha')?.value;
-
-        this.senhasIguais = senha && confirmar && senha === confirmar;
-    }
-
 }

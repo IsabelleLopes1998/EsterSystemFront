@@ -44,25 +44,27 @@
 
             <ng-template pTemplate="header">
                 <tr>
-                    <th pSortableColumn="idProduto" style="min-width: 180px; font-size: 13px;">Produto</th>
-                    <th pSortableColumn="quantidade" style="min-width: 100px; font-size: 13px;">Quantidade <p-sortIcon
-                            field="quantidade"></p-sortIcon></th>
-                    <th pSortableColumn="tipoMovimentacao" style="min-width: 130px; font-size: 13px;">Tipo <p-sortIcon
-                            field="tipoMovimentacao"></p-sortIcon></th>
-                    <th pSortableColumn="data" style="min-width: 150px; font-size: 13px;">Data</th>
+                    <th pSortableColumn="produtoName" style="min-width: 180px; font-size: 13px;">Produto <p-sortIcon field="produtoName"></p-sortIcon></th>
+                    <th pSortableColumn="quantidade" style="min-width: 100px; font-size: 13px;">Quantidade <p-sortIcon field="quantidade"></p-sortIcon></th>
+                    <th pSortableColumn="tipoMovimentacao" style="min-width: 130px; font-size: 13px;">Tipo <p-sortIcon field="tipoMovimentacao"></p-sortIcon></th>
+                    <th pSortableColumn="data" style="min-width: 150px; font-size: 13px;">Data <p-sortIcon field="data"></p-sortIcon></th>
                     <th style="min-width: 100px;">Ações</th>
                 </tr>
             </ng-template>
 
             <ng-template pTemplate="body" let-mov>
                 <tr>
-                    <td class="table-cell" style="font-size: 12px;">{{
-                        mov.idProduto }}</td>
+                    <td class="table-cell" style="font-size: 12px;">
+                        <ng-container *ngIf="mov.produtoName; else produtoSemNome">
+                            {{ mov.produtoName }}
+                        </ng-container>
+                        <ng-template #produtoSemNome>
+                            <span class="text-warning">Produto ID: {{ mov.idProduto | slice:0:8 }}...</span>
+                        </ng-template>
+                    </td>
                     <td class="table-cell" style="font-size: 12px;">{{ mov.quantidade }}</td>
-                    <td class="table-cell" style="font-size: 12px;">{{
-                        mov.tipoMovimentacao }}</td>
-                    <td class="table-cell" style="font-size: 12px;">{{ mov.data
-                        | date: 'dd/MM/yyyy hh:mm:ss' }}</td>
+                    <td class="table-cell" style="font-size: 12px;">{{ mov.tipoMovimentacao }}</td>
+                    <td class="table-cell" style="font-size: 12px;">{{ mov.data | date: 'dd/MM/yyyy hh:mm:ss' }}</td>
                     <td class="table-cell" style="font-size: 20px;">
                         <p-button type="button" class="custom-button-edit" (click)="editarMovimentacao(mov.id)">
                             <i class="fa-solid fa-pen-to-square"></i>

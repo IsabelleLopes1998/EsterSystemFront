@@ -9,11 +9,11 @@ import { PaginatorModule } from 'primeng/paginator';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { ToastModule } from 'primeng/toast';
 import { finalize } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 import { MessageService } from 'primeng/api';
 import { BreadcrumbModule } from 'src/app/componentes/breadcrumb/breadcrumb.module';
 import { PrimeNgModule } from 'src/app/componentes/primeng/primeng.module';
-import { EstoqueService } from '../estoque.service';
-import { MovimentacaoEstoqueResponseDTO } from '../estoque.model';
+import { EstoqueService, MovimentacaoEstoqueResponseDTO } from '../estoque.service';
 
 interface PageEvent {
     first: number;
@@ -71,8 +71,8 @@ export class EstoqueListarComponent {
     ) { }
 
     ngOnInit(): void {
-        this.getListaDeMovimentacoes();
-        console.log(this.movimentacoesEstoque)
+        console.log('Iniciando componente de lista de movimentações');
+        this.carregarMovimentacoes();
     }
 
     onPageChange(event: PageEvent) {
@@ -88,42 +88,38 @@ export class EstoqueListarComponent {
     }
 
     criarNovaMovimentacao() {
-        this.router.navigate(['/movimentacao-estoque-criar']);
+        this.router.navigate(['/estoque-criar-novo']);
     }
 
-    getListaDeMovimentacoes(): void {
+    carregarMovimentacoes(): void {
         this.isLoading = true;
-
-        this.estoqueService.listarTodos()
-            .pipe(finalize(() => this.isLoading = false))
+        console.log('Carregando movimentações de estoque...');
+        
+        this.estoqueService.listar()
             .subscribe({
-                next: (res: MovimentacaoEstoqueResponseDTO[]) => {
-                    if (res && res.length > 0) {
-                        this.movimentacoesEstoque = res;
-                        this.movimentacoesEstoqueFiltradas = [...res];
-
-                        // Verifica se os dados carregaram corretamente
-                        console.log("Movimentações carregadas:", this.movimentacoesEstoque);
-                        console.log("Movimentacoes carregas 2 :", this.movimentacoesEstoqueFiltradas)
-                    } else {
-                        this.movimentacoesEstoque = [];
-                        this.movimentacoesEstoqueFiltradas = [];
-                        this.messageService.add({
-                            severity: 'warn',
-                            summary: 'Aviso',
-                            detail: 'Nenhuma movimentação encontrada.',
-                            life: 3000
-                        });
+                next: (movimentacoes) => {
+                    console.log('Movimentações recebidas:', JSON.stringify(movimentacoes, null, 2));
+                    
+                    // Verificar se o campo produtoName está presente
+                    if (movimentacoes.length > 0) {
+                        const firstItem = movimentacoes[0];
+                        console.log('Campos disponíveis no primeiro item:', Object.keys(firstItem));
+                        console.log('Valor do produtoName:', firstItem.produtoName);
+                        console.log('Valor do idProduto:', firstItem.idProduto);
                     }
+                    
+                    this.movimentacoesEstoque = movimentacoes;
+                    this.movimentacoesEstoqueFiltradas = [...movimentacoes];
+                    this.isLoading = false;
                 },
-                error: (error: any) => {
-                    console.error('Erro ao carregar movimentações', error);
+                error: (error) => {
+                    console.error('Erro ao carregar movimentações:', error);
                     this.messageService.add({
                         severity: 'error',
                         summary: 'Erro',
-                        detail: 'Erro ao carregar a lista de movimentações.',
-                        life: 5000
+                        detail: 'Erro ao carregar movimentações de estoque'
                     });
+                    this.isLoading = false;
                 }
             });
     }
@@ -154,7 +150,7 @@ export class EstoqueListarComponent {
                     detail: 'Movimentação excluída com sucesso!'
                 });
 
-                this.getListaDeMovimentacoes();
+                this.carregarMovimentacoes();
             },
             error: () => {
                 this.modalExclusaoVisivel = false;
