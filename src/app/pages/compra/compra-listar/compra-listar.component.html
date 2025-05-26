@@ -1,0 +1,64 @@
+<p-toast></p-toast>
+
+<p-card>
+    <div style="margin-left: 30px;">
+        <app-breadcrumb [breadcrumbs]="[{ label: 'Início', url: '#' }, { label: 'Lista de compras', url: '#' }]"></app-breadcrumb>
+    </div>
+
+    <div class="container-fluid">
+        <div class="header-container d-flex align-items-center mb-4 mt-4">
+            <!-- Título -->
+            <div class="titulo" style="margin-left: 10px;">
+                <h1 class="titulo-pagina" style="font-size: 1.5rem; color: #5e2974;">
+                    <strong>Lista de compras</strong>
+                </h1>
+            </div>
+            <p-divider class="divider" type="solid"></p-divider>
+            <div class="search-container p-input-icon-left ml-auto" style="position: relative; margin-right: 15px;">
+                <i class="pi pi-search" style="position: absolute; left: 10px; top: 65%; transform: translateY(-50%);"></i>
+                <input class="input-pesquisar" pInputText type="text" placeholder="Pesquisar" style="padding-left: 30px;" [(ngModel)]="pesquisar">
+            </div>
+        </div>
+    </div>
+
+    <!-- Spinner de carregamento -->
+    <div *ngIf="isLoading" class="spinner-container">
+        <p-progressSpinner ariaLabel="loading" [style]="{ width: '50px', height: '50px' }" strokeWidth="4" class="green-spinner"></p-progressSpinner>
+    </div>
+
+    <!-- Tabela de compras -->
+    <p-table *ngIf="!isLoading" [value]="comprasFiltradas" dataKey="id" styleClass="p-datatable-striped custom-table"
+             [tableStyle]="{ 'min-width': '20rem', 'width': '100%' }" [paginator]="true" [rows]="10"
+             [rowsPerPageOptions]="[10, 20, 30]">
+
+        <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn="data" style="min-width: 150px; font-size: 13px;">Data <p-sortIcon field="data"></p-sortIcon></th>
+                <th pSortableColumn="fornecedor" style="min-width: 180px; font-size: 13px;">Fornecedor <p-sortIcon field="fornecedor"></p-sortIcon></th>
+                <th pSortableColumn="formaPagamento" style="min-width: 150px; font-size: 13px;">Pagamento <p-sortIcon field="formaPagamento"></p-sortIcon></th>
+                <th pSortableColumn="quantidadeParcelas" style="min-width: 130px; font-size: 13px;">Parcelas <p-sortIcon field="quantidadeParcelas"></p-sortIcon></th>
+                <th pSortableColumn="nomeUsuario" style="min-width: 180px; font-size: 13px;">Usuário <p-sortIcon field="nomeUsuario"></p-sortIcon></th>
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-compra>
+            <tr>
+                <td class="table-cell" style="font-size: 12px;">{{ compra.data }}</td>
+                <td class="table-cell" style="font-size: 12px;">{{ compra.fornecedor }}</td>
+                <td class="table-cell" style="font-size: 12px;">{{ compra.formaPagamento }}</td>
+                <td class="table-cell" style="font-size: 12px;">{{ compra.quantidadeParcelas }}</td>
+                <td class="table-cell" style="font-size: 12px;">{{ compra.nomeUsuario }}</td>
+            </tr>
+        </ng-template>
+
+    </p-table>
+</p-card>
+<!-- <p-dialog [(visible)]="modalExclusaoVisivel" [modal]="true" [closable]="false" header="Confirmar Exclusão">
+  <div class="p-d-flex p-ai-center p-jc-center">
+    <p>Tem certeza que deseja excluir esta compra?</p>
+  </div>
+  <div class="p-dialog-footer p-d-flex p-jc-center">
+    <button class="btn-nao" (click)="modalExclusaoVisivel = false"><i class="pi pi-times"></i> NÃO</button>
+    <button class="btn-sim" (click)="excluirCompra()"><i class="pi pi-check"></i> SIM</button>
+  </div>
+</p-dialog> -->

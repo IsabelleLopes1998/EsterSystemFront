@@ -27,11 +27,46 @@
                 <input id="nome" type="text" class="form-control input-pequeno" pInputText formControlName="nome"
                     placeholder="Digite o nome do cliente"/>
             </div>
+
             <div class="col-md-3">
-                <label for="cpf" class="form-label">CPF</label>
-                <input id="cpf" pInputText type="text" class="form-control input-pequeno" formControlName="cpf"
-                    placeholder="Digite o cpf do cliente"/>
+                <label for="cpf" class="form-label">CPF/CNPJ</label>
+                <input
+                    id="cpf"
+                    type="text"
+                    class="form-control input-pequeno"
+                    pInputText
+                    formControlName="cpf"
+                    placeholder="CPF ou CNPJ"
+                    (input)="applyCpfMask()"
+                />
+                <small *ngIf="clienteForm.get('cpf')?.hasError('required') && clienteForm.get('cpf')?.touched" class="p-error">
+                    Campo obrigatório.
+                </small>
+                <small *ngIf="clienteForm.get('cpf')?.hasError('pattern') && clienteForm.get('cpf')?.touched" class="p-error">
+                    Formato inválido. Use CPF (XXX.XXX.XXX-XX) ou CNPJ (XX.XXX.XXX/0001-XX).
+                </small>
+                <small *ngIf="clienteForm.get('cpf')?.hasError('cpfInvalido') && clienteForm.get('cpf')?.touched" class="p-error">
+                    CPF inválido.
+                </small>
+                <small *ngIf="clienteForm.get('cpf')?.hasError('cnpjInvalido') && clienteForm.get('cpf')?.touched" class="p-error">
+                    CNPJ inválido.
+                </small>
+                <small *ngIf="clienteForm.get('cpf')?.hasError('cpfCnpjInvalido') && clienteForm.get('cpf')?.touched" class="p-error">
+                    CPF ou CNPJ inválido.
+                </small>
+
             </div>
+
+
+            <div class="col-md-3">
+                <label class="form-label">Data de Nascimento</label>
+                <p-calendar
+                    [showIcon]="true"
+                    [iconDisplay]="'input'"
+                    dateFormat="dd/mm/yy"
+                    placeholder="Selecione uma data"
+                    formControlName="dataNascimento"
+                    [showOnFocus]="false">
             <div class="col-md-3 custom-field">
                 <label style="margin-block-end: 8px; display: block;">Data de Nascimento</label>
                 <p-calendar [showIcon]="true" [iconDisplay]="'input'" dateFormat="dd/mm/yy"
@@ -40,11 +75,6 @@
                 </p-calendar>
             </div>
 
-            <!--            <div class="col-md-3">-->
-<!--                <label for="telefone" class="form-label">Telefone</label>-->
-<!--                <input type="text" class="form-control input-pequeno" pInputText formControlName="telefone"-->
-<!--                    placeholder="Digite o telefone" maxlength="15" (input)="applyPhoneMask($event.target.value)" />-->
-<!--            </div>-->
         </div>
         <div class="row mt-3">
             <div class="col-md-3">
@@ -57,11 +87,51 @@
                     <i class="pi pi-exclamation-circle"></i> E-mail inválido
                 </small>
             </div>
+            <div class="col-md-3">
+                <label for="primeiroTelefone" class="form-label">Telefone 1</label>
+                <input
+                    id="primeiroTelefone"
+                    type="text"
+                    class="form-control input-pequeno"
+                    pInputText
+                    formControlName="primeiroTelefone"
+                    placeholder="Ex: (85) 90000-0000"
+                    (input)="applyPhoneMask('primeiroTelefone')"
+                />
+                <small
+                    *ngIf="clienteForm.get('primeiroTelefone')?.invalid && (clienteForm.get('primeiroTelefone')?.touched || clienteForm.get('primeiroTelefone')?.dirty)"
+                    class="text-danger"
+                >
+                    <i class="pi pi-exclamation-circle"></i> Telefone inválido (formato: (XX) 9XXXX-XXXX)
+                </small>
+            </div>
 
+            <div class="col-md-3">
+                <label for="segundoTelefone" class="form-label">Telefone 2</label>
+                <input
+                    id="segundoTelefone"
+                    type="text"
+                    class="form-control input-pequeno"
+                    pInputText
+                    formControlName="segundoTelefone"
+                    placeholder="Ex: (85) 90000-0000"
+                    (input)="applyPhoneMask('segundoTelefone')"
+                />
+                <small
+                    *ngIf="clienteForm.get('segundoTelefone')?.invalid && (clienteForm.get('segundoTelefone')?.touched || clienteForm.get('segundoTelefone')?.dirty)"
+                    class="text-danger"
+                >
+                    <i class="pi pi-exclamation-circle"></i> Telefone inválido (formato: (XX) 9XXXX-XXXX)
+                </small>
+            </div>
+
+
+        </div>
+        <div class="row mt-3">
             <div class="col-md-3">
                 <label for="rua" class="form-label">Rua</label>
                 <input id="rua" type="text" class="form-control input-pequeno" pInputText formControlName="rua"
-                    placeholder="Digite o nome da rua"/>
+                       placeholder="Digite o nome da rua"/>
             </div>
             <div class="col-md-3">
                 <label for="numero" class="form-label">Número</label>
@@ -75,16 +145,17 @@
             </div>
             <div class="col-md-3">
                 <label for="cep" class="form-label">CEP</label>
-                <input id="cep" type="text" class="form-control input-pequeno" pInputText formControlName="cep"
-                       placeholder="Digite o CEP"/>
+                <input
+                    id="cep"
+                    type="text"
+                    class="form-control input-pequeno"
+                    pInputText
+                    formControlName="cep"
+                    placeholder="Digite o CEP"
+                    (input)="applyCepMask()"
+                />
+
             </div>
-<!--            <div class="col-md-3">-->
-<!--                <label for="pagamento" class="form-label">Ordem de Pagamento</label>-->
-<!--                <p-treeSelect id="pagamento" class="md:w-100rem w-full input-pequeno" containerStyleClass="w-full"-->
-<!--                    [options]="tiposPagamento" [(ngModel)]="pagamentoSelecionado" optionLabel="label" optionValue="key"-->
-<!--                    formControlName="pagamento" placeholder="Selecione">-->
-<!--                </p-treeSelect>-->
-<!--            </div>-->
 
         </div>
 
