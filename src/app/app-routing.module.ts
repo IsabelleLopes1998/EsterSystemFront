@@ -14,23 +14,21 @@ import { CategoriaCriarNovoComponent } from './pages/categoria/categoria-criar-n
 import { LoginComponent } from './pages/login/login.component';
 import { AuthGuard } from './auth.guard';
 
-import { EstoqueListarComponent } from './pages/estoque/estoque-listar/estoque-listar.component'
-
+import { EstoqueListarComponent } from './pages/estoque/estoque-listar/estoque-listar.component';
+import { EstoqueCriarNovoComponent } from './pages/estoque/estoque-criar-novo/estoque-criar-novo.component';
+import { VendaListarComponent } from './pages/venda/venda-listar/venda-listar.component';
+import { VendaCriarNovoComponent } from './pages/venda/venda-criar-novo/venda-criar-novo.component';
 
 const routes: Routes = [
-    // Redirecionamento automático para /login ao abrir a aplicação
-    { path: '', redirectTo: 'login', pathMatch: 'full' },
+    // Rota de login (pública)
+    { path: 'login', component: LoginComponent },
 
+    // Rotas protegidas
     {
         path: '',
+        canActivate: [AuthGuard],
         children: [
             { path: 'index', component: IndexComponent },
-            //       {
-            //         path: 'index',
-            //         loadComponent: () => import('../app/index/index.component').then(m => m.IndexComponent),
-            //         canActivate: [AuthGuard]
-            //       },
-
             { path: 'cliente-criar-novo', component: ClienteCriarNovoComponent },
             { path: 'cliente-criar-novo/:id', component: ClienteCriarNovoComponent },
             { path: 'cliente-listar', component: ClienteListarComponent },
@@ -40,18 +38,18 @@ const routes: Routes = [
             { path: 'categoria-criar-novo', component: CategoriaCriarNovoComponent },
             { path: 'produto-criar-novo', component: ProdutoCriarNovoComponent },
             { path: 'categoria-criar-novo/:id', component: CategoriaCriarNovoComponent },
-            { path: 'estoque-listar', component: EstoqueListarComponent }
-            //       { path: 'financeiro', component: FinanceiroComponent, canActivate: [AuthGuard] },
-            //       { path: 'usuario-criar-novo', component: UsuarioCriarNovoComponent, canActivate: [AuthGuard] },
-            //       { path: 'usuario-criar-novo/:id', component: UsuarioCriarNovoComponent, canActivate: [AuthGuard] },
-            //       { path: 'usuario-listar', component: UsuarioListarComponent, canActivate: [AuthGuard] }
+            { path: 'estoque-listar', component: EstoqueListarComponent },
+            { path: 'estoque-criar-novo', component: EstoqueCriarNovoComponent },
+            { path: 'venda-listar', component: VendaListarComponent },
+            { path: 'venda-criar-novo', component: VendaCriarNovoComponent },
+            { path: 'venda-criar-novo/:id', component: VendaCriarNovoComponent }
         ]
     },
 
-    // Caso a rota não exista, redireciona para login
-    { path: '**', redirectTo: 'index' }
+    // Redirecionamentos
+    { path: '', redirectTo: 'login', pathMatch: 'full' },
+    { path: '**', redirectTo: 'login' }
 ];
-
 
 @NgModule({
     imports: [RouterModule.forRoot(routes)],

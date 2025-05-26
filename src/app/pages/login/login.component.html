@@ -1,21 +1,70 @@
 <div class="login-wrapper">
     <div class="login-card">
-        <img src="../../assets/images/someli-sem-s.png" alt="Logo Someli" class="logo" />
-
-        <h2 class="title">Acesso ao sistema</h2>
-
-        <form [formGroup]="loginForm" (ngSubmit)="fazerLogin()">
+        <div class="logo">
+            <i class="pi pi-user" style="font-size: 2rem"></i>
+        </div>
+        <h2>Login</h2>
+        <form [formGroup]="form" (ngSubmit)="fazerLogin()">
             <div class="form-group">
-                <label for="cpf">CPF</label>
-                <input id="cpf" pInputText formControlName="cpf" placeholder="Digite seu CPF" />
+                <label for="username">Usuário</label>
+                <span class="p-input-icon-left">
+                    <i class="pi pi-user"></i>
+                    <input 
+                        id="username"
+                        type="text" 
+                        pInputText 
+                        formControlName="username"
+                        [ngClass]="{'ng-invalid ng-dirty': username?.invalid && username?.touched}"
+                        placeholder="Digite seu usuário"
+                        [disabled]="loading"
+                    >
+                </span>
+                <small class="p-error" *ngIf="username?.invalid && username?.touched">
+                    <span *ngIf="username?.errors?.['required']">Usuário é obrigatório</span>
+                    <span *ngIf="username?.errors?.['minlength']">Usuário deve ter no mínimo 3 caracteres</span>
+                </small>
             </div>
 
             <div class="form-group">
                 <label for="senha">Senha</label>
-                <input id="senha" pInputText type="password" formControlName="senha" placeholder="Digite sua senha" />
+                <span class="p-input-icon-left">
+                    <i class="pi pi-lock"></i>
+                    <input 
+                        id="senha"
+                        [type]="mostrarSenha ? 'text' : 'password'" 
+                        pInputText 
+                        formControlName="senha"
+                        [ngClass]="{'ng-invalid ng-dirty': senha?.invalid && senha?.touched}"
+                        placeholder="Digite sua senha"
+                        [disabled]="loading"
+                    >
+                </span>
+                <button 
+                    type="button" 
+                    pButton 
+                    class="p-button-text" 
+                    icon="pi pi-eye" 
+                    (click)="mostrarSenha = !mostrarSenha"
+                    [disabled]="loading"
+                ></button>
+                <small class="p-error" *ngIf="senha?.invalid && senha?.touched">
+                    <span *ngIf="senha?.errors?.['required']">Senha é obrigatória</span>
+                    <span *ngIf="senha?.errors?.['minlength']">Senha deve ter no mínimo 6 caracteres</span>
+                </small>
             </div>
 
-            <button type="submit" pButton label="Entrar" class="login-button w-full p-button-success mt-3"></button>
+            <div class="form-group">
+                <button 
+                    pButton 
+                    type="submit" 
+                    label="Entrar" 
+                    [loading]="loading"
+                    [disabled]="form.invalid || loading"
+                    class="p-button-primary"
+                ></button>
+            </div>
+
+            <small *ngIf="errorMessage" class="p-error">{{ errorMessage }}</small>
         </form>
     </div>
 </div>

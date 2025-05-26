@@ -19,26 +19,26 @@
 
 .logo {
     max-width: 160px;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
 }
 
 .title {
-    font-size: 22px;
+    font-size: 24px;
     font-weight: 600;
     margin-bottom: 2rem;
-    color: #3a3a3a;
+    color: #2c3e50;
 }
 
 .form-group {
     text-align: left;
-    margin-bottom: 1.2rem;
+    margin-bottom: 1.5rem;
 }
 
 .form-group label {
     display: block;
     font-weight: 500;
     margin-bottom: 0.5rem;
-    color: #555;
+    color: #4a5568;
     font-size: 14px;
 }
 
@@ -46,17 +46,61 @@ input[pInputText] {
     width: 100%;
     padding: 0.75rem;
     border-radius: 8px;
-    border: 1px solid #dcdcdc;
+    border: 1px solid #e2e8f0;
     font-size: 14px;
-    transition: border-color 0.2s ease;
+    transition: all 0.2s ease;
 }
 
 input[pInputText]:focus {
     outline: none;
     border-color: #2e7d32;
+    box-shadow: 0 0 0 2px rgba(46, 125, 50, 0.1);
+}
+
+input[pInputText].ng-invalid.ng-dirty {
+    border-color: #e53e3e;
+}
+
+.p-error {
+    color: #e53e3e;
+    font-size: 12px;
+    margin-top: 0.25rem;
+    display: block;
 }
 
 .login-button {
     font-weight: 600;
+    padding: 0.75rem;
+    font-size: 16px;
+    transition: all 0.2s ease;
+}
+
+.login-button:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.custom-spinner {
+    margin-right: 0.5rem;
+}
+
+.p-input-icon-right i {
+    color: #718096;
+    transition: color 0.2s ease;
+}
+
+.p-input-icon-right i:hover {
+    color: #2e7d32;
+}
+
+/* Animação de loading */
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.custom-spinner {
+    animation: spin 1s linear infinite;
 }
 

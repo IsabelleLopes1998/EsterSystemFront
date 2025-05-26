@@ -7,7 +7,6 @@
 
 <!-- Container dos Cards Internos -->
 <div class="card-container">
-
     <!-- Clientes -->
     <div class="card-custom">
         <i class="fa-solid fa-user card-icon"></i>
@@ -29,12 +28,57 @@
         <button class="p-button-outline" (click)="navigateTo('/categoria-listar')">Lista de categorias</button>
         <button class="p-button" (click)="navigateTo('/categoria-criar-novo')">Adicionar categoria</button>
     </div>
+    <!-- Estoque -->
     <div class="card-custom">
         <i class="fa-solid fa-box card-icon"></i>
         <div class="card-title">Estoque</div>
         <button class="p-button-outline" (click)="navigateTo('/estoque-listar')">Lista de estoque</button>
         <button class="p-button" (click)="navigateTo('/estoque-criar-novo')">Adicionar item de estoque</button>
     </div>
+    <!-- Vendas -->
+    <div class="card-custom">
+        <i class="fa-solid fa-cart-shopping card-icon"></i>
+        <div class="card-title">Vendas</div>
+        <button class="p-button-outline" (click)="navigateTo('/venda-listar')">Lista de vendas</button>
+        <button class="p-button" (click)="navigateTo('/venda-criar-novo')">Nova venda</button>
+    </div>
+</div>
 
+<div class="col-12">
+    <div class="card">
+        <div class="flex justify-content-between align-items-center mb-4">
+            <h2>Últimas Vendas</h2>
+            <div class="button-container">
+                <button pButton label="Ver todas" icon="pi pi-list" class="p-button-sm" (click)="verTodasVendas()"></button>
+            </div>
+        </div>
 
+        <p-table [value]="ultimasVendas" [rows]="5" styleClass="p-datatable-sm">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Data</th>
+                    <th>Cliente</th>
+                    <th>Status</th>
+                    <th>Total</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-venda>
+                <tr>
+                    <td>{{venda.dataVenda | date:'dd/MM/yyyy HH:mm'}}</td>
+                    <td>{{venda.idCliente}}</td>
+                    <td>
+                        <span [class]="'status-badge status-' + venda.statusVenda.toLowerCase()">
+                            {{venda.statusVenda}}
+                        </span>
+                    </td>
+                    <td>{{venda.valorTotal | currency:'BRL'}}</td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+                <tr>
+                    <td colspan="4" class="text-center">Nenhuma venda encontrada</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
 </div>

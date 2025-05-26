@@ -1,1 +1,62 @@
-<p>subcategoria-criar-novo works!</p>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <p-card>
+                <p-toast></p-toast>
+                
+                <div class="d-flex align-items-center mb-4">
+                    <h1 class="page-title">
+                        <strong>Nova Subcategoria</strong>
+                    </h1>
+                    <div class="divider"></div>
+                </div>
+
+                <form [formGroup]="subcategoriaForm" (ngSubmit)="salvar()">
+                    <div class="form-grid">
+                        <div class="form-field">
+                            <label for="nome">Nome *</label>
+                            <input type="text" id="nome" pInputText formControlName="nome" 
+                                placeholder="Nome da subcategoria" 
+                                [class.ng-invalid]="subcategoriaForm.get('nome')?.invalid && subcategoriaForm.get('nome')?.touched">
+                            <small class="error-message" *ngIf="subcategoriaForm.get('nome')?.invalid && subcategoriaForm.get('nome')?.touched">
+                                Nome é obrigatório
+                            </small>
+                        </div>
+
+                        <div class="form-field">
+                            <label for="descricao">Descrição *</label>
+                            <input type="text" id="descricao" pInputText formControlName="descricao" 
+                                placeholder="Descrição da subcategoria" 
+                                [class.ng-invalid]="subcategoriaForm.get('descricao')?.invalid && subcategoriaForm.get('descricao')?.touched">
+                            <small class="error-message" *ngIf="subcategoriaForm.get('descricao')?.invalid && subcategoriaForm.get('descricao')?.touched">
+                                Descrição é obrigatória
+                            </small>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-end mt-4">
+                        <button type="button" pButton class="btn-limpar mx-2" (click)="limparFormulario()">Limpar</button>
+                        <button type="submit" pButton class="btn-salvar mx-2" [disabled]="isLoading">
+                            <i *ngIf="isLoading" class="pi pi-spin pi-spinner mr-2"></i>
+                            Salvar
+                        </button>
+                    </div>
+                </form>
+            </p-card>
+        </div>
+    </div>
+</div>
+
+<p-dialog [(visible)]="isLoading" [modal]="true" [closable]="false" [style]="{width: '450px'}">
+    <div class="flex align-items-center justify-content-center">
+        <p-progressSpinner [style]="{width: '50px', height: '50px'}" strokeWidth="8" fill="var(--surface-ground)" animationDuration=".5s"></p-progressSpinner>
+    </div>
+</p-dialog>
