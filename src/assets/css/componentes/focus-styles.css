@@ -1,0 +1,66 @@
+/* Standardized purple focus styles for all form components */
+
+/* Input focus styles */
+body .p-inputtext:enabled:focus,
+body .p-inputtext:not(.p-disabled).p-focus {
+    box-shadow: 0 0 0 0.2rem #f3e5f5 !important;
+    border-color: #6F2481 !important;
+}
+
+/* Dropdown focus styles */
+body .p-dropdown:not(.p-disabled).p-focus {
+    box-shadow: 0 0 0 0.2rem #f3e5f5 !important;
+    border-color: #6F2481 !important;
+}
+
+/* Calendar focus styles */
+body .p-calendar .p-inputtext:enabled:focus,
+body .p-calendar .p-inputtext:not(.p-disabled).p-focus {
+    box-shadow: 0 0 0 0.2rem #f3e5f5 !important;
+    border-color: #6F2481 !important;
+}
+
+/* Autocomplete focus styles */
+body .p-autocomplete-input:enabled:focus,
+body .p-autocomplete:not(.p-disabled).p-focus .p-autocomplete-input {
+    box-shadow: 0 0 0 0.2rem #f3e5f5 !important;
+    border-color: #6F2481 !important;
+}
+
+/* InputNumber focus styles */
+body .p-inputnumber .p-inputtext:enabled:focus,
+body .p-inputnumber .p-inputtext:not(.p-disabled).p-focus {
+    box-shadow: 0 0 0 0.2rem #f3e5f5 !important;
+    border-color: #6F2481 !important;
+}
+
+/* Textarea focus styles */
+body .p-inputtextarea:enabled:focus,
+body .p-inputtextarea:not(.p-disabled).p-focus {
+    box-shadow: 0 0 0 0.2rem #f3e5f5 !important;
+    border-color: #6F2481 !important;
+}
+
+/* MultiSelect focus styles */
+body .p-multiselect:not(.p-disabled).p-focus {
+    box-shadow: 0 0 0 0.2rem #f3e5f5 !important;
+    border-color: #6F2481 !important;
+}
+
+/* TreeSelect focus styles */
+body .p-treeselect:not(.p-disabled).p-focus {
+    box-shadow: 0 0 0 0.2rem #f3e5f5 !important;
+    border-color: #6F2481 !important;
+}
+
+/* Checkbox focus styles */
+body .p-checkbox:not(.p-checkbox-disabled) .p-checkbox-box.p-focus {
+    box-shadow: 0 0 0 0.2rem #f3e5f5 !important;
+    border-color: #6F2481 !important;
+}
+
+/* RadioButton focus styles */
+body .p-radiobutton:not(.p-radiobutton-disabled) .p-radiobutton-box.p-focus {
+    box-shadow: 0 0 0 0.2rem #f3e5f5 !important;
+    border-color: #6F2481 !important;
+} 
