@@ -1,22 +1,75 @@
 @import url("./paleta.css");
 
-.p-dropdown-label {
-    font-size: 14px !important;
-    margin-left: 5px;
+/* Base dropdown styles */
+:host ::ng-deep .p-dropdown {
+    width: 100%;
+    height: 38px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    background: #ffffff;
+    font-size: 0.85rem;
+    color: #4b5563;
 }
 
-
-.p-dropdown-panel .p-dropdown-items .p-dropdown-item:not(.p-highlight):not(.p-disabled).p-focus {
-    color: var(--cor-preto);
-    background: var(--cor-primaria);
+:host ::ng-deep .p-dropdown-label {
+    font-size: 0.85rem !important;
+    padding: 0.45rem 0.45rem;
+    line-height: 20px;
 }
 
-.p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight.p-focus {
-    color: var(--cor-preto);
-    background: var(--cor-primaria);
+/* Dropdown panel styles */
+:host ::ng-deep .p-dropdown-panel {
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.p-dropdown-panel .p-dropdown-items .p-dropdown-item:not(.p-highlight):not(.p-disabled):hover {
-    color: var(--cor-preto);
-    background: (255, 171, 0, 0.24);
+:host ::ng-deep .p-dropdown-panel .p-dropdown-items .p-dropdown-item {
+    padding: 0.75rem 1rem;
+    font-size: 0.85rem;
+    color: #4b5563;
+}
+
+:host ::ng-deep .p-dropdown-panel .p-dropdown-items .p-dropdown-item:not(.p-highlight):not(.p-disabled):hover {
+    background: rgba(111, 36, 129, 0.1);
+    color: #6F2481;
+}
+
+:host ::ng-deep .p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight {
+    background: #6F2481;
+    color: #ffffff;
+}
+
+:host ::ng-deep .p-dropdown-panel .p-dropdown-items .p-dropdown-item:not(.p-highlight):not(.p-disabled).p-focus {
+    background: rgba(111, 36, 129, 0.1);
+    color: #6F2481;
+}
+
+/* Disabled state */
+:host ::ng-deep .p-dropdown.p-disabled {
+    background: #f3f4f6;
+    border-color: #e5e7eb;
+    opacity: 0.7;
+}
+
+/* Error state */
+:host ::ng-deep .p-dropdown.ng-invalid.ng-touched {
+    border-color: #dc2626;
+}
+
+/* Placeholder style */
+:host ::ng-deep .p-dropdown-label.p-placeholder {
+    color: #9ca3af;
+}
+
+/* Clear icon */
+:host ::ng-deep .p-dropdown-clear-icon {
+    color: #6b7280;
+    font-size: 0.75rem;
+}
+
+/* Dropdown trigger icon */
+:host ::ng-deep .p-dropdown-trigger-icon {
+    color: #6b7280;
+    font-size: 0.75rem;
 }
