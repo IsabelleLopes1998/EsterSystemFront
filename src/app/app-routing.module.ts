@@ -13,7 +13,6 @@ import { CompraListarComponent } from './pages/compra/compra-listar/compra-lista
 import { LoginComponent } from './pages/login/login.component';
 import { AuthGuard } from './auth.guard';
 
-import { EstoqueListarComponent } from './pages/estoque/estoque-listar/estoque-listar.component';
 import { EstoqueCriarNovoComponent } from './pages/estoque/estoque-criar-novo/estoque-criar-novo.component';
 import { VendaListarComponent } from './pages/venda/venda-listar/venda-listar.component';
 import { VendaCriarNovoComponent } from './pages/venda/venda-criar-novo/venda-criar-novo.component';
