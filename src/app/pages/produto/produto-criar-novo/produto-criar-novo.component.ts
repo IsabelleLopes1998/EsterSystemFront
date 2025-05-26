@@ -14,7 +14,7 @@ import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { DialogModule } from 'primeng/dialog';
 import { CategoriaService } from '../../categoria/categoria.service';
-import { SubcategoriaService } from '../../subcategoria/subcategoria.service';
+
 
 @Component({
    selector: 'app-produto-criar-novo',
@@ -54,7 +54,7 @@ export class ProdutoCriarNovoComponent {
         private router: Router,
         private produtoService: ProdutoService,
         private categoriaService: CategoriaService,
-        private subCategoriaService: SubcategoriaService,
+       
         private messageService: MessageService
     ) {
         this.produtoForm = this.fb.group({
@@ -75,9 +75,7 @@ export class ProdutoCriarNovoComponent {
             console.log('[DEBUG] Categorias carregadas:', this.categoria);
         });
 
-        this.subCategoriaService.getListaDeSubcategorias().subscribe(subs => {
-            this.subcategoria = subs;
-        });
+    
 
         const id = this.route.snapshot.paramMap.get('id');
         if (id) {

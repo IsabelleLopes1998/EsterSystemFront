@@ -40,7 +40,8 @@ const routes: Routes = [
       { path: 'estoque-listar', component: EstoqueListarComponent },
       { path: 'estoque-criar-novo', component: EstoqueCriarNovoComponent },
       { path: 'venda-listar', component: VendaListarComponent },
-      { path: 'compra-criar-novo', component: CompraCriarNovoComponent },,
+      { path: 'compra-listar', component: CompraListarComponent },
+      { path: 'compra-criar-novo', component: CompraCriarNovoComponent },
       { path: 'venda-criar-novo', component: VendaCriarNovoComponent },
       { path: 'venda-criar-novo/:id', component: VendaCriarNovoComponent }
     ]
