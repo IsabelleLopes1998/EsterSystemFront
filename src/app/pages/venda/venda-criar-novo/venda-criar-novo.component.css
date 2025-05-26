@@ -1,0 +1,320 @@
+.container-fluid {
+    padding: 2rem;
+}
+
+.page-title {
+    color: #5e2974;
+    font-size: 1.25rem;
+    margin: 0;
+    padding-right: 1rem;
+}
+
+.divider {
+    flex: 1;
+    height: 1px;
+    background-color: #e5e7eb;
+    margin-left: 1rem;
+}
+
+.p-button-someli {
+    background-color: #6F2481 !important;
+    border: none !important;
+    color: white !important;
+    font-weight: bold;
+    padding: 0.75rem 1.5rem !important;
+    border-radius: 6px !important;
+    transition: all 0.3s ease-in-out;
+}
+
+.p-button-someli:hover {
+    background-color: #571C66 !important;
+}
+
+.p-button-someli .p-button-icon {
+    margin-right: 0.5rem;
+}
+
+:host {
+  display: block;
+  padding: 1rem;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-field label {
+  font-weight: 500;
+  color: #4b5563;
+}
+
+.form-field input,
+.form-field p-dropdown {
+  width: 100%;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.items-section {
+  margin-top: 2rem;
+  background-color: #f9fafb;
+  padding: 1.5rem;
+  border-radius: 8px;
+}
+
+.items-section h6 {
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+  color: #4b5563;
+}
+
+.add-item-row {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.search-product {
+  flex: 1;
+  min-width: 200px;
+}
+
+.item-quantity {
+  width: 150px;
+}
+
+.item-quantity ::ng-deep .p-inputnumber {
+  width: 100%;
+}
+
+.item-quantity ::ng-deep .p-inputnumber-input {
+  width: 100%;
+  text-align: center;
+}
+
+.item-quantity ::ng-deep .p-button {
+  padding: 0.5rem;
+}
+
+.add-item-button {
+  margin-left: 0.5rem;
+  height: 38px; /* Altura igual ao input */
+  width: 38px; /* Largura igual à altura para ficar quadrado */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.items-list {
+  margin-top: 1rem;
+}
+
+:host ::ng-deep .p-datatable {
+  font-size: 0.9rem;
+}
+
+:host ::ng-deep .p-datatable .p-datatable-thead > tr > th {
+  background: #f3f4f6;
+  color: #4b5563;
+  font-weight: 600;
+  padding: 0.75rem;
+}
+
+:host ::ng-deep .p-datatable .p-datatable-tbody > tr > td {
+  padding: 0.75rem;
+}
+
+:host ::ng-deep .p-datatable .p-datatable-tbody > tr:hover {
+  background: #f9fafb;
+}
+
+.items-list ::ng-deep .p-inputnumber {
+  width: 100%;
+}
+
+.items-list ::ng-deep .p-inputnumber-input {
+  text-align: center;
+}
+
+.items-list ::ng-deep .p-button.p-button-sm {
+  padding: 0.5rem;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.item-row {
+  display: flex;
+  padding: 0.75rem;
+  background-color: var(--surface-card);
+  border: 1px solid var(--surface-border);
+  border-radius: 6px;
+}
+
+.item-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.item-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.item-name {
+  font-weight: 500;
+  color: var(--text-color);
+  min-width: 200px;
+}
+
+.item-quantity {
+  color: var(--text-color);
+  font-weight: 500;
+}
+
+.item-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.error-message {
+  color: #dc2626;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+.custom-margin {
+  margin-top: 40px;
+  margin-left: 60px;
+}
+
+:host ::ng-deep .p-card {
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+:host ::ng-deep .p-card .p-card-body {
+  padding: 2rem;
+}
+
+:host ::ng-deep .mt-0 {
+  margin-top: -0.3rem !important;
+}
+
+:host ::ng-deep .p-inputtext {
+  font-size: 0.85rem;
+  color: #4b5563;
+  background: #ffffff;
+  padding: 0.45rem 0.45rem;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+}
+
+:host ::ng-deep .p-dropdown {
+  width: 100%;
+}
+
+.custom-field {
+  width: 25%;
+}
+
+:host ::ng-deep .p-treeselect {
+  height: 38px !important;
+  display: flex;
+  align-items: center;
+}
+
+/* Ajuste do botão Limpar */
+.btn-limpar {
+  background-color: transparent !important;
+  border: 2px solid #6F2481 !important;
+  color: #6F2481 !important;
+  font-weight: bold;
+  padding: 0.75rem 1.5rem !important;
+  border-radius: 6px !important;
+  transition: all 0.3s ease-in-out;
+  width: 130px;
+  text-align: center;
+  height: 44px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn-limpar:hover {
+  background-color: #6F2481 !important;
+  color: white !important;
+}
+
+/* Ajuste do botão Salvar */
+.btn-salvar {
+  background-color: #6F2481 !important;
+  color: white !important;
+  border: none !important;
+  font-weight: bold;
+  padding: 0.75rem 1.5rem !important;
+  border-radius: 6px !important;
+  transition: all 0.3s ease-in-out;
+  width: 130px;
+  text-align: center;
+  height: 44px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn-salvar:hover {
+  background-color: #571C66 !important;
+}
+
+.btn-salvar:disabled {
+  background-color: #A685A6 !important;
+  cursor: not-allowed !important;
+  opacity: 0.6;
+}
+
+/* Estilos para o Calendário */
+:host ::ng-deep .p-calendar .p-datepicker-calendar .p-highlight {
+  background-color: #5e2974 !important;
+  color: white !important;
+}
+
+:host ::ng-deep .p-calendar .p-datepicker-calendar td.p-datepicker-today > span.p-highlight {
+  background-color: #5e2974 !important;
+  color: white !important;
+  border-color: #5e2974 !important;
+}
+
+:host ::ng-deep .p-calendar .p-datepicker-calendar td > span:hover {
+  background-color: #8a4ca8 !important;
+  color: white !important;
+}
+
+:host ::ng-deep .p-calendar .p-datepicker-header .p-datepicker-title button:hover {
+  color: #5e2974 !important;
+}
+
+:host ::ng-deep .p-calendar .p-datepicker-header .p-datepicker-prev:hover,
+:host ::ng-deep .p-calendar .p-datepicker-header .p-datepicker-next:hover {
+  background-color: #f0e8f5 !important;
+  color: #5e2974 !important;
+} 
