@@ -36,5 +36,25 @@ export class ClienteService {
     return this.http.delete<void>(`${this.clienteApiUrl}/excluirCliente/${id}`);
   }
 
+  listarTodos(): Observable<any[]> {
+    return this.http.get<any[]>(this.clienteApiUrl);
+  }
+
+  buscarPorId(id: number): Observable<any> {
+    return this.http.get<any>(`${this.clienteApiUrl}/${id}`);
+  }
+
+  criar(cliente: any): Observable<any> {
+    return this.http.post(this.clienteApiUrl, cliente);
+  }
+
+  atualizar(id: number, cliente: any): Observable<any> {
+    return this.http.put(`${this.clienteApiUrl}/${id}`, cliente);
+  }
+
+  excluir(id: number): Observable<any> {
+    return this.http.delete(`${this.clienteApiUrl}/${id}`);
+  }
+
 }
 

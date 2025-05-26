@@ -33,7 +33,7 @@
                     placeholder="Digite o cpf do cliente"/>
             </div>
             <div class="col-md-3 custom-field">
-                <label  style="margin-block-end: 8px;">Data de Nascimento</label>
+                <label style="margin-block-end: 8px; display: block;">Data de Nascimento</label>
                 <p-calendar [showIcon]="true" [iconDisplay]="'input'" dateFormat="dd/mm/yy"
                             placeholder="Selecione uma data" formControlName="dateBirth"
                             (input)="formatarData($event)" [showOnFocus]="false">
@@ -90,17 +90,17 @@
 
 
         <!-- Botões -->
-        <div class="d-flex justify-content-left mt-4">
-            <button type="button" class="btn-limpar mx-2" (click)="limparFormulario()">Limpar</button>
+        <div class="d-flex justify-content-end mt-4">
+            <button type="button" pButton class="btn-limpar mx-2" (click)="limparFormulario()">Limpar</button>
 
             <!-- Botão para cadastrar novo cliente -->
-            <button *ngIf="!isEditing" type="submit" class="btn-salvar mx-2">
-                Cadastrar Cliente
+            <button *ngIf="!isEditing" type="submit" pButton class="btn-salvar mx-2">
+                Cadastrar 
             </button>
 
             <!-- Botão para atualizar cliente existente -->
-            <button *ngIf="isEditing" type="submit" class="btn-atualizar mx-2">
-                Atualizar Cliente
+            <button *ngIf="isEditing" type="submit" pButton class="btn-atualizar mx-2">
+                Atualizar 
             </button>
         </div>
 
