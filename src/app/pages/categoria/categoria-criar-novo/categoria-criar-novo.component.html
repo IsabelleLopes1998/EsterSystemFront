@@ -1,45 +1,62 @@
-<div class="custom-margin">
-    <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <p-card>
+                <p-toast></p-toast>
+                
+                <div class="d-flex align-items-center mb-4">
+                    <h1 class="page-title">
+                        <strong>{{ isEditing ? 'Editar' : 'Nova' }} Categoria</strong>
+                    </h1>
+                    <div class="divider"></div>
+                </div>
+
+                <form [formGroup]="categoriaForm" (ngSubmit)="salvarCategoria()">
+                    <div class="form-grid">
+                        <div class="form-field">
+                            <label for="nome">Nome *</label>
+                            <input id="nome" type="text" pInputText formControlName="nome" 
+                                placeholder="Nome da categoria"
+                                [class.ng-invalid]="categoriaForm.get('nome')?.invalid && categoriaForm.get('nome')?.touched">
+                            <small class="error-message" *ngIf="categoriaForm.get('nome')?.invalid && categoriaForm.get('nome')?.touched">
+                                Nome é obrigatório
+                            </small>
+                        </div>
+
+                        <div class="form-field">
+                            <label for="descricao">Descrição *</label>
+                            <input id="descricao" type="text" pInputText formControlName="descricao" 
+                                placeholder="Descrição da categoria"
+                                [class.ng-invalid]="categoriaForm.get('descricao')?.invalid && categoriaForm.get('descricao')?.touched">
+                            <small class="error-message" *ngIf="categoriaForm.get('descricao')?.invalid && categoriaForm.get('descricao')?.touched">
+                                Descrição é obrigatória
+                            </small>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-end mt-4">
+                        <button type="button" pButton class="btn-limpar mx-2" (click)="limparFormulario()">Limpar</button>
+                        <button type="submit" pButton class="btn-salvar mx-2" [disabled]="isLoading">
+                            <i *ngIf="isLoading" class="pi pi-spin pi-spinner mr-2"></i>
+                            {{ isEditing ? 'Atualizar' : 'Salvar' }}
+                        </button>
+                    </div>
+                </form>
+            </p-card>
+        </div>
+    </div>
 </div>
 
-<p-card class="custom-card-margin">
-
-    <p-dialog [(visible)]="isLoading" [modal]="true" [closable]="false" showHeader="false"
-              styleClass="custom-loading-dialog">
-        <div class="loading-content">
-            <p-progressSpinner></p-progressSpinner>
-            <p class="loading-text">Processando...</p>
-        </div>
-    </p-dialog>
-
-    <form [formGroup]="categoriaForm" (ngSubmit)="salvarCategoria()">
-        <div class="row">
-            <div class="col-md-3">
-                <label for="nome" class="form-label">Nome</label>
-                <input id="nome" type="text" class="form-control" formControlName="nome" placeholder="Nome da categoria" />
-            </div>
-
-            <div class="col-md-3">
-                <label for="descricao" class="form-label">Descrição</label>
-                <input id="descricao" type="text" class="form-control" formControlName="descricao" placeholder="Descrição" />
-            </div>
-        </div>
-
-        <!-- Botões -->
-        <div class="d-flex justify-content-left mt-4">
-            <button type="button" class="btn-limpar mx-2" (click)="limparFormulario()">Limpar</button>
-
-            <button *ngIf="!isEditing" type="submit" class="btn-salvar mx-2">
-                Cadastrar Categoria
-            </button>
-
-            <button *ngIf="isEditing" type="submit" class="btn-atualizar mx-2">
-                Atualizar Categoria
-            </button>
-        </div>
-
-    </form>
-
-</p-card>
-
-<p-toast></p-toast>
+<p-dialog [(visible)]="isLoading" [modal]="true" [closable]="false" [style]="{width: '450px'}">
+    <div class="flex align-items-center justify-content-center">
+        <p-progressSpinner [style]="{width: '50px', height: '50px'}" strokeWidth="8" fill="var(--surface-ground)" animationDuration=".5s"></p-progressSpinner>
+    </div>
+</p-dialog>

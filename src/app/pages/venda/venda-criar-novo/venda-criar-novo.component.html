@@ -1,0 +1,167 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <p-card>
+                <p-toast></p-toast>
+                
+                <div class="d-flex align-items-center mb-4">
+                    <h1 class="page-title">
+                        <strong>{{ id ? 'Editar' : 'Nova' }} Venda</strong>
+                    </h1>
+                    <div class="divider"></div>
+                </div>
+
+                <form [formGroup]="form" (ngSubmit)="salvar()">
+                    <div class="form-grid">
+                        <div class="form-field">
+                            <label for="data" style="margin-block-end: 8px; display: block;">Data *</label>
+                            <p-calendar id="data" formControlName="data"
+                                [showIcon]="true" 
+                                [iconDisplay]="'input'" 
+                                dateFormat="dd/mm/yy"
+                                [showTime]="true"
+                                [timeOnly]="false"
+                                hourFormat="24"
+                                placeholder="Selecione data e hora" 
+                                [showOnFocus]="false"
+                                [class.ng-invalid]="form.get('data')?.invalid && form.get('data')?.touched">
+                            </p-calendar>
+                            <small class="error-message" *ngIf="form.get('data')?.invalid && form.get('data')?.touched">
+                                Data é obrigatória
+                            </small>
+                        </div>
+
+                        <div class="form-field">
+                            <label for="idCliente">Cliente *</label>
+                            <p-dropdown id="idCliente" formControlName="idCliente" [options]="clientes" 
+                                optionLabel="nome" optionValue="id" placeholder="Selecione um cliente"
+                                [class.ng-invalid]="form.get('idCliente')?.invalid && form.get('idCliente')?.touched">
+                            </p-dropdown>
+                            <small class="error-message" *ngIf="form.get('idCliente')?.invalid && form.get('idCliente')?.touched">
+                                Cliente é obrigatório
+                            </small>
+                        </div>
+
+                        <div class="form-field">
+                            <label for="formaPagamento">Forma de Pagamento *</label>
+                            <p-dropdown id="formaPagamento" formControlName="formaPagamento" [options]="formasPagamento" 
+                                placeholder="Selecione a forma de pagamento"
+                                [class.ng-invalid]="form.get('formaPagamento')?.invalid && form.get('formaPagamento')?.touched">
+                            </p-dropdown>
+                            <small class="error-message" *ngIf="form.get('formaPagamento')?.invalid && form.get('formaPagamento')?.touched">
+                                Forma de pagamento é obrigatória
+                            </small>
+                        </div>
+                    </div>
+
+                    <div class="items-section">
+                        <h6>Itens da Venda</h6>
+                        
+                        <div class="add-item-row">
+                            <div class="search-product">
+                                <p-autoComplete 
+                                    [(ngModel)]="produtoSelecionado"
+                                    [suggestions]="filteredProdutos" 
+                                    (completeMethod)="filtrarProdutos($event)"
+                                    (onSelect)="onProdutoSelect($event)"
+                                    [field]="'nome'"
+                                    [minLength]="1"
+                                    placeholder="Selecione o produto"
+                                    [dropdown]="true"
+                                    [style]="{'width':'100%'}"
+                                    [forceSelection]="true"
+                                    [ngModelOptions]="{standalone: true}">
+                                </p-autoComplete>
+                            </div>
+                            <div class="item-quantity">
+                                <p-inputNumber [(ngModel)]="quantidadeSelecionada" 
+                                    [min]="1" 
+                                    [showButtons]="true"
+                                    buttonLayout="horizontal"
+                                    spinnerMode="horizontal"
+                                    decrementButtonClass="p-button-secondary"
+                                    incrementButtonClass="p-button-secondary"
+                                    incrementButtonIcon="pi pi-plus"
+                                    decrementButtonIcon="pi pi-minus"
+                                    [style]="{'width':'100%'}"
+                                    [ngModelOptions]="{standalone: true}">
+                                </p-inputNumber>
+                            </div>
+                            <button type="button" pButton icon="pi pi-plus" 
+                                class="p-button-success add-item-button" 
+                                (click)="adicionarProduto()"
+                                pTooltip="Adicionar item">
+                            </button>
+                        </div>
+
+                        <div class="items-list">
+                            <p-table [value]="vendaItems" [style]="{'width':'100%'}" styleClass="p-datatable-sm">
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th>Produto</th>
+                                        <th style="width: 150px">Quantidade</th>
+                                        <th style="width: 100px">Ações</th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-item let-i="rowIndex">
+                                    <tr>
+                                        <td>{{ getProdutoNome(item.produtoId) }}</td>
+                                        <td>
+                                            <p-inputNumber [(ngModel)]="item.quantidadeVenda" 
+                                                [min]="1" 
+                                                [showButtons]="true"
+                                                buttonLayout="horizontal"
+                                                spinnerMode="horizontal"
+                                                decrementButtonClass="p-button-secondary"
+                                                incrementButtonClass="p-button-secondary"
+                                                incrementButtonIcon="pi pi-plus"
+                                                decrementButtonIcon="pi pi-minus"
+                                                [style]="{'width':'100%'}"
+                                                [ngModelOptions]="{standalone: true}"
+                                                (onInput)="calcularTotal()">
+                                            </p-inputNumber>
+                                        </td>
+                                        <td>
+                                            <button type="button" pButton icon="pi pi-trash" 
+                                                class="p-button-danger p-button-sm" 
+                                                (click)="removerItem(i)" 
+                                                pTooltip="Remover item">
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="emptymessage">
+                                    <tr>
+                                        <td colspan="3" class="text-center">Nenhum item adicionado</td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-end mt-4">
+                        <button type="button" pButton class="btn-limpar mx-2" (click)="limparFormulario()">Limpar</button>
+                        <button type="submit" pButton class="btn-salvar mx-2" [disabled]="loading">
+                            <i *ngIf="loading" class="pi pi-spin pi-spinner mr-2"></i>
+                            {{ id ? 'Atualizar' : 'Salvar' }}
+                        </button>
+                    </div>
+                </form>
+            </p-card>
+        </div>
+    </div>
+</div>
+
+<p-dialog [(visible)]="loading" [modal]="true" [closable]="false" [style]="{width: '450px'}">
+    <div class="flex align-items-center justify-content-center">
+        <p-progressSpinner [style]="{width: '50px', height: '50px'}" strokeWidth="8" fill="var(--surface-ground)" animationDuration=".5s"></p-progressSpinner>
+    </div>
+</p-dialog> 

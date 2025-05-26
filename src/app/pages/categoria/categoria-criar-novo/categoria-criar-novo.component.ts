@@ -35,7 +35,11 @@ import { CategoriaResponse } from '../categoria-listar/categoria.model';
 
 })
 export class CategoriaCriarNovoComponent {
-  breadcrumbs: any = [{ "label": "Início", "url": "#" }, { "label": "Nova consulta", "url": "javascript:void(0)" }];
+  breadcrumbs = [
+    { label: 'Início', url: '/' },
+    { label: 'Categorias', url: '/categoria-listar' },
+    { label: 'Nova Categoria', url: '/categoria-criar-novo' }
+  ];
 
   categoriaForm: FormGroup;
   isFormValid: boolean = false;

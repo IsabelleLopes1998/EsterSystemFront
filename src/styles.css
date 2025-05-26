@@ -23,6 +23,7 @@
 @import './assets/css/componentes/confirm-dialog.css';
 @import './assets/css/componentes/inputSwitch.css';
 @import './assets/css/componentes/error-fields.css';
+@import './assets/css/componentes/focus-styles.css';
 
 @font-face {
   font-family: 'Inter';

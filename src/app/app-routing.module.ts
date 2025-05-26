@@ -14,27 +14,41 @@ import { CompraCriarNovoComponent } from './pages/compra/compra-criar-novo/compr
 import { LoginComponent } from './pages/login/login.component';
 import { AuthGuard } from './auth.guard';
 
+import { EstoqueCriarNovoComponent } from './pages/estoque/estoque-criar-novo/estoque-criar-novo.component';
+import { VendaListarComponent } from './pages/venda/venda-listar/venda-listar.component';
+import { VendaCriarNovoComponent } from './pages/venda/venda-criar-novo/venda-criar-novo.component';
+
 const routes: Routes = [
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  // Rota de login (pública)
+  { path: 'login', component: LoginComponent },
+
+  // Rotas protegidas
   {
     path: '',
+    canActivate: [AuthGuard],
     children: [
       { path: 'index', component: IndexComponent },
       { path: 'cliente-criar-novo', component: ClienteCriarNovoComponent },
       { path: 'cliente-criar-novo/:id', component: ClienteCriarNovoComponent },
       { path: 'cliente-listar', component: ClienteListarComponent },
       { path: 'produto-listar', component: ProdutoListarComponent },
-      { path: 'produto-criar-novo', component: ProdutoCriarNovoComponent },
       { path: 'produto-criar-novo/:id', component: ProdutoCriarNovoComponent },
       { path: 'categoria-listar', component: CategoriaListarComponent },
       { path: 'categoria-criar-novo', component: CategoriaCriarNovoComponent },
+      { path: 'produto-criar-novo', component: ProdutoCriarNovoComponent },
       { path: 'categoria-criar-novo/:id', component: CategoriaCriarNovoComponent },
       { path: 'estoque-listar', component: EstoqueListarComponent },
-      { path: 'compra-listar', component: CompraListarComponent },
-      { path: 'compra-criar-novo', component: CompraCriarNovoComponent },
+      { path: 'estoque-criar-novo', component: EstoqueCriarNovoComponent },
+      { path: 'venda-listar', component: VendaListarComponent },
+      { path: 'compra-criar-novo', component: CompraCriarNovoComponent },,
+      { path: 'venda-criar-novo', component: VendaCriarNovoComponent },
+      { path: 'venda-criar-novo/:id', component: VendaCriarNovoComponent }
     ]
   },
-  { path: '**', redirectTo: 'index' }
+
+  // Redirecionamentos
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: '**', redirectTo: 'login' }
 ];
 
 @NgModule({

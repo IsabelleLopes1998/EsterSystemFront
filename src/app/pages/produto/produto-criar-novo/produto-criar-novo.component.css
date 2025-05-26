@@ -1,22 +1,65 @@
-:host ::ng-deep .p-card .p-card-body {
-    padding: 2rem !important;
-    margin-top: -70px;
+.container-fluid {
+    padding: 2rem;
+}
+
+.page-title {
+    color: #5e2974;
+    font-size: 1.25rem;
+    margin: 0;
+    padding-right: 1rem;
+}
+
+.divider {
+    flex: 1;
+    height: 1px;
+    background-color: #e5e7eb;
+    margin-left: 1rem;
+}
+
+:host {
+    display: block;
+    padding: 1rem;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.form-field label {
+    font-weight: 500;
+    color: #4b5563;
+}
+
+.form-field input,
+.form-field p-dropdown,
+.form-field p-calendar,
+.form-field p-autocomplete,
+.form-field p-inputnumber {
+    width: 100%;
+}
+
+.error-message {
+    color: #dc2626;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
 }
 
 :host ::ng-deep .p-card {
-    border-radius: 10px;
-    width: 90%;
-    margin-left: 70px;
-    margin-top: 6rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-:host ::ng-deep .mt-0 {
-    margin-top: -0.3rem !important;
-}
-
-.custom-margin {
-    margin-top: 40px;
-    margin-left: 60px;
+:host ::ng-deep .p-card .p-card-body {
+    padding: 2rem;
 }
 
 :host ::ng-deep .p-inputtext {
@@ -28,37 +71,230 @@
     border-radius: 6px;
 }
 
+/* Dropdown Styling */
 :host ::ng-deep .p-dropdown {
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    height: 38px;
+}
+
+:host ::ng-deep .p-dropdown:not(.p-disabled).p-focus {
+    box-shadow: 0 0 0 0.2rem #f3e5f5;
+    border-color: #6F2481;
+}
+
+:host ::ng-deep .p-dropdown .p-dropdown-label {
+    padding: 0.45rem 0.45rem;
+    font-size: 0.85rem;
+    color: #4b5563;
+}
+
+:host ::ng-deep .p-dropdown .p-dropdown-trigger {
+    width: 3rem;
+    color: #6F2481;
+}
+
+:host ::ng-deep .p-dropdown-panel {
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+:host ::ng-deep .p-dropdown-panel .p-dropdown-header {
+    padding: 0.75rem 1.25rem;
+    border-bottom: 1px solid #d1d5db;
+    background: #f9fafb;
+}
+
+:host ::ng-deep .p-dropdown-panel .p-dropdown-items {
+    padding: 0.5rem 0;
+}
+
+:host ::ng-deep .p-dropdown-panel .p-dropdown-items .p-dropdown-item {
+    padding: 0.75rem 1.25rem;
+    margin: 0;
+    color: #4b5563;
+}
+
+:host ::ng-deep .p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight {
+    background: #f3e5f5;
+    color: #6F2481;
+}
+
+:host ::ng-deep .p-dropdown-panel .p-dropdown-items .p-dropdown-item:hover {
+    background: #f3e5f5;
+}
+
+/* Calendar Styling */
+:host ::ng-deep .p-calendar {
     width: 100%;
 }
 
-.custom-field {
-    width: 25%;
+:host ::ng-deep .p-calendar .p-inputtext {
+    width: 100%;
 }
 
+:host ::ng-deep .p-calendar .p-button {
+    color: #6F2481;
+}
+
+:host ::ng-deep .p-calendar-w-btn .p-datepicker-trigger {
+    background-color: #f3f4f6;
+    border-color: #d1d5db;
+    color: #6F2481;
+}
+
+:host ::ng-deep .p-calendar-w-btn .p-datepicker-trigger:hover {
+    background-color: #e5e7eb;
+}
+
+:host ::ng-deep .p-datepicker table td > span.p-highlight {
+    background: #6F2481;
+    color: #ffffff;
+}
+
+:host ::ng-deep .p-datepicker:not(.p-disabled) table td span:not(.p-highlight):not(.p-disabled):hover {
+    background: #f3e5f5;
+}
+
+:host ::ng-deep .p-datepicker .p-datepicker-header .p-datepicker-title .p-datepicker-year:enabled:hover,
+:host ::ng-deep .p-datepicker .p-datepicker-header .p-datepicker-title .p-datepicker-month:enabled:hover {
+    color: #6F2481;
+}
+
+:host ::ng-deep .p-datepicker .p-datepicker-header .p-datepicker-prev:enabled:hover,
+:host ::ng-deep .p-datepicker .p-datepicker-header .p-datepicker-next:enabled:hover {
+    color: #6F2481;
+    border-color: transparent;
+    background: #f3e5f5;
+}
+
+/* InputNumber Styling */
+:host ::ng-deep .p-inputnumber {
+    width: 100%;
+}
+
+:host ::ng-deep .p-inputnumber-input {
+    width: 100%;
+    text-align: center;
+}
+
+:host ::ng-deep .p-inputnumber .p-button {
+    background-color: #f3f4f6;
+    border-color: #d1d5db;
+    color: #6F2481;
+}
+
+:host ::ng-deep .p-inputnumber .p-button:hover {
+    background-color: #e5e7eb;
+}
+
+:host ::ng-deep .p-inputnumber .p-button.p-button-icon-only {
+    width: 3rem;
+    padding: 0.5rem 0;
+}
+
+/* Autocomplete Styling */
+:host ::ng-deep .p-autocomplete {
+    width: 100%;
+}
+
+:host ::ng-deep .p-autocomplete .p-autocomplete-input {
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 0.45rem 0.45rem;
+    font-size: 0.85rem;
+    color: #4b5563;
+    width: 100%;
+}
+
+:host ::ng-deep .p-autocomplete.p-autocomplete-dd .p-autocomplete-input {
+    padding-right: 3rem;
+}
+
+:host ::ng-deep .p-autocomplete:not(.p-disabled).p-focus .p-autocomplete-input {
+    box-shadow: 0 0 0 0.2rem #f3e5f5;
+    border-color: #6F2481;
+}
+
+:host ::ng-deep .p-autocomplete .p-autocomplete-dropdown {
+    width: 3rem;
+    height: 38px;
+    color: #6F2481;
+    border: 1px solid #d1d5db;
+    background: #f3f4f6;
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+}
+
+:host ::ng-deep .p-autocomplete .p-autocomplete-dropdown:hover {
+    background: #e5e7eb;
+}
+
+:host ::ng-deep .p-autocomplete-panel {
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background: white;
+}
+
+:host ::ng-deep .p-autocomplete-panel .p-autocomplete-items {
+    padding: 0.5rem 0;
+}
+
+:host ::ng-deep .p-autocomplete-panel .p-autocomplete-items .p-autocomplete-item {
+    padding: 0.75rem 1.25rem;
+    color: #4b5563;
+}
+
+:host ::ng-deep .p-autocomplete-panel .p-autocomplete-items .p-autocomplete-item.p-highlight {
+    background: #f3e5f5;
+    color: #6F2481;
+}
+
+:host ::ng-deep .p-autocomplete-panel .p-autocomplete-items .p-autocomplete-item:hover {
+    background: #f3e5f5;
+}
+
+/* TreeSelect Styling */
 :host ::ng-deep .p-treeselect {
     height: 38px !important;
-    /* Mantém altura padrão dos inputs */
     display: flex;
     align-items: center;
 }
 
+:host ::ng-deep .p-treeselect .p-treeselect-label {
+    padding: 0.45rem 0.45rem;
+    font-size: 0.85rem;
+    color: #4b5563;
+}
 
+:host ::ng-deep .p-treeselect .p-treeselect-trigger {
+    width: 3rem;
+    color: #6F2481;
+}
 
-/* Ajuste do botão Limpar */
+:host ::ng-deep .p-treeselect-panel {
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Button Styling */
 .btn-limpar {
     background-color: transparent !important;
     border: 2px solid #6F2481 !important;
-    /* Roxo padrão da Someli */
     color: #6F2481 !important;
     font-weight: bold;
-    padding: 10px 25px !important;
+    padding: 0.75rem 1.5rem !important;
     border-radius: 6px !important;
     transition: all 0.3s ease-in-out;
     width: 130px;
-    /* Mantendo um tamanho uniforme */
     text-align: center;
     height: 44px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .btn-limpar:hover {
@@ -66,31 +302,33 @@
     color: white !important;
 }
 
-/* Ajuste do botão Cadastrar */
-.btn-cadastrar {
+.btn-salvar, .btn-cadastrar {
     background-color: #6F2481 !important;
     color: white !important;
     border: none !important;
     font-weight: bold;
-    padding: 10px 25px !important;
+    padding: 0.75rem 1.5rem !important;
     border-radius: 6px !important;
     transition: all 0.3s ease-in-out;
     width: 130px;
     text-align: center;
     height: 44px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.btn-cadastrar:hover {
+.btn-salvar:hover, .btn-cadastrar:hover {
     background-color: #571C66 !important;
 }
 
-.btn-cadastrar:disabled {
+.btn-salvar:disabled, .btn-cadastrar:disabled {
     background-color: #A685A6 !important;
-    /* Um tom mais claro do roxo da Someli */
     cursor: not-allowed !important;
     opacity: 0.6;
 }
 
+/* Loading Styling */
 .loading-overlay {
     position: fixed;
     top: 0;
@@ -102,25 +340,19 @@
     justify-content: center;
     align-items: center;
     z-index: 1000;
-
-
 }
 
-/* Remove o fundo branco do modal */
 ::ng-deep .custom-loading-dialog .p-dialog-content {
     background: transparent !important;
     box-shadow: none !important;
     border: none !important;
 }
 
-/* Remove bordas e sombras do modal */
 ::ng-deep .custom-loading-dialog {
     background: rgba(0, 0, 0, 0.4) !important;
-    /* Deixa o fundo escuro e transparente */
     box-shadow: none !important;
 }
 
-/* Estiliza o conteúdo do loading */
 .loading-content {
     display: flex;
     flex-direction: column;
@@ -129,69 +361,17 @@
     padding: 20px;
 }
 
-/* Estiliza o texto "Processando..." */
 .loading-text {
     color: white;
     font-weight: bold;
     margin-top: 10px;
 }
 
-.btn-salvar {
-    background-color: #6a1b9a;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    font-size: 14px;
-    border-radius: 5px;
-    cursor: pointer;
+.custom-margin {
+    margin-top: 40px;
+    margin-left: 60px;
 }
 
-.btn-salvar:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
-}
-
-.btn-atualizar {
-    background-color: #6a1b9a;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    font-size: 14px;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.btn-atualizar:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
-}
-
-.btn-limpar {
-    background-color: white;
-    color: #6a1b9a;
-    border: 2px solid #6a1b9a;
-    padding: 10px 15px;
-    font-size: 14px;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.btn-limpar:hover {
-    background-color: #6a1b9a;
-    color: white;
-}
 .custom-field {
     width: 25%;
-}
-
-::ng-deep .p-dropdown {
-  border: 0px ;
-  font-size: 14px;
-  width: 100%;
-  height: 38px; /* mesmo padrão dos inputs Bootstrap */
-  padding: 0px 0px;
-}
-
-::ng-deep .p-dropdown-label {
-  line-height: 20px;
 }

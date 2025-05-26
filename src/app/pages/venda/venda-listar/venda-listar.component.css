@@ -1,0 +1,276 @@
+.custom-margin {
+    margin-left: 30px;
+    margin-bottom: 20px;
+}
+
+.card {
+    padding: 1rem;
+    background: var(--surface-card);
+    border-radius: 12px;
+    margin-bottom: 1rem;
+}
+
+.flex {
+    display: flex;
+}
+
+.justify-content-between {
+    justify-content: space-between;
+}
+
+.align-items-center {
+    align-items: center;
+}
+
+.mb-4 {
+    margin-bottom: 1.5rem;
+}
+
+.mb-2 {
+    margin-bottom: 0.5rem;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+/* Estilos para a tabela */
+:host ::ng-deep .p-datatable .p-datatable-thead > tr > th {
+    background: var(--surface-section);
+    color: var(--text-color);
+    font-weight: 600;
+}
+
+:host ::ng-deep .p-datatable .p-datatable-tbody > tr > td {
+    padding: 1rem;
+}
+
+:host ::ng-deep .p-datatable .p-datatable-tbody > tr:hover {
+    background: var(--surface-hover);
+}
+
+/* Estilos para o botão de editar */
+:host ::ng-deep .p-button.p-button-text {
+    color: var(--primary-color);
+}
+
+:host ::ng-deep .p-button.p-button-text:hover {
+    background: var(--primary-50);
+    color: var(--primary-700);
+}
+
+/* Estilos para os badges de status */
+.status-badge {
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.status-pendente {
+    background-color: var(--yellow-100);
+    color: var(--yellow-700);
+}
+
+.status-concluida {
+    background-color: var(--green-100);
+    color: var(--green-700);
+}
+
+.status-cancelada {
+    background-color: var(--red-100);
+    color: var(--red-700);
+}
+
+/* Estilos para os detalhes da venda */
+.venda-detalhes {
+    padding: 1rem;
+    background: var(--surface-ground);
+    border: 1px solid var(--surface-border);
+    border-radius: 6px;
+    margin: 0.5rem;
+}
+
+.venda-detalhes h6 {
+    color: var(--text-color);
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+::ng-deep .p-datatable.p-datatable-sm .p-datatable-thead > tr > th {
+    padding: 0.5rem;
+    font-size: 0.875rem;
+}
+
+::ng-deep .p-datatable.p-datatable-sm .p-datatable-tbody > tr > td {
+    padding: 0.5rem;
+    font-size: 0.875rem;
+}
+
+::ng-deep .p-button.p-button-success {
+    background: var(--green-500);
+}
+
+::ng-deep .p-button.p-button-success:hover {
+    background: var(--green-600);
+}
+
+::ng-deep .p-accordion {
+    margin-top: 0.5rem;
+}
+
+::ng-deep .p-accordion .p-accordion-header-link {
+    padding: 0.75rem;
+    background: var(--surface-section);
+    border: 1px solid var(--surface-border);
+    border-radius: 6px;
+}
+
+::ng-deep .p-accordion .p-accordion-content {
+    padding: 1rem;
+    background: var(--surface-ground);
+    border: 1px solid var(--surface-border);
+    border-top: none;
+    border-radius: 0 0 6px 6px;
+}
+
+.header-container {
+  margin-left: 0;
+  padding: 0 10px;
+}
+
+.divider {
+  flex-grow: 1;
+  margin-left: 60px;
+  margin-right: 60px;
+  height: 45px;
+}
+
+:host ::ng-deep .custom-button {
+  background-color: transparent !important;
+}
+
+:host ::ng-deep .custom-button-edit .p-button {
+  padding: 6px 8px;
+  background-color: rgb(255, 165, 0);
+  border-color: rgb(255, 165, 0);
+  margin-left: 5px;
+}
+
+:host ::ng-deep .custom-button-excluir .p-button {
+  padding: 6px 8px;
+  background-color: rgb(199, 31, 31);
+  border-color: rgb(199, 31, 31);
+  margin-left: 5px;
+}
+
+:host ::ng-deep .flex {
+  display: flex !important;
+  margin-top: -3rem;
+}
+
+.p-button {
+  border-radius: 7px;
+  text-transform: initial;
+  padding: 10px 10px;
+  font-size: 1rem;
+  height: auto;
+  width: auto;
+  margin-right: 20px;
+}
+
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin-top: -270px;
+}
+
+:host ::ng-deep .p-progress-spinner-circle {
+  stroke: #6A1B9A !important;
+}
+
+.p-button-someli {
+  background-color: #4d0b63 !important;
+  border-color: #4d0b63 !important;
+  color: #ffffff !important;
+}
+
+.p-button-someli:hover {
+  background-color: #7a43be !important;
+  border-color: #7a43be !important;
+}
+
+/* Ajuste geral do modal */
+:host ::ng-deep .p-dialog {
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  width: 350px !important;
+}
+
+/* Centraliza o conteúdo do modal */
+:host ::ng-deep .p-dialog-content {
+  text-align: center;
+  font-size: 16px;
+  color: #444;
+  padding-bottom: 20px;
+}
+
+/* Alinha os botões corretamente */
+:host ::ng-deep .p-dialog-footer {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  padding: 10px 20px;
+}
+
+/* Botão "Não" */
+.btn-nao {
+  background-color: #6c757d !important;
+  border: none;
+  color: white !important;
+  font-weight: bold;
+  padding: 10px 15px;
+  border-radius: 8px;
+  transition: 0.3s;
+  min-width: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Botão "Sim" */
+.btn-sim {
+  background-color: #dc3545 !important;
+  border: none;
+  color: white !important;
+  font-weight: bold;
+  padding: 10px 15px;
+  border-radius: 8px;
+  transition: 0.3s;
+  min-width: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Espaçamento entre o ícone e o texto */
+.btn-nao i,
+.btn-sim i {
+  margin-right: 8px;
+}
+
+/* Ajuste ao passar o mouse */
+.btn-nao:hover {
+  background-color: #5a6268 !important;
+}
+
+.btn-sim:hover {
+  background-color: #c82333 !important;
+} 

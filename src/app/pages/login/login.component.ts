@@ -6,65 +6,71 @@ import { PrimeNgModule } from 'src/app/componentes/primeng/primeng.module';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { AuthService } from 'src/app/auth.service';
+import { InputMaskModule } from 'primeng/inputmask';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, PrimeNgModule, ToastModule],
+  imports: [
+    CommonModule, 
+    ReactiveFormsModule, 
+    PrimeNgModule, 
+    ToastModule,
+    InputMaskModule,
+    ProgressSpinnerModule
+  ],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
   providers: [MessageService]
 })
 export class LoginComponent {
-  loginForm: FormGroup;
+  form: FormGroup;
+  loading = false;
+  mostrarSenha = false;
+  errorMessage = '';
 
   constructor(
     private fb: FormBuilder,
-    private router: Router,
-    private messageService: MessageService,
     private authService: AuthService,
+    private router: Router,
+    private messageService: MessageService
   ) {
-    this.loginForm = this.fb.group({
-      cpf: ['', [Validators.required]],
-      senha: ['', [Validators.required]]
+    this.form = this.fb.group({
+      username: ['', [Validators.required, Validators.minLength(3)]],
+      senha: ['', [Validators.required, Validators.minLength(6)]]
     });
-
   }
 
-  fazerLogin(): void {
-    if (this.loginForm.invalid) {
-      this.messageService.add({
-        severity: 'warn',
-        summary: 'Atenção',
-        detail: 'Preencha todos os campos corretamente'
+  get username() { return this.form.get('username'); }
+  get senha() { return this.form.get('senha'); }
+
+  toggleMostrarSenha(): void {
+    this.mostrarSenha = !this.mostrarSenha;
+  }
+
+  fazerLogin() {
+    if (this.form.valid) {
+      this.loading = true;
+      this.errorMessage = '';
+
+      const { username, senha } = this.form.value;
+
+      this.authService.login(username, senha).subscribe({
+        next: () => {
+          this.router.navigate(['/index']);
+        },
+        error: (error) => {
+          this.loading = false;
+          if (error.status === 401) {
+            this.errorMessage = 'Usuário ou senha inválidos';
+          } else if (error.status === 0) {
+            this.errorMessage = 'Erro de conexão com o servidor';
+          } else {
+            this.errorMessage = 'Erro ao fazer login. Tente novamente.';
+          }
+        }
       });
-      return;
     }
-
-    const { cpf, senha } = this.loginForm.value;
-
-    this.authService.login(cpf.replace(/\D/g, ''), senha).subscribe({
-      next: (res: any) => {
-        localStorage.setItem('token', res.token); // 👈 salva o token ANTES de redirecionar
-
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Sucesso',
-          detail: 'Login realizado com sucesso!'
-        });
-
-        console.log('Login OK, redirecionando...');
-        this.router.navigateByUrl('/index'); // ou this.router.navigate(['/index']);
-      },
-      error: () => {
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Erro',
-          detail: 'CPF ou senha inválidos'
-        });
-      }
-    });
-
   }
-
 }

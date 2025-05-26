@@ -43,22 +43,21 @@
     align-items: center;
 }
 
-
-
 /* Ajuste do botão Limpar */
 .btn-limpar {
     background-color: transparent !important;
     border: 2px solid #6F2481 !important;
-    /* Roxo padrão da Someli */
     color: #6F2481 !important;
     font-weight: bold;
-    padding: 10px 25px !important;
+    padding: 0.75rem 1.5rem !important;
     border-radius: 6px !important;
     transition: all 0.3s ease-in-out;
     width: 130px;
-    /* Mantendo um tamanho uniforme */
     text-align: center;
     height: 44px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .btn-limpar:hover {
@@ -72,12 +71,15 @@
     color: white !important;
     border: none !important;
     font-weight: bold;
-    padding: 10px 25px !important;
+    padding: 0.75rem 1.5rem !important;
     border-radius: 6px !important;
     transition: all 0.3s ease-in-out;
     width: 130px;
     text-align: center;
     height: 44px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .btn-cadastrar:hover {
@@ -86,7 +88,6 @@
 
 .btn-cadastrar:disabled {
     background-color: #A685A6 !important;
-    /* Um tom mais claro do roxo da Someli */
     cursor: not-allowed !important;
     opacity: 0.6;
 }
@@ -102,8 +103,6 @@
     justify-content: center;
     align-items: center;
     z-index: 1000;
-
-
 }
 
 /* Remove o fundo branco do modal */
@@ -137,33 +136,55 @@
 }
 
 .btn-salvar {
-    background-color: #6a1b9a;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    font-size: 14px;
-    border-radius: 5px;
-    cursor: pointer;
+    background-color: #6F2481 !important;
+    color: white !important;
+    border: none !important;
+    font-weight: bold;
+    padding: 0.75rem 1.5rem !important;
+    border-radius: 6px !important;
+    transition: all 0.3s ease-in-out;
+    width: 130px;
+    text-align: center;
+    height: 44px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-salvar:hover {
+    background-color: #571C66 !important;
 }
 
 .btn-salvar:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
+    background-color: #A685A6 !important;
+    cursor: not-allowed !important;
+    opacity: 0.6;
 }
 
 .btn-atualizar {
-    background-color: #6a1b9a;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    font-size: 14px;
-    border-radius: 5px;
-    cursor: pointer;
+    background-color: #6F2481 !important;
+    color: white !important;
+    border: none !important;
+    font-weight: bold;
+    padding: 0.75rem 1.5rem !important;
+    border-radius: 6px !important;
+    transition: all 0.3s ease-in-out;
+    width: 130px;
+    text-align: center;
+    height: 44px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-atualizar:hover {
+    background-color: #571C66 !important;
 }
 
 .btn-atualizar:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
+    background-color: #A685A6 !important;
+    cursor: not-allowed !important;
+    opacity: 0.6;
 }
 
 .btn-limpar {
@@ -180,6 +201,34 @@
     background-color: #6a1b9a;
     color: white;
 }
+
 .custom-field {
     width: 25%;
+}
+
+/* Estilos para o Calendário */
+:host ::ng-deep .p-calendar .p-datepicker-calendar .p-highlight {
+  background-color: #5e2974 !important;
+  color: white !important;
+}
+
+:host ::ng-deep .p-calendar .p-datepicker-calendar td.p-datepicker-today > span.p-highlight {
+  background-color: #5e2974 !important;
+  color: white !important;
+  border-color: #5e2974 !important;
+}
+
+:host ::ng-deep .p-calendar .p-datepicker-calendar td > span:hover {
+  background-color: #8a4ca8 !important;
+  color: white !important;
+}
+
+:host ::ng-deep .p-calendar .p-datepicker-header .p-datepicker-title button:hover {
+  color: #5e2974 !important;
+}
+
+:host ::ng-deep .p-calendar .p-datepicker-header .p-datepicker-prev:hover,
+:host ::ng-deep .p-calendar .p-datepicker-header .p-datepicker-next:hover {
+  background-color: #f0e8f5 !important;
+  color: #5e2974 !important;
 }

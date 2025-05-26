@@ -98,3 +98,97 @@
   color: #333;
   margin-top: 20px;
 }
+
+/* Estilos para os badges de status */
+.status-badge {
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.status-pendente {
+    background-color: var(--yellow-100);
+    color: var(--yellow-700);
+}
+
+.status-concluida {
+    background-color: var(--green-100);
+    color: var(--green-700);
+}
+
+.status-cancelada {
+    background-color: var(--red-100);
+    color: var(--red-700);
+}
+
+/* Estilos para a tabela */
+:host ::ng-deep .p-datatable .p-datatable-thead > tr > th {
+    background: var(--surface-section);
+    color: var(--text-color);
+    font-weight: 600;
+    padding: 1rem 1.5rem;
+}
+
+:host ::ng-deep .p-datatable .p-datatable-tbody > tr > td {
+    padding: 1rem 1.5rem;
+}
+
+:host ::ng-deep .p-datatable .p-datatable-tbody > tr:hover {
+    background: var(--surface-hover);
+}
+
+:host ::ng-deep .p-datatable .p-datatable-wrapper {
+    padding: 0.5rem;
+}
+
+:host ::ng-deep .p-datatable .p-datatable-table {
+    border-spacing: 0;
+    border-collapse: separate;
+}
+
+:host ::ng-deep .p-datatable .p-datatable-thead > tr > th:first-child {
+    border-top-left-radius: 6px;
+}
+
+:host ::ng-deep .p-datatable .p-datatable-thead > tr > th:last-child {
+    border-top-right-radius: 6px;
+}
+
+/* Estilos para o container do título e botão */
+.card {
+    padding: 2rem;
+}
+
+.card h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    color: var(--text-color);
+}
+
+.flex.justify-content-between {
+    margin-bottom: 1.5rem;
+    padding: 0 0.5rem;
+}
+
+/* Estilos para o botão */
+:host ::ng-deep .p-button.p-button-sm {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.8rem;
+    min-width: 90px;
+}
+
+:host ::ng-deep .p-button.p-button-sm .p-button-icon {
+    font-size: 0.8rem;
+    margin-right: 0.4rem;
+}
+
+:host ::ng-deep .p-button.p-button-sm .p-button-label {
+    font-weight: 500;
+}
+
+.button-container {
+    display: inline-flex;
+    justify-content: flex-end;
+    min-width: 120px;
+}
