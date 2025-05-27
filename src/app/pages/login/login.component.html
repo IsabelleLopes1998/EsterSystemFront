@@ -9,10 +9,10 @@
                 <label for="username">Usuário</label>
                 <span class="p-input-icon-left">
                     <i class="pi pi-user"></i>
-                    <input 
+                    <input
                         id="username"
-                        type="text" 
-                        pInputText 
+                        type="text"
+                        pInputText
                         formControlName="username"
                         [ngClass]="{'ng-invalid ng-dirty': username?.invalid && username?.touched}"
                         placeholder="Digite seu usuário"
@@ -29,21 +29,21 @@
                 <label for="senha">Senha</label>
                 <span class="p-input-icon-left">
                     <i class="pi pi-lock"></i>
-                    <input 
+                    <input
                         id="senha"
-                        [type]="mostrarSenha ? 'text' : 'password'" 
-                        pInputText 
+                        [type]="mostrarSenha ? 'text' : 'password'"
+                        pInputText
                         formControlName="senha"
                         [ngClass]="{'ng-invalid ng-dirty': senha?.invalid && senha?.touched}"
                         placeholder="Digite sua senha"
                         [disabled]="loading"
                     >
                 </span>
-                <button 
-                    type="button" 
-                    pButton 
-                    class="p-button-text" 
-                    icon="pi pi-eye" 
+                <button
+                    type="button"
+                    pButton
+                    class="p-button-text"
+                    icon="pi pi-eye"
                     (click)="mostrarSenha = !mostrarSenha"
                     [disabled]="loading"
                 ></button>
@@ -54,10 +54,10 @@
             </div>
 
             <div class="form-group">
-                <button 
-                    pButton 
-                    type="submit" 
-                    label="Entrar" 
+                <button
+                    pButton
+                    type="submit"
+                    label="Entrar"
                     [loading]="loading"
                     [disabled]="form.invalid || loading"
                     class="p-button-primary"

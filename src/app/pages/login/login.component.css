@@ -17,10 +17,23 @@
     text-align: center;
 }
 
-.logo {
+/*.logo {
     max-width: 160px;
     margin-bottom: 1.5rem;
+}*/
+
+.logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1.5rem;
 }
+
+.user-icon {
+    font-size: 3rem;
+    color: #2c3e50;
+}
+
 
 .title {
     font-size: 24px;
@@ -32,6 +45,7 @@
 .form-group {
     text-align: left;
     margin-bottom: 1.5rem;
+    position: relative; /* Necessário para posicionar o botão de olho */
 }
 
 .form-group label {
@@ -44,11 +58,13 @@
 
 input[pInputText] {
     width: 100%;
-    padding: 0.75rem;
+    padding: rem;
     border-radius: 8px;
     border: 1px solid #e2e8f0;
     font-size: 14px;
     transition: all 0.2s ease;
+    box-sizing: border-box;
+    max-width: 480px;
 }
 
 input[pInputText]:focus {
@@ -104,3 +120,50 @@ input[pInputText].ng-invalid.ng-dirty {
     animation: spin 1s linear infinite;
 }
 
+/* Corrige posicionamento do botão de olho */
+.form-group button[icon="pi pi-eye"] {
+    position: absolute;
+    top: 38px;
+    right: 10px;
+    border: none;
+    background: transparent;
+    padding: 0;
+    height: 36px;
+    width: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #4a5568;
+    z-index: 2;
+    cursor: pointer;
+}
+
+.form-group button[icon="pi pi-eye"]:hover {
+    color: #2e7d32;
+}
+.p-input-icon-left {
+    display: block;
+    width: 100%;
+}
+.form-group {
+    width: 100%;
+}
+.p-button {
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+}
+
+.p-button-primary {
+  background-color: #4d0b63;
+  border: none;
+  color: white;
+  opacity: 1;
+}
+
+.p-button-primary:hover {
+  background-color: #5c89d6;
+}
