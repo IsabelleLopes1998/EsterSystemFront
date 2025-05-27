@@ -139,3 +139,28 @@
 .btn-sim:hover {
   background-color: #c82333 !important;
 }
+:host ::ng-deep .p-calendar .p-datepicker-calendar .p-highlight {
+  background-color: #5e2974 !important;
+  color: white !important;
+}
+
+:host ::ng-deep .p-calendar .p-datepicker-calendar td.p-datepicker-today > span.p-highlight {
+  background-color: #5e2974 !important;
+  color: white !important;
+  border-color: #5e2974 !important;
+}
+
+:host ::ng-deep .p-calendar .p-datepicker-calendar td > span:hover {
+  background-color: #8a4ca8 !important;
+  color: white !important;
+}
+
+:host ::ng-deep .p-calendar .p-datepicker-header .p-datepicker-title button:hover {
+  color: #5e2974 !important;
+}
+
+:host ::ng-deep .p-calendar .p-datepicker-header .p-datepicker-prev:hover,
+:host ::ng-deep .p-calendar .p-datepicker-header .p-datepicker-next:hover {
+  background-color: #f0e8f5 !important;
+  color: #5e2974 !important;
+} 
