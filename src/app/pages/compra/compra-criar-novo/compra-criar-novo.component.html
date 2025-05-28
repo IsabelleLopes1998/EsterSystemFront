@@ -48,37 +48,52 @@
     <div class="items-section mt-4">
       <h6>Itens da Compra</h6>
 
-      <div class="add-item-row">
-        <div class="search-product">
-          <p-autoComplete [(ngModel)]="produtoSelecionado" [suggestions]="filteredProdutos"
-            (completeMethod)="filtrarProdutos($event)" (onSelect)="onProdutoSelect($event)" [field]="'nome'"
-            [minLength]="1" placeholder="Selecione o produto" [dropdown]="true" [style]="{ width: '100%' }"
-            [forceSelection]="true" [ngModelOptions]="{ standalone: true }">
-          </p-autoComplete>
+        <div class="add-item-row d-flex align-items-center gap-2">
+            <div class="search-product flex-grow-1">
+                <p-autoComplete
+                    [(ngModel)]="produtoSelecionado"
+                    [suggestions]="filteredProdutos"
+                    (completeMethod)="filtrarProdutos($event)"
+                    (onSelect)="onProdutoSelect($event)"
+                    [field]="'nome'"
+                    [minLength]="1"
+                    placeholder="Selecione o produto"
+                    [dropdown]="true"
+                    [style]="{ width: '100%' }"
+                    [forceSelection]="true"
+                    [ngModelOptions]="{ standalone: true }">
+                </p-autoComplete>
+            </div>
+
+            <div class="action-buttons">
+                <!-- Botão de adicionar item -->
+                <button
+                    type="button"
+                    pButton
+                    icon="pi pi-plus"
+                    class="p-button"
+                    (click)="adicionarProduto()"
+                    style="background-color: #6F2481; color: white; width: 50px; height: 50px;"
+                    pTooltip="Adicionar item">
+                </button>
+
+                <!-- Botão de criar novo produto -->
+                <a
+                    [routerLink]="['/produto-criar-novo']"
+                    [state]="{ voltarParaCompra: true }"
+                    class="p-button-someli"
+                    pButton
+                    icon="pi pi-plus-circle"
+                    label="Novo Produto"
+                    pTooltip="Cadastrar novo produto">
+                </a>
+            </div>
+
         </div>
 
-        <!-- <div class="item-quantity">
-                <p-inputNumber
-                  [(ngModel)]="quantidadeSelecionada"
-                  [min]="1"
-                  [showButtons]="true"
-                  buttonLayout="horizontal"
-                  spinnerMode="horizontal"
-                  decrementButtonClass="p-button-secondary"
-                  incrementButtonClass="p-button-secondary"
-                  incrementButtonIcon="pi pi-plus"
-                  decrementButtonIcon="pi pi-minus"
-                  [style]="{ width: '100%' }"
-                  [ngModelOptions]="{ standalone: true }">
-                </p-inputNumber>
-              </div> -->
 
-        <button type="button" pButton icon="pi pi-plus" class="p-button-success add-item-button"
-          (click)="adicionarProduto()" pTooltip="Adicionar item">
-        </button>
-      </div>
 
-      <div class="items-list mt-3">
+        <div class="items-list mt-3">
         <p-table [value]="itensCompra" [style]="{ width: '100%' }" styleClass="p-datatable-sm">
           <ng-template pTemplate="header">
             <tr>

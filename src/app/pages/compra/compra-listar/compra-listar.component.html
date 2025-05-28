@@ -2,21 +2,38 @@
 
 <p-card>
     <div style="margin-left: 30px;">
-        <app-breadcrumb [breadcrumbs]="[{ label: 'Início', url: '#' }, { label: 'Lista de compras', url: '#' }]"></app-breadcrumb>
+        <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+    </div>
+
+    <div class="container-fluid mb-7 mr-5">
+        <div class="header-container mb-7 mr-5" style="margin-right: -10px;">
+
+            <div class="container-fluid mb-7 mr-5" style="margin-right: -10px;">
+                <div class="flex justify-content-end">
+                    <button icon="pi pi-plus" pButton pRipple label="Nova Compra" class="p-button-someli"
+                            (click)="criarNovaCompra()">
+                    </button>
+                </div>
+            </div>
+        </div>
+
+
     </div>
 
     <div class="container-fluid">
-        <div class="header-container d-flex align-items-center mb-4 mt-4">
-            <!-- Título -->
+        <div class="header-container d-flex align-items-center mb-4">
+            <!-- Título com margem à esquerda para movê-lo para a direita -->
             <div class="titulo" style="margin-left: 10px;">
-                <h1 class="titulo-pagina" style="font-size: 1.5rem; color: #5e2974;">
-                    <strong>Lista de compras</strong>
+                <h1 class="titulo-pagina" style="font-size: 1.5rem; color: #5e2974; margin-right: 10px;">
+                    <strong>Lista de clientes</strong>
                 </h1>
             </div>
             <p-divider class="divider" type="solid"></p-divider>
             <div class="search-container p-input-icon-left ml-auto" style="position: relative; margin-right: 15px;">
-                <i class="pi pi-search" style="position: absolute; left: 10px; top: 65%; transform: translateY(-50%);"></i>
-                <input class="input-pesquisar" pInputText type="text" placeholder="Pesquisar" style="padding-left: 30px;" [(ngModel)]="pesquisar">
+                <i class="pi pi-search"
+                   style="position: absolute; left: 10px; top: 65%; transform: translateY(-50%);"></i>
+                <input class="input-pesquisar" pInputText type="text" placeholder="Pesquisar"
+                       style="padding-left: 30px;" [(ngModel)]="pesquisar">
             </div>
         </div>
     </div>
@@ -27,17 +44,18 @@
     </div>
 
     <!-- Tabela de compras -->
-    <p-table *ngIf="!isLoading" [value]="comprasFiltradas" dataKey="id" styleClass="p-datatable-striped custom-table"
-             [tableStyle]="{ 'min-width': '20rem', 'width': '100%' }" [paginator]="true" [rows]="10"
-             [rowsPerPageOptions]="[10, 20, 30]">
+    <p-table *ngIf="!isLoading" [value]="comprasFiltradas" dataKey="id"
+         styleClass="p-datatable-striped custom-table" [tableStyle]="{ 'min-width': '20rem', 'width': '100%' }"
+         [paginator]="true" [rows]="10" [rowsPerPageOptions]="[10, 20, 30]">
 
         <ng-template pTemplate="header">
             <tr>
-                <th pSortableColumn="data" style="min-width: 150px; font-size: 13px;">Data <p-sortIcon field="data"></p-sortIcon></th>
+                <th pSortableColumn="nome" style="min-width: 180px; font-size: 13px;">Data <p-sortIcon field="data"></p-sortIcon></th>
                 <th pSortableColumn="fornecedor" style="min-width: 180px; font-size: 13px;">Fornecedor </th>
                 <th pSortableColumn="formaPagamento" style="min-width: 150px; font-size: 13px;">Pagamento </th>
                 <th pSortableColumn="quantidadeParcelas" style="min-width: 130px; font-size: 13px;">Parcelas </th>
                 <th pSortableColumn="nomeUsuario" style="min-width: 180px; font-size: 13px;">Usuário </th>
+                <!--<th style="min-width: 100px">Ações</th>-->
             </tr>
         </ng-template>
 
@@ -48,6 +66,15 @@
                 <td class="table-cell" style="font-size: 12px;">{{ compra.formaPagamento }}</td>
                 <td class="table-cell" style="font-size: 12px;">{{ compra.quantidadeParcelas }}</td>
                 <td class="table-cell" style="font-size: 12px;">{{ compra.nomeUsuario }}</td>
+
+                <!--<td class="table-cell" style="font-size: 20px;">
+                    <p-button class="custom-button-edit" (click)="editarCompra(compra.id)">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </p-button>
+                    <p-button class="custom-button-excluir" (click)="confirmarExclusao(compra)">
+                        <i class="fa-solid fa-trash"></i>
+                    </p-button>
+                </td>-->
             </tr>
         </ng-template>
 

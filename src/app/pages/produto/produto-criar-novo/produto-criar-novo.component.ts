@@ -16,6 +16,7 @@ import { DialogModule } from 'primeng/dialog';
 import { CategoriaService } from '../../categoria/categoria.service';
 
 
+
 @Component({
    selector: 'app-produto-criar-novo',
    standalone: true,
@@ -47,24 +48,35 @@ export class ProdutoCriarNovoComponent {
 
     categoria: { id: string; nome: string }[] = [];
     subcategoria: { id: string; nome: string }[] = [];
+    voltarParaCompra = false;
 
     constructor(
-        private fb: FormBuilder,
-        private route: ActivatedRoute,
-        private router: Router,
-        private produtoService: ProdutoService,
-        private categoriaService: CategoriaService,
-       
-        private messageService: MessageService
+      private fb: FormBuilder,
+      private route: ActivatedRoute,
+      private router: Router,
+      private produtoService: ProdutoService,
+      private categoriaService: CategoriaService,
+      private messageService: MessageService
     ) {
-        this.produtoForm = this.fb.group({
-            nome: ['', Validators.required],
-            valor: [0, Validators.required],
-            quantidadeEstoque: [0, Validators.required],
-            idCategoria: [null, Validators.required],
-            idSubcategoria: [null]
-        });
+      this.produtoForm = this.fb.group({
+        nome: ['', Validators.required],
+        valor: [0, Validators.required],
+        quantidadeEstoque: [0, Validators.required],
+        idCategoria: [null, Validators.required],
+        idSubcategoria: [null]
+      });
+
+      const navigation = this.router.getCurrentNavigation();
+      if (navigation?.extras.state) {
+        this.voltarParaCompra = navigation.extras.state['voltarParaCompra'] === true;
+        sessionStorage.setItem('voltarParaCompra', JSON.stringify(this.voltarParaCompra));
+      } else {
+        // fallback caso recarregue a página
+        this.voltarParaCompra = JSON.parse(sessionStorage.getItem('voltarParaCompra') || 'false');
+      }
     }
+
+
 
     ngOnInit() {
         this.isFormValid = this.produtoForm.valid;
@@ -75,7 +87,7 @@ export class ProdutoCriarNovoComponent {
             console.log('[DEBUG] Categorias carregadas:', this.categoria);
         });
 
-    
+
 
         const id = this.route.snapshot.paramMap.get('id');
         if (id) {
@@ -116,7 +128,8 @@ export class ProdutoCriarNovoComponent {
     }
 
     salvarProduto() {
-        console.log('[DEBUG] salvarProduto foi chamado');
+
+         console.log('[DEBUG] salvarProduto foi chamado');
         if (this.produtoForm.invalid) {
             console.log('[DEBUG] Formulário inválido');
 
@@ -144,31 +157,53 @@ export class ProdutoCriarNovoComponent {
 
         console.log('Enviando para o backend:', produto);
 
+          const redirecionar = () => {
+            const rota = this.voltarParaCompra ? '/compra-criar-novo' : '/produto-listar';
+            setTimeout(() => this.router.navigate([rota]), 2000);
+          };
+
         if (this.isEditing) {
-            this.produtoService.atualizarProduto(produto, this.id!).subscribe({
-                next: () => {
-                    this.isLoading = false;
-                    this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Produto atualizado com sucesso!' });
-                    setTimeout(() => this.router.navigate(['/produto-listar']), 2000);
-                },
-                error: () => {
-                    this.isLoading = false;
-                    this.messageService.add({ severity: 'error', summary: 'Erro', detail: 'Falha ao atualizar o produto!' });
+          this.produtoService.atualizarProduto(produto, this.id!).subscribe({
+            next: () => {
+              this.isLoading = false;
+              this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Produto atualizado com sucesso!' });
+
+              setTimeout(() => {
+                if (this.voltarParaCompra) {
+                  sessionStorage.removeItem('voltarParaCompra');
+                  this.router.navigate(['/compra-criar-novo']);
+                } else {
+                  this.router.navigate(['/produto-listar']);
                 }
-            });
+              }, 2000);
+            },
+            error: () => {
+              this.isLoading = false;
+              this.messageService.add({ severity: 'error', summary: 'Erro', detail: 'Falha ao atualizar o produto!' });
+            }
+          });
         } else {
-            this.produtoService.salvarProduto(produto).subscribe({
-                next: () => {
-                    this.isLoading = false;
-                    this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Produto cadastrado com sucesso!' });
-                    setTimeout(() => this.router.navigate(['/produto-listar']), 2000);
-                },
-                error: () => {
-                    this.isLoading = false;
-                    this.messageService.add({ severity: 'error', summary: 'Erro', detail: 'Falha ao salvar o produto!' });
+          this.produtoService.salvarProduto(produto).subscribe({
+            next: () => {
+              this.isLoading = false;
+              this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Produto cadastrado com sucesso!' });
+
+              setTimeout(() => {
+                if (this.voltarParaCompra) {
+                  sessionStorage.removeItem('voltarParaCompra');
+                  this.router.navigate(['/compra-criar-novo']);
+                } else {
+                  this.router.navigate(['/produto-listar']);
                 }
-            });
+              }, 2000);
+            },
+            error: () => {
+              this.isLoading = false;
+              this.messageService.add({ severity: 'error', summary: 'Erro', detail: 'Falha ao salvar o produto!' });
+            }
+          });
         }
+
     }
 
     limparFormulario(): void {

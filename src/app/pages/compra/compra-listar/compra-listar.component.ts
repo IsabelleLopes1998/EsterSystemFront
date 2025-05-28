@@ -28,7 +28,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     ReactiveFormsModule,
     ProgressSpinnerModule
   ],
-  
+
   templateUrl: './compra-listar.component.html',
   styleUrls: ['./compra-listar.component.css'],
 })
@@ -51,9 +51,13 @@ export class CompraListarComponent {
     this.getListaDeCompras();
   }
 
-  // criarNovaCompra() {
-  //   this.router.navigate(['/compra-criar-nova']);
-  // }
+  criarNovaCompra() {
+     this.router.navigate(['/compra-criar-nova']);
+  }
+    breadcrumbs = [
+      { label: 'Início', routerLink: '/' },
+      { label: 'Compras', routerLink: '/compra-listar' }
+    ];
 
   getListaDeCompras(): void {
     this.isLoading = true;
@@ -79,5 +83,5 @@ export class CompraListarComponent {
   // confirmarExclusao(compra: CompraResponse) {
   //   this.compraSelecionada = compra;
   //   this.modalExclusaoVisivel = true;
-  // } 
+  // }
   }

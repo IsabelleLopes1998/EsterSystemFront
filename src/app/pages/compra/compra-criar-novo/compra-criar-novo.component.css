@@ -163,4 +163,76 @@
 :host ::ng-deep .p-calendar .p-datepicker-header .p-datepicker-next:hover {
   background-color: #f0e8f5 !important;
   color: #5e2974 !important;
-} 
+}
+
+/* Ajuste do botão Limpar */
+.btn-limpar {
+    background-color: transparent !important;
+    border: 2px solid #6F2481 !important;
+    color: #6F2481 !important;
+    font-weight: bold;
+    padding: 0.75rem 1.5rem !important;
+    border-radius: 6px !important;
+    transition: all 0.3s ease-in-out;
+    width: 130px;
+    text-align: center;
+    height: 44px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.btn-salvar {
+    background-color: #6F2481 !important;
+    color: white !important;
+    border: none !important;
+    font-weight: bold;
+    padding: 0.75rem 1.5rem !important;
+    border-radius: 6px !important;
+    transition: all 0.3s ease-in-out;
+    width: 130px;
+    text-align: center;
+    height: 44px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.add-item-row {
+  display: flex;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.search-product {
+  flex-grow: 1;
+}
+
+.button-wrapper button {
+  height: 100%;
+  padding: 0.75rem 1rem;
+}
+.add-item-button.p-button {
+  background-color: #6F2481 !important; /* cor roxa, altere conforme desejar */
+  border: none !important;
+  color: #fff !important;
+  transition: background-color 0.2s ease;
+}
+
+.add-item-button.p-button:hover {
+  background-color: #732d91 !important; /* cor mais escura no hover */
+}
+
+
+::ng-deep .p-autocomplete-dropdown {
+  background-color: #6F2481 !important; /* Exemplo: roxo */
+  border: none !important;
+  color: #fff !important;
+}
+
+::ng-deep .p-autocomplete-dropdown:hover {
+  background-color: #732d91 !important; /* Hover mais escuro */
+}
+.action-buttons {
+  display: flex;
+  align-items: center;
+  gap: 1rem; /* controla o espaçamento entre os botões */
+}

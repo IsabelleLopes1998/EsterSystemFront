@@ -134,7 +134,7 @@ export class ProdutoListarComponent {
       excluirProduto() {
         if (!this.produtoSelecionado || !this.produtoSelecionado.id) return;
 
-        this.produtoService.excluirProduto(this.produtoSelecionado.id).subscribe({
+        this.produtoService.excluir(Number(this.produtoSelecionado.id)).subscribe({
           next: () => {
             this.modalExclusaoVisivel = false;
             this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Produto excluído com sucesso!' });

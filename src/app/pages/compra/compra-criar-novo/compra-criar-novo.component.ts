@@ -23,6 +23,9 @@ import { CalendarModule } from 'primeng/calendar';
 import { CompraService } from '../compra.service';
 import { ProdutoService } from '../../produto/produto.service';
 import { CompraRequest, CompraItemRequest } from '../compra-listar/compra.model';
+import { RouterModule } from '@angular/router';
+
+
 
 @Component({
   selector: 'app-compra-criar-novo',
@@ -42,7 +45,8 @@ import { CompraRequest, CompraItemRequest } from '../compra-listar/compra.model'
     AutoCompleteModule,
     TooltipModule,
     ProgressSpinnerModule,
-    CalendarModule
+    CalendarModule,
+    RouterModule
   ],
   providers: [MessageService]
 })
@@ -77,6 +81,12 @@ export class CompraCriarNovoComponent implements OnInit {
 
     this.carregarProdutos();
   }
+
+  irParaCriarProduto() {
+      this.router.navigate(['/produto-criar-novo'], { state: { voltarParaCompra: true } });
+  }
+
+
 
   carregarProdutos(): void {
     this.produtoService.getListaDeProdutos().subscribe({
