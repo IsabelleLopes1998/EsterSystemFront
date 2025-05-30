@@ -37,8 +37,11 @@
                     pInputText
                     formControlName="cpf"
                     placeholder="CPF ou CNPJ"
-                    (input)="applyCpfMask()"
+                    (blur)="applyCpfMask()"
                 />
+                <div *ngIf="clienteForm.get('cpf')?.errors?.['cpfDuplicado']">
+                    Já existe um cliente com esse CPF.
+                </div>
                 <small *ngIf="clienteForm.get('cpf')?.hasError('required') && clienteForm.get('cpf')?.touched" class="p-error">
                     Campo obrigatório.
                 </small>
@@ -64,17 +67,23 @@
                 </p-calendar>
             </div>
         </div>
-        
+
         <div class="row mt-3">
             <div class="col-md-3">
                 <label for="email" class="form-label">E-mail</label>
                 <input id="email" pInputText type="email" class="form-control input-pequeno" formControlName="email"
                     placeholder="Digite o e-mail" />
+                <div *ngIf="clienteForm.get('email')?.errors?.['emailDuplicado']" class="text-danger">
+                    <i class="pi pi-exclamation-circle"></i> Já existe um cliente com esse e-mail.
+                </div>
+
                 <small
-                    *ngIf="clienteForm.get('email')?.invalid && (clienteForm.get('email')?.touched || clienteForm.get('email')?.dirty)"
-                    class="text-danger">
+                    *ngIf="clienteForm.get('email')?.errors?.['email'] && (clienteForm.get('email')?.touched || clienteForm.get('email')?.dirty)"
+                    class="text-danger"
+                >
                     <i class="pi pi-exclamation-circle"></i> E-mail inválido
                 </small>
+
             </div>
             <div class="col-md-3">
                 <label for="primeiroTelefone" class="form-label">Telefone 1</label>
@@ -114,7 +123,7 @@
                 </small>
             </div>
         </div>
-        
+
         <div class="row mt-3">
             <div class="col-md-3">
                 <label for="rua" class="form-label">Rua</label>
@@ -151,12 +160,12 @@
 
             <!-- Botão para cadastrar novo cliente -->
             <button *ngIf="!isEditing" type="submit" pButton class="btn-salvar mx-2">
-                Cadastrar 
+                Cadastrar
             </button>
 
             <!-- Botão para atualizar cliente existente -->
             <button *ngIf="isEditing" type="submit" pButton class="btn-atualizar mx-2">
-                Atualizar 
+                Atualizar
             </button>
         </div>
     </form>

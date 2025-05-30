@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { ClienteResponse } from './cliente-listar/cliente.model';
+import { HttpParams } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -38,5 +39,19 @@ export class ClienteService {
   excluirCliente(id: string): Observable<void> {
     return this.http.delete<void>(`${this.clienteApiUrl}/excluirCliente/${id}`);
   }
+
+  verificarCpf(cpf: string, id?: string): Observable<boolean> {
+    const params = new HttpParams().set('cpf', cpf).set('id', id ?? '');
+    return this.http.get<boolean>(`${this.clienteApiUrl}/clientes/exists-by-cpf`, { params });
+  }
+
+
+ verificarEmail(email: string, id?: string): Observable<boolean> {
+   const params = new HttpParams()
+     .set('email', email)
+     .set('id', id ?? '');
+   return this.http.get<boolean>(`${this.clienteApiUrl}/clientes/exists-by-email`, { params });
+ }
+
 
 }

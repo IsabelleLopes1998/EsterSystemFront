@@ -92,7 +92,7 @@ export class ClienteListarComponent {
             this.Clientes = res;
             this.ClientesFiltrados = [...this.Clientes];
 
-            // Verifica se os IDs estão carregando corretamente
+
             console.log("Clientes carregados:", this.Clientes);
           } else {
             this.Clientes = [];

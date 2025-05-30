@@ -16,6 +16,11 @@ import { DialogModule } from 'primeng/dialog';
 import { ClienteResponse } from '../cliente-listar/cliente.model';
 import { CalendarModule } from 'primeng/calendar';
 import { cpfOuCnpjValido } from '../validators';
+import { AbstractControl, AsyncValidatorFn, ValidationErrors } from '@angular/forms';
+import { Observable, of } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
+import { HttpParams } from '@angular/common/http';
+
 
 
 
@@ -58,16 +63,36 @@ export class ClienteCriarNovoComponent {
   ) {
     this.clienteForm = this.fb.group({
       nome: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
-        cpf: ['', [Validators.required, Validators.pattern(/^(\d{3}\.\d{3}\.\d{3}-\d{2}|\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2})$/), cpfOuCnpjValido()]],
-        dataNascimento: ['', Validators.required],
-        email: ['', [Validators.required, Validators.email]],
-        primeiroTelefone: ['', [Validators.pattern(/\(\d{2}\)\s9\d{4}-\d{4}/)]],
-        segundoTelefone: ['', [Validators.pattern(/\(\d{2}\)\s9\d{4}-\d{4}/) ]],
-        rua: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(200)]],
-        numero: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(10)]],
-        complemento: ['', [Validators.required, Validators.maxLength(100)]],
-        cep: ['', [Validators.required,Validators.pattern(/\d{5}-\d{3}/)]]
+
+      cpf: ['', {
+        validators: [
+          Validators.required,
+          Validators.pattern(/^(\d{3}\.\d{3}\.\d{3}-\d{2}|\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2})$/),
+          cpfOuCnpjValido()
+        ],
+        asyncValidators: [this.cpfDuplicadoValidator()], // <- aqui está o ajuste
+        updateOn: 'blur'
+      }],
+
+
+      dataNascimento: ['', Validators.required],
+
+      email: ['', {
+        validators: [Validators.required, Validators.email],
+        asyncValidators: [this.emailDuplicadoValidator()],
+        updateOn: 'blur'
+      }],
+
+
+      primeiroTelefone: ['', [Validators.pattern(/\(\d{2}\)\s9\d{4}-\d{4}/)]],
+      segundoTelefone: ['', [Validators.pattern(/\(\d{2}\)\s9\d{4}-\d{4}/)]],
+
+      rua: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(200)]],
+      numero: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(10)]],
+      complemento: ['', [Validators.required, Validators.maxLength(100)]],
+      cep: ['', [Validators.required, Validators.pattern(/\d{5}-\d{3}/)]]
     });
+
   }
   ngOnInit() {
     this.isFormValid = this.clienteForm.valid;
@@ -177,13 +202,46 @@ export class ClienteCriarNovoComponent {
           this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Cliente cadastrado com sucesso!' });
           setTimeout(() => this.router.navigate(['/cliente-listar']), 2000);
         },
-        error: () => {
-          this.isLoading = false;
-          this.messageService.add({ severity: 'error', summary: 'Erro', detail: 'Falha ao salvar o cliente!' });
+        error: (err) => {
+            this.isLoading = false;
+            if (err.status === 409) {
+
+                  this.messageService.add({ severity: 'warn', summary: 'CPF Duplicado', detail: 'Já existe um cliente com esse CPF.' });
+                } else {
+                    this.isLoading = false;
+                              this.messageService.add({ severity: 'error', summary: 'Erro', detail: 'Falha ao salvar o cliente!' });
+                }
         }
       });
     }
   }
+   cpfDuplicadoValidator(): AsyncValidatorFn {
+     return (control: AbstractControl): Observable<ValidationErrors | null> => {
+       const cpf = control.value;
+       if (!cpf) return of(null);
+
+       return this.clienteService.verificarCpf(cpf, this.id).pipe(
+         map((existe: boolean) => (existe ? { cpfDuplicado: true } : null)),
+         catchError(() => of(null)) // <- previne o crash caso o backend quebre
+       );
+     };
+   }
+
+
+
+
+  emailDuplicadoValidator(): AsyncValidatorFn {
+    return (control: AbstractControl): Observable<ValidationErrors | null> => {
+      const email = control.value;
+      if (!email) return of(null);
+
+      return this.clienteService.verificarEmail(email, this.id).pipe(
+        map(existe => (existe ? { emailDuplicado: true } : null)),
+        catchError(() => of(null))
+      );
+    };
+  }
+
 
   limparFormulario(): void {
       this.clienteForm.reset();
