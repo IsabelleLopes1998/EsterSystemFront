@@ -33,7 +33,7 @@ interface PageEvent {
 export class ProdutoListarComponent {
       @ViewChild(PaginatorModule) paginator: PaginatorModule;
       @Input() TITULO = 'Lista de produtos';
-      @Input() veiculoData: ProdutoResponse[] = [];
+
       breadcrumbs: any = [{ "label": "Início", "url": "#" }, { "label": "Lista de produtos", "url": "#/produto-listar" }];
       Produto : ProdutoResponse[] = [];
       totalElements: number = 0;
@@ -115,7 +115,7 @@ export class ProdutoListarComponent {
           });
     }
 
-    editarProduto(id: number | undefined) {
+    editarProduto(id: string | undefined) {
         if (!id) {
           console.error("Erro: ID do produto está indefinido!");
           return;
@@ -130,21 +130,37 @@ export class ProdutoListarComponent {
        this.modalExclusaoVisivel = true;
     }
 
-    //Função para excluir o produto
+
       excluirProduto() {
         if (!this.produtoSelecionado || !this.produtoSelecionado.id) return;
 
-        this.produtoService.excluir(Number(this.produtoSelecionado.id)).subscribe({
+        this.produtoService.excluirProduto(this.produtoSelecionado.id).subscribe({
           next: () => {
             this.modalExclusaoVisivel = false;
             this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Produto excluído com sucesso!' });
             this.getListaDeProdutos(); // Atualiza a lista
           },
-          error: () => {
+          error: (err) => {
             this.modalExclusaoVisivel = false;
-            this.messageService.add({ severity: 'error', summary: 'Erro', detail: 'Falha ao excluir produto!' });
+            if (err.status === 409) {
+              this.messageService.add({
+                severity: 'warn',
+                summary: 'Atenção',
+                detail: 'Não é possível excluir este produto porque ele está vinculado ao histórico ou estoque.'
+              });
+            } else {
+              this.messageService.add({
+                severity: 'error',
+                summary: 'Erro',
+                detail: 'Falha ao excluir produto!'
+              });
+            }
           }
         });
+
+
+
       }
+
 
 }
