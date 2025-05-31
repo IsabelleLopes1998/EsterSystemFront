@@ -53,7 +53,7 @@ export class CompraListarComponent {
   }
 
   criarNovaCompra() {
-     this.router.navigate(['/compra-criar-nova']);
+     this.router.navigate(['/compra-criar-novo']);
   }
 
 
