@@ -37,7 +37,7 @@ import { CategoriaService } from '../../categoria/categoria.service';
 })
 
 export class ProdutoCriarNovoComponent {
-    breadcrumbs: any = [{ "label": "Início", "url": "#" }, { "label": "Nova consulta", "url": "javascript:void(0)" }];
+    breadcrumbs: any = [{ "label": "Início", "url": "/index" }, { "label": "Nova consulta", "url": "javascript:void(0)" }];
 
     produtoForm: FormGroup;
     isFormValid: boolean = false;

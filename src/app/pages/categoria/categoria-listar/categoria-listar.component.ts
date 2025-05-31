@@ -42,7 +42,7 @@ export class CategoriaListarComponent {
     @ViewChild(PaginatorModule) paginator: PaginatorModule;
       @Input() TITULO = 'Lista de categorias';
       @Input() veiculoData: CategoriaResponse[] = [];
-      breadcrumbs: any = [{ "label": "Início", "url": "#" }, { "label": "Lista de categorias", "url": "#/categoria-listar" }];
+      breadcrumbs: any = [{ "label": "Início", "url": "/index" }, { "label": "Lista de categorias", "url": "#/categoria-listar" }];
       Categoria: CategoriaResponse[] = [];
       totalElements: number = 0;
       pageSize: number = 5;

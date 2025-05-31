@@ -23,7 +23,7 @@ import { MessageService } from 'primeng/api';
 })
 export class SubcategoriaCriarNovoComponent {
   breadcrumbs = [
-    { label: 'Início', url: '/' },
+    { label: 'Início', url: '/index' },
     { label: 'Subcategorias', url: '/subcategoria-listar' },
     { label: 'Nova Subcategoria', url: '/subcategoria-criar-novo' }
   ];

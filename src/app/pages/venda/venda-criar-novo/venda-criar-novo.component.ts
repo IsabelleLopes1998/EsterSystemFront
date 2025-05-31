@@ -52,7 +52,7 @@ export class VendaCriarNovoComponent implements OnInit {
   produtoSelecionado: any = null;
   quantidadeSelecionada: number = 1;
   breadcrumbs = [
-    { label: 'Início', url: '/' },
+    { label: 'Início', url: '/index' },
     { label: 'Vendas', url: '/venda-listar' },
     { label: 'Nova Venda', url: '/venda-criar-novo' }
   ];
@@ -76,7 +76,7 @@ export class VendaCriarNovoComponent implements OnInit {
   ngOnInit(): void {
     this.carregarClientes();
     this.carregarProdutos();
-    
+
     this.id = this.route.snapshot.params['id'];
     if (this.id) {
       this.carregarVenda(this.id);
@@ -118,7 +118,7 @@ export class VendaCriarNovoComponent implements OnInit {
   filtrarProdutos(event: any): void {
     console.log('Evento de filtro:', event); // Debug log
     const query = event.query.toLowerCase();
-    this.filteredProdutos = this.produtos.filter(produto => 
+    this.filteredProdutos = this.produtos.filter(produto =>
       produto.nome.toLowerCase().includes(query)
     );
     console.log('Produtos filtrados:', this.filteredProdutos); // Debug log
@@ -200,26 +200,26 @@ export class VendaCriarNovoComponent implements OnInit {
       next: (venda) => {
         // Converte a data string para objeto Date
         const dataVenda = new Date(venda.dataVenda);
-        
+
         this.form.patchValue({
           data: dataVenda,
           idCliente: venda.idCliente,
           formaPagamento: venda.statusVenda // Usando statusVenda em vez de formaPagamento
         });
-        
+
         // Carregar itens da venda
         this.vendaItems = venda.vendaItemList.map(item => ({
           produtoId: item.produtoId,
           quantidadeVenda: item.quantidadeVenda
         }));
-        
+
         // Atualizar breadcrumb para edição
         this.breadcrumbs = [
           { label: 'Início', url: '/' },
           { label: 'Vendas', url: '/venda-listar' },
           { label: 'Editar Venda', url: `/venda-editar/${id}` }
         ];
-        
+
         this.loading = false;
       },
       error: (error) => {
@@ -261,10 +261,10 @@ export class VendaCriarNovoComponent implements OnInit {
 
     this.loading = true;
     const formValues = this.form.value;
-    
+
     // Formatação da data para o formato esperado pelo backend
     const data = formValues.data instanceof Date ? formValues.data : new Date(formValues.data);
-    
+
     const venda: VendaRequestDTO = {
       data: data.toISOString(),
       idCliente: formValues.idCliente,
@@ -272,7 +272,7 @@ export class VendaCriarNovoComponent implements OnInit {
       vendaItemList: this.vendaItems
     };
 
-    const operacao = this.id 
+    const operacao = this.id
       ? this.vendaService.atualizarVenda(this.id, venda)
       : this.vendaService.criarVenda(venda);
 

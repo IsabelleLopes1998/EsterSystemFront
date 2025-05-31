@@ -34,7 +34,7 @@ export class ProdutoListarComponent {
       @ViewChild(PaginatorModule) paginator: PaginatorModule;
       @Input() TITULO = 'Lista de produtos';
 
-      breadcrumbs: any = [{ "label": "Início", "url": "#" }, { "label": "Lista de produtos", "url": "#/produto-listar" }];
+      breadcrumbs: any = [{ "label": "Início", "url": "/index" }, { "label": "Lista de produtos", "url": "#/produto-listar" }];
       Produto : ProdutoResponse[] = [];
       totalElements: number = 0;
       pageSize: number = 5;

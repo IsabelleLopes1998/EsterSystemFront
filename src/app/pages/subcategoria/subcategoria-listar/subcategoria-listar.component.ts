@@ -46,7 +46,7 @@ export class SubcategoriaListarComponent {
   @Input() veiculoData: SubcategoriaResponse[] = [];
 
   breadcrumbs: any = [
-    { label: 'Início', url: '#' },
+    { label: 'Início', url: '/index' },
     { label: 'Lista de subcategorias', url: '#/subcategoria-listar' }
   ];
 

@@ -34,6 +34,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 })
 export class CompraListarComponent {
   @Input() TITULO = 'Lista de compras';
+  breadcrumbs: any = [{ "label": "Início", "url": "/index" }, { "label": "Lista de compras", "url": "#/compra-listar" }];
   compras: CompraResponse[] = [];
   comprasFiltradas: CompraResponse[] = [];
   pesquisar: string = '';
@@ -54,10 +55,8 @@ export class CompraListarComponent {
   criarNovaCompra() {
      this.router.navigate(['/compra-criar-nova']);
   }
-    breadcrumbs = [
-      { label: 'Início', routerLink: '/' },
-      { label: 'Compras', routerLink: '/compra-listar' }
-    ];
+
+
 
   getListaDeCompras(): void {
     this.isLoading = true;

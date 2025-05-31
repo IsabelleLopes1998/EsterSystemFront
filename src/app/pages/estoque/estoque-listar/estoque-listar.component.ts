@@ -48,7 +48,7 @@ export class EstoqueListarComponent {
     movimentacoesEstoqueFiltradas: MovimentacaoEstoqueResponseDTO[] = [];
 
     breadcrumbs: any = [
-        { label: "Início", url: "#" },
+        { label: "Início", url: "/index" },
         { label: "Movimentações de Estoque", url: "#/movimentacao-estoque-listar" }
     ];
 
@@ -94,12 +94,12 @@ export class EstoqueListarComponent {
     carregarMovimentacoes(): void {
         this.isLoading = true;
         console.log('Carregando movimentações de estoque...');
-        
+
         this.estoqueService.listar()
             .subscribe({
                 next: (movimentacoes) => {
                     console.log('Movimentações recebidas:', JSON.stringify(movimentacoes, null, 2));
-                    
+
                     // Verificar se o campo produtoName está presente
                     if (movimentacoes.length > 0) {
                         const firstItem = movimentacoes[0];
@@ -107,7 +107,7 @@ export class EstoqueListarComponent {
                         console.log('Valor do produtoName:', firstItem.produtoName);
                         console.log('Valor do idProduto:', firstItem.idProduto);
                     }
-                    
+
                     this.movimentacoesEstoque = movimentacoes;
                     this.movimentacoesEstoqueFiltradas = [...movimentacoes];
                     this.isLoading = false;

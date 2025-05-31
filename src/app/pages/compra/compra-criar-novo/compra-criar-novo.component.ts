@@ -60,7 +60,7 @@ export class CompraCriarNovoComponent implements OnInit {
   itensCompra: CompraItemRequest[] = [];
 
   breadcrumbs = [
-    { label: 'Início', url: '/' },
+    { label: 'Início', url: '/index' },
     { label: 'Compras', url: '/compra-listar' },
     { label: 'Nova Compra', url: '/compra-criar-novo' }
   ];

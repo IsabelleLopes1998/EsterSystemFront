@@ -44,13 +44,13 @@ export class UsuarioListarComponent {
   usuarios: Usuario[] = [];
   usuariosFiltrados: Usuario[] = [];
   breadcrumbs = [
-    { label: 'Início', url: '#' },
+    { label: 'Início', url: '/index' },
     { label: 'Lista de usuários', url: '#/usuario-listar' }
   ];
   tiposPerfil = [
     { key: 1, label: 'Administrador' }
   ];
-  
+
   totalElements = 0;
   pageSize = 5;
   pageIndex = 0;
@@ -130,7 +130,7 @@ export class UsuarioListarComponent {
     const apenasNumeros = cpf.replace(/\D/g, '');
     return apenasNumeros.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
   }
-    
+
   filtrarUsuarios() {
     const pesquisa = this.pesquisar.toLowerCase();
 

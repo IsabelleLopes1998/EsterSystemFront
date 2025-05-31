@@ -35,7 +35,7 @@ export class VendaListarComponent implements OnInit {
   vendaDetalhes: VendaResponseDTO | null = null;
   produtos: any[] = [];
   breadcrumbs = [
-    { label: 'Início', url: '/' },
+    { label: 'Início', url: '/index' },
     { label: 'Vendas', url: '/venda-listar' }
   ];
   pesquisar: string = '';
@@ -115,4 +115,4 @@ export class VendaListarComponent implements OnInit {
   editarVenda(id: string): void {
     this.router.navigate(['/venda-criar-novo', id]);
   }
-} 
+}

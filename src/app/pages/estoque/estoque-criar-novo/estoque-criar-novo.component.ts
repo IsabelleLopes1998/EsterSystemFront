@@ -54,7 +54,7 @@ export class EstoqueCriarNovoComponent implements OnInit {
     ];
     loading = false;
     breadcrumbs = [
-        { label: 'Início', url: '/' },
+        { label: 'Início', url: '/index' },
         { label: 'Estoque', url: '/estoque-listar' },
         { label: 'Nova Movimentação', url: '/estoque-criar-novo' }
     ];
@@ -103,7 +103,7 @@ export class EstoqueCriarNovoComponent implements OnInit {
     filtrarProdutos(event: any): void {
         console.log('Evento de filtro:', event);
         const query = event.query.toLowerCase();
-        this.filteredProdutos = this.produtos.filter(produto => 
+        this.filteredProdutos = this.produtos.filter(produto =>
             produto.nome.toLowerCase().includes(query)
         );
         console.log('Produtos filtrados:', this.filteredProdutos);
@@ -122,7 +122,7 @@ export class EstoqueCriarNovoComponent implements OnInit {
             this.loading = true;
             this.isLoading = true;
             const dto: MovimentacaoEstoqueRequestDTO = this.form.value;
-            
+
             this.estoqueService.criar(dto).subscribe({
                 next: () => {
                     this.messageService.add({

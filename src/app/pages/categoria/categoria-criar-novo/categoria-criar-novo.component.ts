@@ -36,7 +36,7 @@ import { CategoriaResponse } from '../categoria-listar/categoria.model';
 })
 export class CategoriaCriarNovoComponent {
   breadcrumbs = [
-    { label: 'Início', url: '/' },
+    { label: 'Início', url: '/index' },
     { label: 'Categorias', url: '/categoria-listar' },
     { label: 'Nova Categoria', url: '/categoria-criar-novo' }
   ];
