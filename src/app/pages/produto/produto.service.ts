@@ -39,50 +39,17 @@ export class ProdutoService {
   }
 
   getProdutoPorId(id: string): Observable<ProdutoResponseDTO> {
-    return this.http.get<ProdutoResponseDTO>(`${this.produtoApiUrl}/${id}`);
+    return this.http.get<ProdutoResponseDTO>(`${this.produtoApiUrl}/buscarPorId/${id}`);
   }
 
+
   atualizarProduto(produto: ProdutoRequestDTO, id: string): Observable<ProdutoResponseDTO> {
-    return this.http.put<ProdutoResponseDTO>(`${this.produtoApiUrl}/${id}`, produto);
+    return this.http.put<ProdutoResponseDTO>(`${this.produtoApiUrl}/atualizarProduto/${id}`, produto);
   }
 
   excluirProduto(id: string): Observable<void> {
-    return this.http.delete<void>(`${this.produtoApiUrl}/${id}`);
+    return this.http.delete<void>(`${this.produtoApiUrl}/excluirProduto/${id}`);
   }
 
-  listarTodos(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.produtoApiUrl}/listaDeProdutos`);
-  }
 
-  buscarPorId(id: number): Observable<any> {
-    return this.http.get<any>(`${this.produtoApiUrl}/buscarPorId/${id}`);
-  }
-
-  criar(produto: any): Observable<any> {
-    return this.http.post(`${this.produtoApiUrl}/salvarProduto`, produto);
-  }
-
-  atualizar(id: number, produto: any): Observable<any> {
-    return this.http.put(`${this.produtoApiUrl}/atualizarProduto/${id}`, produto);
-  }
-
-  excluir(id: number): Observable<any> {
-    return this.http.delete(`${this.produtoApiUrl}/excluirProduto/${id}`);
-  }
-
-  criarProduto(dto: ProdutoRequestDTO): Observable<ProdutoResponseDTO> {
-    return this.http.post<ProdutoResponseDTO>(`${this.produtoApiUrl}/salvarProduto`, dto);
-  }
-
-  atualizarProdutoDTO(id: string, dto: ProdutoRequestDTO): Observable<ProdutoResponseDTO> {
-    return this.http.put<ProdutoResponseDTO>(`${this.produtoApiUrl}/${id}`, dto);
-  }
-
-  excluirProdutoDTO(id: string): Observable<void> {
-    return this.http.delete<void>(`${this.produtoApiUrl}/${id}`);
-  }
-
-  buscarProdutoPorId(id: string): Observable<ProdutoResponseDTO> {
-    return this.http.get<ProdutoResponseDTO>(`${this.produtoApiUrl}/${id}`);
-  }
 }
