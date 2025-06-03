@@ -104,7 +104,7 @@
           </ng-template>
           <ng-template pTemplate="body" let-item let-i="rowIndex">
             <tr>
-              <td>{{ getProdutoNome(item.produtoId) }}</td>
+              <td style="font-size: 15px;">{{ getProdutoNome(item.produtoId) }}</td>
               <td>
                 <p-inputNumber [(ngModel)]="item.quantidade" [min]="1" [showButtons]="true" buttonLayout="horizontal"
                   spinnerMode="horizontal" decrementButtonClass="p-button-secondary"
