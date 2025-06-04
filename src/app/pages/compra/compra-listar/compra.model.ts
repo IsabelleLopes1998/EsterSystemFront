@@ -1,13 +1,15 @@
 export interface CompraItemRequest {
   produtoId: string;
   valorUnitario: number;
-  quantidadeVenda: number;
+  quantidade: number;
 }
 
 export interface CompraRequest {
   data: string;
   fornecedor: string;
   itens: CompraItemRequest[];
+  valorTotalDaCompra: number;
+
 }
 
 export interface CompraItemResponse {
@@ -21,5 +23,6 @@ export interface CompraResponse {
   data: string;
   fornecedor: string;
   nomeUsuario: string;
+  valorTotalDaCompra: number;
   itens: CompraItemResponse[];
 }

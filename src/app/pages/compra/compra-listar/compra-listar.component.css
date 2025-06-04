@@ -139,3 +139,9 @@
 .btn-sim:hover {
   background-color: #c82333 !important;
 }
+
+.compact-table td {
+  padding: 4px 8px !important; /* menos padding vertical e horizontal */
+  line-height: 1.2;             /* reduz altura visual */
+}
+

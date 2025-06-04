@@ -76,7 +76,8 @@ export class CompraCriarNovoComponent implements OnInit {
   ngOnInit(): void {
     this.form = this.fb.group({
       data: [new Date(), Validators.required],
-      fornecedor: ['', Validators.required]
+      fornecedor: ['', Validators.required],
+      valorTotalDaCompra: ['', Validators.required]
     });
 
     this.carregarProdutos();
@@ -147,7 +148,7 @@ export class CompraCriarNovoComponent implements OnInit {
     this.itensCompra.push({
       produtoId: this.produtoSelecionado.id,
       valorUnitario: this.produtoSelecionado.preco || 0,
-      quantidadeVenda: this.quantidadeSelecionada
+      quantidade: this.quantidadeSelecionada
     });
 
     this.produtoSelecionado = null;
@@ -198,7 +199,8 @@ export class CompraCriarNovoComponent implements OnInit {
     const compra: CompraRequest = {
       data,
       fornecedor: formValues.fornecedor,
-      itens: this.itensCompra
+      itens: this.itensCompra,
+      valorTotalDaCompra: formValues.valorTotalDaCompra
     };
 
     this.compraService.salvarCompra(compra).subscribe({

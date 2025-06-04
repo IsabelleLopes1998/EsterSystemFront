@@ -126,6 +126,20 @@
           </ng-template>
         </p-table>
       </div>
+        <div>
+
+        </div>
+        <div style="display: flex; align-items: center; justify-content: flex-end; gap: 0.5rem; margin-top: 1.5rem;">
+            <label for="valorTotalDaCompra" style="white-space: nowrap; font-size: 20px; ">Valor Total</label>
+            <input id="valorTotalDaCompra" type="text" pInputText formControlName="valorTotalDaCompra"
+                   placeholder="Digite o valor total"
+                   style="width: 200px; height: 50px;" class="form-control"
+                   [class.ng-invalid]="form.get('valorTotalDaCompra')?.invalid && form.get('valorTotalDaCompra')?.touched" />
+        </div>
+
+
+
+
     </div>
 
     <div class="d-flex justify-content-end mt-4">
