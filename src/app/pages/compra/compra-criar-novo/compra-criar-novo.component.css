@@ -236,3 +236,97 @@
   align-items: center;
   gap: 1rem; /* controla o espaçamento entre os botões */
 }
+
+/* === FORMULÁRIO PRINCIPAL === */
+.page-title {
+  font-size: 2rem;
+  color: #343a40;
+}
+
+.form-label {
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.form-control {
+  border-radius: 6px;
+  padding: 10px 12px;
+  font-size: 15px;
+}
+
+/* === BOTÕES === */
+.btn {
+  height: 45px;
+  padding: 0 20px;
+  font-weight: 500;
+}
+
+.btn-primary {
+  background-color: #6F2481;
+  border: none;
+  color: white;
+}
+
+.btn-outline-secondary {
+  border: 1px solid #6F2481;
+  color: #6F2481;
+  background: white;
+}
+
+.btn-outline-secondary:hover {
+  background-color: #6F2481;
+  color: white;
+}
+
+/* === TABELA DE ITENS === */
+.p-datatable-sm .p-datatable-tbody > tr > td {
+  padding: 10px 12px !important;
+  vertical-align: middle;
+  font-size: 14px;
+}
+
+.p-datatable-sm .p-datatable-thead > tr > th {
+  padding: 10px 12px !important;
+  background-color: #f8f9fa;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.p-datatable .p-button-sm {
+  height: 40px;
+  width: 40px;
+}
+
+/* === INPUT NUMBER === */
+.p-inputnumber {
+  width: 100%;
+}
+
+.p-inputnumber-button {
+  width: 40px !important;
+  height: 40px !important;
+}
+
+/* === CAMPO VALOR TOTAL === */
+.text-end label[for="valorTotalDaCompra"] {
+  margin-right: 12px;
+  font-weight: 600;
+}
+
+input#valorTotalDaCompra {
+  padding: 10px 14px;
+  font-size: 16px;
+}
+
+/* === RESPONSIVO (opcional) === */
+@media (max-width: 768px) {
+  .row .col-md-2,
+  .row .col-md-6 {
+    margin-bottom: 1rem;
+  }
+
+  .text-end {
+    text-align: left !important;
+  }
+}
+
