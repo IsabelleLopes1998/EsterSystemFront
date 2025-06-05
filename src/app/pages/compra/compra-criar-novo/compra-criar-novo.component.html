@@ -105,10 +105,17 @@
             <tr>
               <td style="font-size: 15px;">{{ getProdutoNome(item.produtoId) }}</td>
               <td>
-                <p-inputNumber [(ngModel)]="item.quantidade" [min]="1" [showButtons]="true" buttonLayout="horizontal"
-                  spinnerMode="horizontal" decrementButtonClass="p-button-secondary"
-                  incrementButtonClass="p-button-secondary" incrementButtonIcon="pi pi-plus"
-                  decrementButtonIcon="pi pi-minus" [style]="{ width: '100%' }" [ngModelOptions]="{ standalone: true }">
+                <p-inputNumber [(ngModel)]="item.quantidade"
+                               [min]="1"
+                               [showButtons]="true"
+                               buttonLayout="horizontal"
+                               spinnerMode="horizontal"
+                               decrementButtonClass="p-button-secondary"
+                               incrementButtonClass="p-button-secondary" incrementButtonIcon="pi pi-plus"
+                               decrementButtonIcon="pi pi-minus"
+                               [style]="{ width: '100%' }"
+                               [inputStyle]="{ 'text-align': 'center' }"
+                               [ngModelOptions]="{ standalone: true }">
                 </p-inputNumber>
               </td>
               <td>
