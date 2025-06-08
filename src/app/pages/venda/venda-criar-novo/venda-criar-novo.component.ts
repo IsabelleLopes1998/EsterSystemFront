@@ -101,6 +101,7 @@ export class VendaCriarNovoComponent implements OnInit {
   carregarProdutos(): void {
     this.produtoService.getListaDeProdutos().subscribe({
       next: (produtos) => {
+        console.log('Exemplo de produto:', produtos[0]);
         console.log('Produtos carregados:', produtos); // Debug log
         this.produtos = produtos;
       },
@@ -154,7 +155,14 @@ export class VendaCriarNovoComponent implements OnInit {
       });
       return;
     }
-
+    if (this.quantidadeSelecionada > this.produtoSelecionado.quantidadeEstoque) {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Estoque insuficiente',
+        detail: `Quantidade selecionada (${this.quantidadeSelecionada}) é maior do que o estoque disponível (${this.produtoSelecionado.quantidadeEstoque})`
+      });
+      return;
+    }
     // Verifica se o produto já foi adicionado
     const produtoJaAdicionado = this.vendaItems.some(item => item.produtoId === this.produtoSelecionado.id);
     if (produtoJaAdicionado) {
@@ -207,7 +215,8 @@ export class VendaCriarNovoComponent implements OnInit {
           formaPagamento: venda.statusVenda // Usando statusVenda em vez de formaPagamento
         });
 
-        // Carregar itens da venda
+
+       // Carregar itens da venda
         this.vendaItems = venda.vendaItemList.map(item => ({
           produtoId: item.produtoId,
           quantidadeVenda: item.quantidadeVenda
@@ -249,6 +258,20 @@ export class VendaCriarNovoComponent implements OnInit {
       });
       return;
     }
+     // ✅ NOVA VALIDAÇÃO DE ESTOQUE ANTES DO ENVIO
+      for (const item of this.vendaItems) {
+        const produto = this.produtos.find(p => p.id === item.produtoId);
+        if (produto && item.quantidadeVenda > produto.quantidadeEstoque) {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Estoque insuficiente',
+            detail: `Produto "${produto.nome}" possui apenas ${produto.quantidadeEstoque} unidades em estoque`
+          });
+          return;
+        }
+      }
+
+
 
     if (this.vendaItems.length === 0) {
       this.messageService.add({
@@ -261,6 +284,16 @@ export class VendaCriarNovoComponent implements OnInit {
 
     this.loading = true;
     const formValues = this.form.value;
+
+    // ✅ Validação extra da forma de pagamento
+          if (!formValues.formaPagamento) {
+              this.messageService.add({
+              severity: 'warn',
+              summary: 'Atenção',
+              detail: 'Selecione uma forma de pagamento'
+              });
+              return;
+          }
 
     // Formatação da data para o formato esperado pelo backend
     const data = formValues.data instanceof Date ? formValues.data : new Date(formValues.data);
@@ -287,11 +320,21 @@ export class VendaCriarNovoComponent implements OnInit {
       },
       error: (error) => {
         console.error('Erro ao salvar venda:', error);
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Erro',
-          detail: 'Erro ao salvar venda'
-        });
+
+        // Tratamento específico para erro de estoque
+        if (error?.error?.message?.toLowerCase().includes('estoque')) {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Estoque insuficiente',
+            detail: error.error.message
+          });
+        } else {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Erro',
+            detail: 'Erro ao salvar venda'
+          });
+        }
         this.loading = false;
       }
     });

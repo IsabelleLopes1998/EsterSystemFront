@@ -44,7 +44,7 @@
                     <th pSortableColumn="idCliente" style="min-width: 180px; font-size: 13px;">Cliente </th>
                     <th pSortableColumn="statusVenda" style="min-width: 130px; font-size: 13px;">Status </th>
                     <th pSortableColumn="valorTotal" style="min-width: 130px; font-size: 13px;">Total </th>
-                    <th style="min-width: 100px">Ações</th>
+                    <!--<th style="min-width: 100px">Ações</th>-->
                 </tr>
             </ng-template>
 
@@ -58,11 +58,11 @@
                         </span>
                     </td>
                     <td class="table-cell" style="font-size: 12px;">{{venda.valorTotal | currency:'BRL'}}</td>
-                    <td class="table-cell" style="font-size: 20px;">
+                    <!--<td class="table-cell" style="font-size: 20px;">
                         <p-button class="custom-button-edit" (click)="editarVenda(venda.id); $event.stopPropagation()">
                             <i class="fa-solid fa-pen-to-square"></i>
                         </p-button>
-                    </td>
+                    </td>-->
                 </tr>
                 <tr *ngIf="vendaDetalhes === venda">
                     <td colspan="5" class="p-0">
