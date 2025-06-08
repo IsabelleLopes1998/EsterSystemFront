@@ -151,7 +151,7 @@ export class ClienteCriarNovoComponent {
   salvarCliente() {
    console.log('[DEBUG] salvarCliente foi chamado');
 
-     if (this.clienteForm.invalid) {
+     /* if (this.clienteForm.invalid) {
        console.log('[DEBUG] Formulário inválido');
          Object.keys(this.clienteForm.controls).forEach(campo => {
            const controle = this.clienteForm.get(campo);
@@ -160,7 +160,21 @@ export class ClienteCriarNovoComponent {
            }
          });
          return;
-     }
+     } */
+
+    if (this.clienteForm.invalid) {
+      const camposInvalidos = this.getCamposInvalidos();
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Formulário incompleto',
+        detail: 'Preencha os seguintes campos: ' + camposInvalidos.join(', '),
+        life: 8000
+      });
+
+      this.clienteForm.markAllAsTouched(); // Força a exibição dos erros no form
+      return;
+    }
+
 
     this.isLoading = true; // Exibe o spinner antes do envio
 
@@ -206,15 +220,31 @@ export class ClienteCriarNovoComponent {
             this.isLoading = false;
             if (err.status === 409) {
 
-                  this.messageService.add({ severity: 'warn', summary: 'CPF Duplicado', detail: 'Já existe um cliente com esse CPF.' });
-                } else {
-                    this.isLoading = false;
+            this.messageService.add({ severity: 'warn', summary: 'CPF Duplicado', detail: 'Já existe um cliente com esse CPF.' });
+            } else {
+               this.isLoading = false;
                               this.messageService.add({ severity: 'error', summary: 'Erro', detail: 'Falha ao salvar o cliente!' });
-                }
+            }
         }
       });
     }
   }
+  getCamposInvalidos(): string[] {
+      const campos: Record<string, string> = {
+        nome: 'Nome',
+        cpf: 'CPF/CNPJ',
+        dataNascimento: 'Data de Nascimento',
+        email: 'E-mail',
+        rua: 'Rua',
+        numero: 'Número',
+        complemento: 'Complemento',
+        cep: 'CEP'
+      };
+
+      return Object.keys(campos).filter(campo =>
+        this.clienteForm.get(campo)?.invalid
+      ).map(campo => campos[campo]);
+    }
    cpfDuplicadoValidator(): AsyncValidatorFn {
      return (control: AbstractControl): Observable<ValidationErrors | null> => {
        const cpf = control.value;
